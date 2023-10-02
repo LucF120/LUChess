@@ -1,7 +1,7 @@
 # LUChess
-My name is Luc Ferrara, and I am a Computer Science student at Northeastern University. On the side, I am a 2000+ rated chess player on both Chess.com and lichess.org (my username is Luc120 on both sites). I love chess, so I have decided to try to create a chess application of my own as a fun side challenge.
+My name is Luc Ferrara, and I am a Computer Science student at Northeastern University. On the side, I am a 2000+ rated chess player on both chess.com and lichess.org (my username is Luc120 on both sites). I love chess, so I have decided to try to create a chess application of my own as a fun side challenge.
 
-My goals are to accomplish the following steps (order may be subject to change as I go): 
+My goals are to accomplish the following steps (the order may be subject to change): 
 <ol>
 	<li>Create and define a class hierarchy for all the components of the game of chess (the board, the pieces, teams, etc), and create functions for the different actions in the game (winning, losing, moving pieces, capturing pieces, check, checkmate, stalemate, etc)</li>
 	<li>Allow the user to play a game of chess in the console (playing as both teams)</li> 
@@ -12,3 +12,5 @@ My goals are to accomplish the following steps (order may be subject to change a
 	<li>Far in the future: make lucferrara.com/chess an online experience!</li>
 	
 </ol>
+
+I will continue to update this README to keep track of what goals I have accomplished, and any future goals that I create as I continue to work on this project. 
