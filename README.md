@@ -3,7 +3,7 @@ My name is Luc Ferrara, and I am a Computer Science student at Northeastern Univ
 
 My goals are to accomplish the following steps (order may be subject to change as I go): 
 <ol>
-	<li>Create and define a class hierarchy for all the components of the game of chess (the board, the pieces, teams, etc)</li>
+	<li>Create and define a class hierarchy for all the components of the game of chess (the board, the pieces, teams, etc), and create functions for the different actions in the game (winning, losing, moving pieces, capturing pieces, check, checkmate, stalemate, etc)</li>
 	<li>Allow the user to play a game of chess in the console (playing as both teams)</li> 
 	<li>Allow the user to play a game of chess in the console against the computer (computer making random moves)</li>
 	<li>Allow the user to play a game of chess in the console against a smart computer (need to integrate an open-source chess engine)</li>
