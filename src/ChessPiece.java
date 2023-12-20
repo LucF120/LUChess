@@ -13,6 +13,9 @@ interface ChessPiece {
 
     //Returns the value of a chess piece 
     int getValue(); 
+
+    //Returns 0 if a piece is white, 1 if a piece is black 
+    int getColor(); 
 }
 
 //Represents the Pawn Chess piece 
@@ -21,6 +24,7 @@ class Pawn implements ChessPiece {
     private int rank;
     private boolean isAlive; 
     private int value; 
+    private int color; 
 
     //Constructor for a Pawn 
     public Pawn(char file, int rank, boolean isAlive) {
@@ -51,6 +55,11 @@ class Pawn implements ChessPiece {
     public int getValue() {
         return this.value; 
     }
+
+    //Returns 0 if a piece is white, 1 if a piece is black 
+    public int getColor() {
+        return this.color; 
+    }
 }
 
 //Represents the Rook Chess piece 
@@ -59,6 +68,7 @@ class Rook implements ChessPiece {
     private int rank;
     private boolean isAlive; 
     private int value; 
+    private int color; 
 
     //Constructor for a Rook 
     public Rook(char file, int rank, boolean isAlive) {
@@ -88,6 +98,11 @@ class Rook implements ChessPiece {
     //Returns the value of a chess piece 
     public int getValue() {
         return this.value; 
+    }
+
+    //Returns 0 if a piece is white, 1 if a piece is black 
+    public int getColor() {
+        return this.color; 
     }
 }
 
@@ -127,6 +142,11 @@ class Bishop implements ChessPiece {
     public int getValue() {
         return this.value; 
     }
+
+    //Returns 0 if a piece is white, 1 if a piece is black 
+    public int getColor() {
+        return this.color; 
+    }
 }
 
 //Represents the Knight Chess piece 
@@ -164,6 +184,11 @@ class Knight implements ChessPiece {
     //Returns the value of a chess piece 
     public int getValue() {
         return this.value; 
+    }
+
+    //Returns 0 if a piece is white, 1 if a piece is black 
+    public int getColor() {
+        return this.color; 
     }
 }
 
@@ -203,6 +228,11 @@ class Queen implements ChessPiece {
     public int getValue() {
         return this.value; 
     }
+
+    //Returns 0 if a piece is white, 1 if a piece is black 
+    public int getColor() {
+        return this.color; 
+    }
 }
 
 //Represents the King Chess piece 
@@ -240,5 +270,10 @@ class King implements ChessPiece {
     //Returns the value of a chess piece 
     public int getValue() {
         return this.value; 
+    }
+
+    //Returns 0 if a piece is white, 1 if a piece is black 
+    public int getColor() {
+        return this.color; 
     }
 }
