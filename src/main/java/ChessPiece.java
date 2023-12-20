@@ -1,4 +1,4 @@
-package luchess;
+package main.java;
 
 //Represents a piece on a Chess board 
 interface ChessPiece {

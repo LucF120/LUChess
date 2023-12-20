@@ -1,6 +1,6 @@
-package luchess;
+package main.java;
 
-import luchess.ChessPiece;
+import main.java.ChessPiece;
 
 //Represents a 64-square chess board 
 class ChessBoard {
