@@ -27,11 +27,12 @@ class Pawn implements ChessPiece {
     private int color; 
 
     //Constructor for a Pawn 
-    public Pawn(char file, int rank, boolean isAlive) {
+    public Pawn(char file, int rank, boolean isAlive, int color) {
         this.file = file;
         this.rank = rank;
         this.isAlive = isAlive; 
         this.value = 1; 
+        this.color = color; 
     }
 
     //Returns the file that the piece is currently in (a-h)
@@ -71,11 +72,12 @@ class Rook implements ChessPiece {
     private int color; 
 
     //Constructor for a Rook 
-    public Rook(char file, int rank, boolean isAlive) {
+    public Rook(char file, int rank, boolean isAlive, int color) {
         this.file = file;
         this.rank = rank;
         this.isAlive = isAlive; 
         this.value = 5; 
+        this.color = color; 
     }
 
     //Returns the file that the piece is currently in (a-h)
@@ -112,13 +114,15 @@ class Bishop implements ChessPiece {
     private int rank;
     private boolean isAlive; 
     private int value; 
+    private int color;
 
     //Constructor for a Bishop 
-    public Bishop(char file, int rank, boolean isAlive) {
+    public Bishop(char file, int rank, boolean isAlive, int color) {
         this.file = file;
         this.rank = rank;
         this.isAlive = isAlive; 
         this.value = 3; 
+        this.color = color; 
     }
 
     //Returns the file that the piece is currently in (a-h)
@@ -155,13 +159,15 @@ class Knight implements ChessPiece {
     private int rank;
     private boolean isAlive; 
     private int value; 
+    private int color;
 
     //Constructor for a Knight 
-    public Knight(char file, int rank, boolean isAlive) {
+    public Knight(char file, int rank, boolean isAlive, int color) {
         this.file = file;
         this.rank = rank;
         this.isAlive = isAlive; 
         this.value = 3; 
+        this.color = color; 
     }
 
     //Returns the file that the piece is currently in (a-h)
@@ -198,13 +204,15 @@ class Queen implements ChessPiece {
     private int rank;
     private boolean isAlive; 
     private int value; 
+    private int color; 
 
     //Constructor for a Queen 
-    public Queen(char file, int rank, boolean isAlive) {
+    public Queen(char file, int rank, boolean isAlive, int color) {
         this.file = file;
         this.rank = rank;
         this.isAlive = isAlive; 
         this.value = 9; 
+        this.color = color; 
     }
 
     //Returns the file that the piece is currently in (a-h)
@@ -241,13 +249,15 @@ class King implements ChessPiece {
     private int rank;
     private boolean isAlive; 
     private int value; 
+    private int color;
 
     //Constructor for a King 
-    public King(char file, int rank, boolean isAlive) {
+    public King(char file, int rank, boolean isAlive, int color) {
         this.file = file;
         this.rank = rank;
         this.isAlive = isAlive; 
         this.value = 200; 
+        this.color = color; 
     }
 
     //Returns the file that the piece is currently in (a-h)
