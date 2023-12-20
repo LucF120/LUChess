@@ -1,6 +1,6 @@
 package main.java;
 
-import main.java.ChessPiece;
+import chesspiece.*;
 
 //Represents a 64-square chess board 
 public class ChessBoard {
