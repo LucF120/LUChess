@@ -1,3 +1,5 @@
+package luchess;
+
 //Represents a piece on a Chess board 
 interface ChessPiece {
     //Returns the file that the piece is currently in (a-h)

@@ -1,3 +1,7 @@
+package luchess;
+
+import luchess.ChessPiece;
+
 //Represents a 64-square chess board 
 class ChessBoard {
     ChessPiece[][] pieces = new ChessPiece[8][8];
