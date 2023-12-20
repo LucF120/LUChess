@@ -25,3 +25,6 @@ docs/
 
 # Java Class Files 
 *.class
+
+#Maven folders
+target/
