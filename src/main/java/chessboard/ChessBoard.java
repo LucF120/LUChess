@@ -4,7 +4,7 @@ import chesspiece.*;
 
 //Represents a 64-square chess board 
 public class ChessBoard {
-    ChessPiece[][] pieces = new ChessPiece[8][8];
+    private ChessPiece[][] pieces = new ChessPiece[8][8];
     
     //Creates a new chess board 
     public ChessBoard() {
@@ -53,6 +53,12 @@ public class ChessBoard {
         this.pieces[7][5] = new Bishop('f', 8, true, 1);
         this.pieces[7][6] = new Knight('g', 8, true, 1);
         this.pieces[7][7] = new Rook('h', 8, true, 1);
+    }
+
+    //Returns the 2D array containing the positions of all 
+    //Of the pieces on the chess board 
+    public ChessPiece[][] getBoard() {
+        return this.pieces; 
     }
 
     //Returns a piece that is at a given square 
