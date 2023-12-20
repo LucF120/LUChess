@@ -3,7 +3,7 @@ package main.java;
 import main.java.ChessPiece;
 
 //Represents a 64-square chess board 
-class ChessBoard {
+public class ChessBoard {
     ChessPiece[][] pieces = new ChessPiece[8][8];
     
     //Creates a new chess board 

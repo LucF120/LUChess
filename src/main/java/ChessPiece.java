@@ -1,7 +1,7 @@
 package main.java;
 
 //Represents a piece on a Chess board 
-interface ChessPiece {
+public interface ChessPiece {
     //Returns the file that the piece is currently in (a-h)
     //Returns '0' if the piece is not on the board 
     char getFile(); 
@@ -21,7 +21,7 @@ interface ChessPiece {
 }
 
 //Represents the Pawn Chess piece 
-class Pawn implements ChessPiece {
+public class Pawn implements ChessPiece {
     private char file;
     private int rank;
     private boolean isAlive; 
@@ -66,7 +66,7 @@ class Pawn implements ChessPiece {
 }
 
 //Represents the Rook Chess piece 
-class Rook implements ChessPiece {
+public class Rook implements ChessPiece {
     private char file;
     private int rank;
     private boolean isAlive; 
@@ -111,7 +111,7 @@ class Rook implements ChessPiece {
 }
 
 //Represents the Bishop Chess piece 
-class Bishop implements ChessPiece {
+public class Bishop implements ChessPiece {
     private char file;
     private int rank;
     private boolean isAlive; 
@@ -156,7 +156,7 @@ class Bishop implements ChessPiece {
 }
 
 //Represents the Knight Chess piece 
-class Knight implements ChessPiece {
+public class Knight implements ChessPiece {
     private char file;
     private int rank;
     private boolean isAlive; 
@@ -201,7 +201,7 @@ class Knight implements ChessPiece {
 }
 
 //Represents the Queen Chess piece 
-class Queen implements ChessPiece {
+public class Queen implements ChessPiece {
     private char file;
     private int rank;
     private boolean isAlive; 
@@ -246,7 +246,7 @@ class Queen implements ChessPiece {
 }
 
 //Represents the King Chess piece 
-class King implements ChessPiece {
+public class King implements ChessPiece {
     private char file;
     private int rank;
     private boolean isAlive; 
