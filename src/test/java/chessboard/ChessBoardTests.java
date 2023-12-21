@@ -10,6 +10,8 @@ public class ChessBoardTests {
     public void startingBoardTest() {
         ChessBoard startingBoard = new ChessBoard(); 
         ChessPiece[][] pieces = startingBoard.getBoard();
-        assert(pieces[0][0] instanceof Rook);
+        assert(startingBoard.getPieceAt('a', 0) instanceof Rook);
+        assert(startingBoard.getPieceAt('a', 0).isAlive() == true);
+        assert(startingBoard.getPieceAt('a', 0).getColor() == 0);
     }
 }
