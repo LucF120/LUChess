@@ -249,4 +249,16 @@ public class ChessBoardTests {
         }
 
     }
+
+    @Test 
+    public void whitePiecesValueTest() {
+        ChessBoard board = new ChessBoard();
+        assert(board.whitePiecesValue() == (200 + 9 + 3 + 3 + 3 + 3 + 5 + 5 + 8));
+    }
+
+    @Test
+    public void blackPiecesValueTest() {
+        ChessBoard board = new ChessBoard(); 
+        assert(board.blackPiecesValue() == (200 + 9 + 3 + 3 + 3 + 3 + 5 + 5 + 8));
+    }
 }
