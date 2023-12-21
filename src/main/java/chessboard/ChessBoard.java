@@ -1,6 +1,9 @@
 package chessboard;
 
 import chesspiece.*;
+import util.*;
+
+import java.util.ArrayList;
 
 //Represents a 64-square chess board 
 public class ChessBoard {
@@ -62,15 +65,45 @@ public class ChessBoard {
     }
 
     //Returns the legal moves for a piece at a given coordinate 
-    // public ChessCoordinate[] getLegalMoves(char file, int rank) {
+    public ArrayList<ChessCoordinate> getLegalMoves(char file, int rank) throws IllegalArgumentException {
+        ArrayList<ChessCoordinate> legalMoves = new ArrayList<ChessCoordinate>();
+        if (file != 'a' && file != 'b' && file != 'c' && file != 'd' && file != 'e' && file != 'f' && file != 'g' && file != 'h') {
+            throw new IllegalArgumentException("The file must be between a-h");
+        }
+        if (rank <= 0 || rank > 8) {
+            throw new IllegalArgumentException("The rank must be between 1-8");
+        }
 
-    // }
+        ChessPiece piece = this.getPieceAt(file, rank);
+
+        if (piece == null) {
+            return legalMoves; 
+        }
+        else if(piece instanceof Pawn) {
+            return legalMoves; 
+        }
+        else if(piece instanceof Rook) {
+            return legalMoves; 
+        } 
+        else if(piece instanceof Knight) {
+            return legalMoves; 
+        }
+        else if(piece instanceof Bishop) {
+            return legalMoves; 
+        }
+        else if(piece instanceof Queen) {
+            return legalMoves; 
+        }
+        else {
+            return legalMoves; 
+        }
+    }
 
     // Returns a piece that is at a given square 
     // If no piece is at a given square, returns null 
-    public ChessPiece getPieceAt(char file, int rank) {
-        if (rank <= 0) {
-            return null; 
+    public ChessPiece getPieceAt(char file, int rank) throws IllegalArgumentException{
+        if (rank <= 0 || rank > 8) {
+            throw new IllegalArgumentException("The rank must be between 1-8");
         } else {
             switch(file) {
                 case 'a': 
@@ -90,9 +123,9 @@ public class ChessBoard {
                 case 'h':
                     return this.pieces[rank-1][7];
                 default: 
-                    return null; 
+                    throw new IllegalArgumentException("The file must be between a-h");
+                }
             }
-        }
     }
 
     // boolean isCheckmate(); 
