@@ -61,9 +61,30 @@ public class ChessBoard {
         return this.pieces; 
     }
 
-    //Returns a piece that is at a given square 
-    //If no piece is at a given square, returns null 
-    // public ChessPiece getPieceAt(char file, int rank); 
+    // Returns a piece that is at a given square 
+    // If no piece is at a given square, returns null 
+    public ChessPiece getPieceAt(char file, int rank) {
+        switch(file) {
+            case 'a': 
+                return this.pieces[rank][0];
+            case 'b':
+                return this.pieces[rank][1];
+            case 'c':
+                return this.pieces[rank][2];
+            case 'd':
+                return this.pieces[rank][3];
+            case 'e':
+                return this.pieces[rank][4];
+            case 'f':
+                return this.pieces[rank][5];
+            case 'g':
+                return this.pieces[rank][6];
+            case 'h':
+                return this.pieces[rank][7];
+            default: 
+                return null; 
+        }
+    }
 
     // boolean isGameOver(); 
 
