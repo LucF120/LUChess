@@ -92,6 +92,8 @@ public class ChessBoard {
 
     // boolean isCheckmate(); 
 
+    
+
     //Returns the total value of the white pieces currently
     //On the board 
     public int whitePiecesValue() {

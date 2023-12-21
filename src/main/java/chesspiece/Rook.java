@@ -1,17 +1,17 @@
 package chesspiece;
 
+import util.*; 
+
 //Represents the Rook Chess piece 
 public class Rook implements ChessPiece {
-    private char file;
-    private int rank;
+    private ChessCoordinate location; 
     private boolean isAlive; 
     private int value; 
     private int color; 
 
     //Constructor for a Rook 
     public Rook(char file, int rank, boolean isAlive, int color) {
-        this.file = file;
-        this.rank = rank;
+        this.location = new ChessCoordinate(file, rank);
         this.isAlive = isAlive; 
         this.value = 5; 
         this.color = color; 
@@ -20,13 +20,13 @@ public class Rook implements ChessPiece {
     //Returns the file that the piece is currently in (a-h)
     //Returns '0' if the piece is not on the board 
     public char getFile() {
-        return this.file; 
+        return this.location.getFile(); 
     }
 
     //Returns the rank that the piece is currently in (1-8) 
     //Returns 0 if the piece is not on the board 
     public int getRank() {
-        return this.rank; 
+        return this.location.getRank();
     }
 
     //Returns whether or not the piece is alive and on the board 
