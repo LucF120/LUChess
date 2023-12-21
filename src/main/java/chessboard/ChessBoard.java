@@ -90,13 +90,39 @@ public class ChessBoard {
         }
     }
 
-    // boolean isGameOver(); 
+    // boolean isCheckmate(); 
 
     //Returns the total value of the white pieces currently
     //On the board 
-    // public int whitePiecesValue(); 
+    public int whitePiecesValue() {
+        int total = 0; 
+        for (int i=0 ; i<8 ; i++) {
+            for (int j=0 ; j<8 ; j++) {
+                if(this.pieces[i][j] != null) {
+                    if(this.pieces[i][j].getColor() == 0) {
+                        total += this.pieces[i][j].getValue(); 
+                    }
+                }
+            }
+        }
+
+        return total; 
+    }
 
     //Returns the total value of the black pieces currently
     //On the board 
-    // public int blackPiecesValue(); 
+    public int blackPiecesValue() {
+        int total = 0; 
+        for (int i=0 ; i<8 ; i++) {
+            for (int j=0 ; j<8 ; j++) {
+                if(this.pieces[i][j] != null) {
+                    if(this.pieces[i][j].getColor() == 1) {
+                        total += this.pieces[i][j].getValue(); 
+                    }
+                }
+            }
+        }
+
+        return total;
+    }
 }
