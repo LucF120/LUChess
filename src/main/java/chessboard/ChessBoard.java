@@ -61,6 +61,11 @@ public class ChessBoard {
         return this.pieces; 
     }
 
+    //Returns the legal moves for a piece at a given coordinate 
+    // public ChessCoordinate[] getLegalMoves(char file, int rank) {
+
+    // }
+
     // Returns a piece that is at a given square 
     // If no piece is at a given square, returns null 
     public ChessPiece getPieceAt(char file, int rank) {
@@ -92,7 +97,7 @@ public class ChessBoard {
 
     // boolean isCheckmate(); 
 
-    
+
 
     //Returns the total value of the white pieces currently
     //On the board 
