@@ -29,5 +29,22 @@ public class ChessCoordinate {
         return this.rank; 
     }
 
+    //Overriding the equals method for a ChessCoordinate object 
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof ChessCoordinate)) {
+            return false;
+        }
+
+        ChessCoordinate other = (ChessCoordinate) obj;
+        return this.file == other.file && this.rank == other.rank;
+    }
+
+    //Overriding the hashCode method for a ChessCoordinate object 
+    @Override
+    public int hashCode() {
+        return (int) this.file + (64 * this.rank); 
+  }
+
 
 }
