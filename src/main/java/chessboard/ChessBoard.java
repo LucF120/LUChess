@@ -65,6 +65,7 @@ public class ChessBoard {
     }
 
     //Returns the legal moves for a piece at a given coordinate 
+    //If the inputted file and rank is not a square on the board, throws IllegalArgumentException 
     public ArrayList<ChessCoordinate> getLegalMoves(char file, int rank) throws IllegalArgumentException {
         ArrayList<ChessCoordinate> legalMoves = new ArrayList<ChessCoordinate>();
         if (file != 'a' && file != 'b' && file != 'c' && file != 'd' && file != 'e' && file != 'f' && file != 'g' && file != 'h') {
@@ -76,11 +77,225 @@ public class ChessBoard {
 
         ChessPiece piece = this.getPieceAt(file, rank);
 
+        //Returns an empty ArrayList if there is no piece at the given position. 
         if (piece == null) {
             return legalMoves; 
         }
         else if(piece instanceof Pawn) {
-            return legalMoves; 
+            //White pawn movements 
+            if(piece.getColor() == 0) {
+                //White pawn at starting position moving up 2 squares 
+                if(piece.getRank() == 2) {
+                    if(this.getPieceAt(piece.getFile(), 3) == null && this.getPieceAt(piece.getFile(), 4) == null) {
+                        legalMoves.add(new ChessCoordinate(piece.getFile(), 4));
+                    }
+                }
+                //White pawn moving up 1 square 
+                if(this.getPieceAt(piece.getFile(), piece.getRank()+1) == null) {
+                    legalMoves.add(new ChessCoordinate(piece.getFile(), piece.getRank()+1));
+                }
+
+                //White pawn EN PESSANT - make a function in the Pawn class that says that the Pawn has a legal enpessant 
+                //Maybe add the enpessant coordinate in the "moving up 2 squares" part
+
+                //White pawn diagonal captures 
+                switch(piece.getFile()) {
+                    case 'a':
+                        if(this.getPieceAt('b', piece.getRank()+1) != null) {
+                            if(this.getPieceAt('b', piece.getRank()+1).getColor() == 1) {
+                                legalMoves.add(new ChessCoordinate('b', piece.getRank()+1));
+                            }
+                        }
+                        break;
+                    case 'b':
+                        if(this.getPieceAt('a', piece.getRank()+1) != null) {
+                            if(this.getPieceAt('a', piece.getRank()+1).getColor() == 1) {
+                                legalMoves.add(new ChessCoordinate('a', piece.getRank()+1));
+                            }
+                        }
+                        if(this.getPieceAt('c', piece.getRank()+1) != null) {
+                            if(this.getPieceAt('c', piece.getRank()+1).getColor() == 1) {
+                                legalMoves.add(new ChessCoordinate('c', piece.getRank()+1));
+                            }
+                        }
+                        break;
+                    case 'c':
+                        if(this.getPieceAt('b', piece.getRank()+1) != null) {
+                            if(this.getPieceAt('b', piece.getRank()+1).getColor() == 1) {
+                                legalMoves.add(new ChessCoordinate('b', piece.getRank()+1));
+                            }
+                        }
+                        if(this.getPieceAt('d', piece.getRank()+1) != null) {
+                            if(this.getPieceAt('d', piece.getRank()+1).getColor() == 1) {
+                                legalMoves.add(new ChessCoordinate('d', piece.getRank()+1));
+                            }
+                        }
+                        break;
+                    case 'd':
+                        if(this.getPieceAt('c', piece.getRank()+1) != null) {
+                            if(this.getPieceAt('c', piece.getRank()+1).getColor() == 1) {
+                                legalMoves.add(new ChessCoordinate('c', piece.getRank()+1));
+                            }
+                        }
+                        if(this.getPieceAt('e', piece.getRank()+1) != null) {
+                            if(this.getPieceAt('e', piece.getRank()+1).getColor() == 1) {
+                                legalMoves.add(new ChessCoordinate('e', piece.getRank()+1));
+                            }
+                        }
+                        break;
+                    case 'e': 
+                        if(this.getPieceAt('d', piece.getRank()+1) != null) {
+                            if(this.getPieceAt('d', piece.getRank()+1).getColor() == 1) {
+                                legalMoves.add(new ChessCoordinate('d', piece.getRank()+1));
+                            }
+                        }
+                        if(this.getPieceAt('f', piece.getRank()+1) != null) {
+                            if(this.getPieceAt('f', piece.getRank()+1).getColor() == 1) {
+                                legalMoves.add(new ChessCoordinate('f', piece.getRank()+1));
+                            }
+                        }
+                        break;
+                    case 'f': 
+                        if(this.getPieceAt('e', piece.getRank()+1) != null) {
+                            if(this.getPieceAt('e', piece.getRank()+1).getColor() == 1) {
+                                legalMoves.add(new ChessCoordinate('e', piece.getRank()+1));
+                            }
+                        }
+                        if(this.getPieceAt('g', piece.getRank()+1) != null) {
+                            if(this.getPieceAt('g', piece.getRank()+1).getColor() == 1) {
+                                legalMoves.add(new ChessCoordinate('g', piece.getRank()+1));
+                            }
+                        }
+                        break;
+                    case 'g':
+                        if(this.getPieceAt('f', piece.getRank()+1) != null) {
+                            if(this.getPieceAt('f', piece.getRank()+1).getColor() == 1) {
+                                legalMoves.add(new ChessCoordinate('f', piece.getRank()+1));
+                            }
+                        }
+                        if(this.getPieceAt('h', piece.getRank()+1) != null) {
+                            if(this.getPieceAt('h', piece.getRank()+1).getColor() == 1) {
+                                legalMoves.add(new ChessCoordinate('h', piece.getRank()+1));
+                            }
+                        }
+                        break;
+                    case 'h':
+                        if(this.getPieceAt('g', piece.getRank()+1) != null) {
+                            if(this.getPieceAt('g', piece.getRank()+1).getColor() == 1) {
+                                legalMoves.add(new ChessCoordinate('g', piece.getRank()+1));
+                            }
+                        }
+                        break;
+                }
+            }
+
+            //Black pawn movements 
+            if(piece.getColor() == 1) {
+                //White pawn at starting position moving up 2 squares 
+                if(piece.getRank() == 7) {
+                    if(this.getPieceAt(piece.getFile(), 6) == null && this.getPieceAt(piece.getFile(), 5) == null) {
+                        legalMoves.add(new ChessCoordinate(piece.getFile(), 5));
+                    }
+                }
+                //Black pawn moving down 1 square 
+                if(this.getPieceAt(piece.getFile(), piece.getRank()-1) == null) {
+                    legalMoves.add(new ChessCoordinate(piece.getFile(), piece.getRank()-1));
+                }
+
+                //Black pawn EN PESSANT - make a function in the Pawn class that says that the Pawn has a legal enpessant 
+                //Maybe add the enpessant coordinate in the "moving down 2 squares" part
+
+                //Black pawn diagonal captures 
+                switch(piece.getFile()) {
+                    case 'a':
+                        if(this.getPieceAt('b', piece.getRank()-1) != null) {
+                            if(this.getPieceAt('b', piece.getRank()-1).getColor() == 0) {
+                                legalMoves.add(new ChessCoordinate('b', piece.getRank()-1));
+                            }
+                        }
+                        break;
+                    case 'b':
+                        if(this.getPieceAt('a', piece.getRank()-1) != null) {
+                            if(this.getPieceAt('a', piece.getRank()-1).getColor() == 0) {
+                                legalMoves.add(new ChessCoordinate('a', piece.getRank()-1));
+                            }
+                        }
+                        if(this.getPieceAt('c', piece.getRank()-1) != null) {
+                            if(this.getPieceAt('c', piece.getRank()-1).getColor() == 0) {
+                                legalMoves.add(new ChessCoordinate('c', piece.getRank()-1));
+                            }
+                        }
+                        break;
+                    case 'c':
+                        if(this.getPieceAt('b', piece.getRank()-1) != null) {
+                            if(this.getPieceAt('b', piece.getRank()-1).getColor() == 0) {
+                                legalMoves.add(new ChessCoordinate('b', piece.getRank()-1));
+                            }
+                        }
+                        if(this.getPieceAt('d', piece.getRank()-1) != null) {
+                            if(this.getPieceAt('d', piece.getRank()-1).getColor() == 0) {
+                                legalMoves.add(new ChessCoordinate('d', piece.getRank()-1));
+                            }
+                        }
+                        break;
+                    case 'd':
+                        if(this.getPieceAt('c', piece.getRank()-1) != null) {
+                            if(this.getPieceAt('c', piece.getRank()-1).getColor() == 0) {
+                                legalMoves.add(new ChessCoordinate('c', piece.getRank()-1));
+                            }
+                        }
+                        if(this.getPieceAt('e', piece.getRank()-1) != null) {
+                            if(this.getPieceAt('e', piece.getRank()-1).getColor() == 0) {
+                                legalMoves.add(new ChessCoordinate('e', piece.getRank()-1));
+                            }
+                        }
+                        break;
+                    case 'e': 
+                        if(this.getPieceAt('d', piece.getRank()-1) != null) {
+                            if(this.getPieceAt('d', piece.getRank()-1).getColor() == 0) {
+                                legalMoves.add(new ChessCoordinate('d', piece.getRank()-1));
+                            }
+                        }
+                        if(this.getPieceAt('f', piece.getRank()-1) != null) {
+                            if(this.getPieceAt('f', piece.getRank()-1).getColor() == 0) {
+                                legalMoves.add(new ChessCoordinate('f', piece.getRank()-1));
+                            }
+                        }
+                        break;
+                    case 'f': 
+                        if(this.getPieceAt('e', piece.getRank()-1) != null) {
+                            if(this.getPieceAt('e', piece.getRank()-1).getColor() == 0) {
+                                legalMoves.add(new ChessCoordinate('e', piece.getRank()-1));
+                            }
+                        }
+                        if(this.getPieceAt('g', piece.getRank()-1) != null) {
+                            if(this.getPieceAt('g', piece.getRank()-1).getColor() == 0) {
+                                legalMoves.add(new ChessCoordinate('g', piece.getRank()-1));
+                            }
+                        }
+                        break;
+                    case 'g':
+                        if(this.getPieceAt('f', piece.getRank()-1) != null) {
+                            if(this.getPieceAt('f', piece.getRank()-1).getColor() == 0) {
+                                legalMoves.add(new ChessCoordinate('f', piece.getRank()-1));
+                            }
+                        }
+                        if(this.getPieceAt('h', piece.getRank()-1) != null) {
+                            if(this.getPieceAt('h', piece.getRank()-1).getColor() == 0) {
+                                legalMoves.add(new ChessCoordinate('h', piece.getRank()-1));
+                            }
+                        }
+                        break;
+                    case 'h':
+                        if(this.getPieceAt('g', piece.getRank()-1) != null) {
+                            if(this.getPieceAt('g', piece.getRank()-1).getColor() == 0) {
+                                legalMoves.add(new ChessCoordinate('g', piece.getRank()-1));
+                            }
+                        }
+                        break;
+                }
+            }
+
         }
         else if(piece instanceof Rook) {
             return legalMoves; 
@@ -100,7 +315,7 @@ public class ChessBoard {
     }
 
     // Returns a piece that is at a given square 
-    // If no piece is at a given square, returns null 
+    // If no piece is at a given square, throws IllegalArgumentException
     public ChessPiece getPieceAt(char file, int rank) throws IllegalArgumentException{
         if (rank <= 0 || rank > 8) {
             throw new IllegalArgumentException("The rank must be between 1-8");
