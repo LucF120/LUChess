@@ -571,6 +571,35 @@ public class ChessBoard {
             }
     }
 
+    // Sets a piece at a given square 
+    // If the given square does not exist, throws an IllegalArgumentException
+    public void setPieceAt(char file, int rank, ChessPiece piece) throws IllegalArgumentException{
+        if (rank <= 0 || rank > 8) {
+            throw new IllegalArgumentException("The rank must be between 1-8");
+        } else {
+            switch(file) {
+                case 'a': 
+                    this.pieces[rank-1][0] = piece;
+                case 'b':
+                    this.pieces[rank-1][1] = piece;
+                case 'c':
+                    this.pieces[rank-1][2] = piece;
+                case 'd':
+                    this.pieces[rank-1][3] = piece;
+                case 'e':
+                    this.pieces[rank-1][4] = piece;
+                case 'f':
+                    this.pieces[rank-1][5] = piece;
+                case 'g':
+                    this.pieces[rank-1][6] = piece;
+                case 'h':
+                    this.pieces[rank-1][7] = piece;
+                default: 
+                    throw new IllegalArgumentException("The file must be between a-h");
+                }
+            }
+    }
+
     // boolean isCheckmate(); 
 
 
