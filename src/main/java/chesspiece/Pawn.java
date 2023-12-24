@@ -8,6 +8,7 @@ public class Pawn implements ChessPiece {
     private boolean isAlive; 
     private int value; 
     private int color; 
+    private boolean isFirstMove; 
 
     //Constructor for a Pawn 
     public Pawn(char file, int rank, boolean isAlive, int color) {
@@ -15,6 +16,7 @@ public class Pawn implements ChessPiece {
         this.isAlive = isAlive; 
         this.value = 1; 
         this.color = color; 
+        this.isFirstMove = false;
     }
 
     //Returns the file that the piece is currently in (a-h)
@@ -42,5 +44,10 @@ public class Pawn implements ChessPiece {
     //Returns 0 if a piece is white, 1 if a piece is black 
     public int getColor() {
         return this.color; 
+    }
+
+    //Returns a boolean of whether or not the pawn just moved for the first time 
+    public boolean isFirstMove() {
+        return this.isFirstMove; 
     }
 }
