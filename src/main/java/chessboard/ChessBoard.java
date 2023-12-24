@@ -14,6 +14,11 @@ public class ChessBoard {
         this.setupBoard(); 
     }
 
+    //Create a new chessboard by inputting a 2D array of pieces
+    public ChessBoard(ChessPiece[][] pieces) {
+        this.pieces = pieces; 
+    }
+
     //Sets up the starting position of the board, with all 
     //Pieces on their default squares 
     private void setupBoard() {
