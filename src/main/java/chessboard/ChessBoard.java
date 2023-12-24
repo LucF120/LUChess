@@ -580,20 +580,28 @@ public class ChessBoard {
             switch(file) {
                 case 'a': 
                     this.pieces[rank-1][0] = piece;
+                    break;
                 case 'b':
                     this.pieces[rank-1][1] = piece;
+                    break;
                 case 'c':
                     this.pieces[rank-1][2] = piece;
+                    break;
                 case 'd':
                     this.pieces[rank-1][3] = piece;
+                    break;
                 case 'e':
                     this.pieces[rank-1][4] = piece;
+                    break;
                 case 'f':
                     this.pieces[rank-1][5] = piece;
+                    break;
                 case 'g':
                     this.pieces[rank-1][6] = piece;
+                    break;
                 case 'h':
                     this.pieces[rank-1][7] = piece;
+                    break;
                 default: 
                     throw new IllegalArgumentException("The file must be between a-h");
                 }
