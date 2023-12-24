@@ -19,6 +19,15 @@ public class Pawn implements ChessPiece {
         this.isFirstMove = false;
     }
 
+    //Constructor for a Pawn where you can set isFirstMove 
+    public Pawn(char file, int rank, boolean isAlive, int color, boolean isFirstMove) {
+        this.location = new ChessCoordinate(file, rank);
+        this.isAlive = isAlive; 
+        this.value = 1; 
+        this.color = color; 
+        this.isFirstMove = isFirstMove;
+    }
+
     //Returns the file that the piece is currently in (a-h)
     //Returns '0' if the piece is not on the board 
     public char getFile() {
