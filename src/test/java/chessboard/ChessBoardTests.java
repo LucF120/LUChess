@@ -671,4 +671,124 @@ public class ChessBoardTests {
         assert(board.getLegalMoves('h', 4).equals(legalMovesH4));
     }
 
+    @Test
+    public void rookTests() {
+        ChessPiece[][] pieces = new ChessPiece[8][8];
+        ChessBoard board = new ChessBoard(pieces);
+        board.setPieceAt('a', 1, new Rook('a', 1, true, 0));
+        ArrayList<ChessCoordinate> legalMovesA1 = new ArrayList<ChessCoordinate>();
+        legalMovesA1.add(new ChessCoordinate('b', 1));
+        legalMovesA1.add(new ChessCoordinate('c', 1));
+        legalMovesA1.add(new ChessCoordinate('d', 1));
+        legalMovesA1.add(new ChessCoordinate('e', 1));
+        legalMovesA1.add(new ChessCoordinate('f', 1));
+        legalMovesA1.add(new ChessCoordinate('g', 1));
+        legalMovesA1.add(new ChessCoordinate('h', 1));
+        legalMovesA1.add(new ChessCoordinate('a', 2));
+        legalMovesA1.add(new ChessCoordinate('a', 3));
+        legalMovesA1.add(new ChessCoordinate('a', 4));
+        legalMovesA1.add(new ChessCoordinate('a', 5));
+        legalMovesA1.add(new ChessCoordinate('a', 6));
+        legalMovesA1.add(new ChessCoordinate('a', 7));
+        legalMovesA1.add(new ChessCoordinate('a', 8));
+        assert(board.getLegalMoves('a', 1).equals(legalMovesA1));
+
+        ArrayList<ChessCoordinate> legalMovesB1 = new ArrayList<ChessCoordinate>();
+        board.setPieceAt('a', 1, null);
+        board.setPieceAt('b', 1, new Rook('b', 1, true, 0));
+        legalMovesB1.add(new ChessCoordinate('a', 1));
+        legalMovesB1.add(new ChessCoordinate('c', 1));
+        legalMovesB1.add(new ChessCoordinate('d', 1));
+        legalMovesB1.add(new ChessCoordinate('e', 1));
+        legalMovesB1.add(new ChessCoordinate('f', 1));
+        legalMovesB1.add(new ChessCoordinate('g', 1));
+        legalMovesB1.add(new ChessCoordinate('h', 1));
+        legalMovesB1.add(new ChessCoordinate('b', 2));
+        legalMovesB1.add(new ChessCoordinate('b', 3));
+        legalMovesB1.add(new ChessCoordinate('b', 4));
+        legalMovesB1.add(new ChessCoordinate('b', 5));
+        legalMovesB1.add(new ChessCoordinate('b', 6));
+        legalMovesB1.add(new ChessCoordinate('b', 7));
+        legalMovesB1.add(new ChessCoordinate('b', 8));
+        assert(board.getLegalMoves('b', 1).equals(legalMovesB1));
+
+        ArrayList<ChessCoordinate> legalMovesG1 = new ArrayList<ChessCoordinate>();
+        board.setPieceAt('b', 1, null);
+        board.setPieceAt('g', 1, new Rook('g', 1, true, 0));
+        legalMovesG1.add(new ChessCoordinate('f', 1));
+        legalMovesG1.add(new ChessCoordinate('e', 1));
+        legalMovesG1.add(new ChessCoordinate('d', 1));
+        legalMovesG1.add(new ChessCoordinate('c', 1));
+        legalMovesG1.add(new ChessCoordinate('b', 1));
+        legalMovesG1.add(new ChessCoordinate('a', 1));
+        legalMovesG1.add(new ChessCoordinate('h', 1));
+        legalMovesG1.add(new ChessCoordinate('g', 2));
+        legalMovesG1.add(new ChessCoordinate('g', 3));
+        legalMovesG1.add(new ChessCoordinate('g', 4));
+        legalMovesG1.add(new ChessCoordinate('g', 5));
+        legalMovesG1.add(new ChessCoordinate('g', 6));
+        legalMovesG1.add(new ChessCoordinate('g', 7));
+        legalMovesG1.add(new ChessCoordinate('g', 8));
+        assert(board.getLegalMoves('g', 1).equals(legalMovesG1));
+
+        ArrayList<ChessCoordinate> legalMovesE4 = new ArrayList<ChessCoordinate>();
+        board.setPieceAt('g', 1, null);
+        board.setPieceAt('e', 4, new Rook('e', 4, true, 1));
+        legalMovesE4.add(new ChessCoordinate('d', 4));
+        legalMovesE4.add(new ChessCoordinate('c', 4));
+        legalMovesE4.add(new ChessCoordinate('b', 4));
+        legalMovesE4.add(new ChessCoordinate('a', 4));
+        legalMovesE4.add(new ChessCoordinate('f', 4));
+        legalMovesE4.add(new ChessCoordinate('g', 4));
+        legalMovesE4.add(new ChessCoordinate('h', 4));
+        legalMovesE4.add(new ChessCoordinate('e', 3));
+        legalMovesE4.add(new ChessCoordinate('e', 2));
+        legalMovesE4.add(new ChessCoordinate('e', 1));
+        legalMovesE4.add(new ChessCoordinate('e', 5));
+        legalMovesE4.add(new ChessCoordinate('e', 6));
+        legalMovesE4.add(new ChessCoordinate('e', 7));
+        legalMovesE4.add(new ChessCoordinate('e', 8));
+        assert(board.getLegalMoves('e', 4).equals(legalMovesE4));
+
+        //Checks that there are no legal moves for a rook surrounded by same color pieces 
+        board.setPieceAt('c', 4, new Rook('c', 4, true, 1));
+        board.setPieceAt('d', 5, new King('d', 5, true, 1));
+        board.setPieceAt('d', 3, new Knight('d', 3, true, 1));
+        board.setPieceAt('d', 4, new Bishop('d', 4, true, 1));
+        assert(board.getLegalMoves('d', 4).equals(new ArrayList<ChessCoordinate>()));
+
+        //Checks that there are four capture moves legal for a rook surrounded by opposite color pieces 
+        ArrayList<ChessCoordinate> legalMovesD4 = new ArrayList<ChessCoordinate>();
+        board.setPieceAt('d', 4, new Rook('d', 4, true, 0));
+        legalMovesD4.add(new ChessCoordinate('c', 4));
+        legalMovesD4.add(new ChessCoordinate('e', 4));
+        legalMovesD4.add(new ChessCoordinate('d', 3));
+        legalMovesD4.add(new ChessCoordinate('d', 5));
+        assert(board.getLegalMoves('d', 4).equals(legalMovesD4));
+
+        //Check a rook can travel from a-f, but can't go to g-h due to colliding with it's own piece
+        board.setPieceAt('d', 4, null);
+        board.setPieceAt('c', 4, null);
+        board.setPieceAt('d', 5, null);
+        board.setPieceAt('d', 3, null);
+        board.setPieceAt('e', 4, null);
+        ArrayList<ChessCoordinate> legalMovesA5 = new ArrayList<ChessCoordinate>();
+        board.setPieceAt('a', 5, new Rook('a', 5, true, 0));
+        board.setPieceAt('g', 5, new Rook('g', 5, true, 0));
+        board.setPieceAt('a', 7, new Pawn('a', 7, true, 0));
+        board.setPieceAt('a', 2, new Bishop('a', 2, true, 0));
+        legalMovesA5.add(new ChessCoordinate('b', 5));
+        legalMovesA5.add(new ChessCoordinate('c', 5));
+        legalMovesA5.add(new ChessCoordinate('d', 5));
+        legalMovesA5.add(new ChessCoordinate('e', 5));
+        legalMovesA5.add(new ChessCoordinate('f', 5));
+        legalMovesA5.add(new ChessCoordinate('a', 4));
+        legalMovesA5.add(new ChessCoordinate('a', 3));
+        legalMovesA5.add(new ChessCoordinate('a', 6));
+        assert(board.getLegalMoves('a', 5).equals(legalMovesA5));
+
+
+
+    }
+
 }
