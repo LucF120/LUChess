@@ -90,7 +90,7 @@ public class ChessBoard {
             return this.getLegalPawnMoves((Pawn) piece);
         }
         else if(piece instanceof Rook) {
-            return legalMoves; 
+            return this.getLegalRookMoves((Rook) piece);
         } 
         else if(piece instanceof Knight) {
             return legalMoves; 
@@ -540,6 +540,849 @@ public class ChessBoard {
             }
         }
         return legalMoves; 
+    }
+
+    //Returns the legal moves that a rook piece can make 
+    private ArrayList<ChessCoordinate> getLegalRookMoves(Rook piece) {
+        ArrayList<ChessCoordinate> legalMoves = new ArrayList<ChessCoordinate>();
+
+        //Checks for legal left-right moves 
+        switch(piece.getFile()) {
+            case 'a':
+                if(this.getPieceAt('b', piece.getRank()) != null) {
+                    if(this.getPieceAt('b', piece.getRank()).getColor() != piece.getColor()) {
+                        legalMoves.add(new ChessCoordinate('b', piece.getRank()));
+                    }
+                } else {
+                    legalMoves.add(new ChessCoordinate('b', piece.getRank()));
+                    if(this.getPieceAt('c', piece.getRank()) != null) {
+                        if(this.getPieceAt('c', piece.getRank()).getColor() != piece.getColor()) {
+                            legalMoves.add(new ChessCoordinate('c', piece.getRank()));
+                        }
+                    } else {
+                        legalMoves.add(new ChessCoordinate('c', piece.getRank()));
+                        if(this.getPieceAt('d', piece.getRank()) != null) {
+                            if(this.getPieceAt('d', piece.getRank()).getColor() != piece.getColor()) {
+                                legalMoves.add(new ChessCoordinate('d', piece.getRank()));
+                            }
+                        } else {
+                            legalMoves.add(new ChessCoordinate('d', piece.getRank()));
+                            if(this.getPieceAt('e', piece.getRank()) != null) {
+                                if(this.getPieceAt('e', piece.getRank()).getColor() != piece.getColor()) {
+                                    legalMoves.add(new ChessCoordinate('e', piece.getRank()));
+                                }
+                            } else {
+                                legalMoves.add(new ChessCoordinate('e', piece.getRank()));
+                                if(this.getPieceAt('f', piece.getRank()) != null) {
+                                    if(this.getPieceAt('f', piece.getRank()).getColor() != piece.getColor()) {
+                                        legalMoves.add(new ChessCoordinate('f', piece.getRank()));
+                                    }
+                                } else {
+                                    legalMoves.add(new ChessCoordinate('f', piece.getRank()));
+                                    if(this.getPieceAt('g', piece.getRank()) != null) {
+                                        if(this.getPieceAt('g', piece.getRank()).getColor() != piece.getColor()) {
+                                            legalMoves.add(new ChessCoordinate('g', piece.getRank()));
+                                        }
+                                    } else {
+                                        legalMoves.add(new ChessCoordinate('g', piece.getRank()));
+                                        if(this.getPieceAt('h', piece.getRank()) != null) {
+                                            if(this.getPieceAt('h', piece.getRank()).getColor() != piece.getColor()) {
+                                                legalMoves.add(new ChessCoordinate('h', piece.getRank()));
+                                            }
+                                        } else {
+                                            legalMoves.add(new ChessCoordinate('h', piece.getRank()));
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                } 
+                break;
+            case 'b':
+                if(this.getPieceAt('a', piece.getRank()) != null) {
+                    if(this.getPieceAt('a', piece.getRank()).getColor() != piece.getColor()) {
+                        legalMoves.add(new ChessCoordinate('a', piece.getRank()));
+                    } 
+                } else {
+                        legalMoves.add(new ChessCoordinate('a', piece.getRank()));
+                    }
+                
+                if(this.getPieceAt('c', piece.getRank()) != null) {
+                    if(this.getPieceAt('c', piece.getRank()).getColor() != piece.getColor()) {
+                        legalMoves.add(new ChessCoordinate('c', piece.getRank()));
+                    }
+                } else {
+                    legalMoves.add(new ChessCoordinate('c', piece.getRank()));
+                    if(this.getPieceAt('d', piece.getRank()) != null) {
+                        if(this.getPieceAt('d', piece.getRank()).getColor() != piece.getColor()) {
+                            legalMoves.add(new ChessCoordinate('d', piece.getRank()));
+                        }
+                    } else {
+                        legalMoves.add(new ChessCoordinate('d', piece.getRank()));
+                        if(this.getPieceAt('e', piece.getRank()) != null) {
+                            if(this.getPieceAt('e', piece.getRank()).getColor() != piece.getColor()) {
+                                legalMoves.add(new ChessCoordinate('e', piece.getRank()));
+                            }
+                        } else {
+                            legalMoves.add(new ChessCoordinate('e', piece.getRank()));
+                            if(this.getPieceAt('f', piece.getRank()) != null) {
+                                if(this.getPieceAt('f', piece.getRank()).getColor() != piece.getColor()) {
+                                    legalMoves.add(new ChessCoordinate('f', piece.getRank()));
+                                }
+                            } else {
+                                legalMoves.add(new ChessCoordinate('f', piece.getRank()));
+                                if(this.getPieceAt('g', piece.getRank()) != null) {
+                                    if(this.getPieceAt('g', piece.getRank()).getColor() != piece.getColor()) {
+                                        legalMoves.add(new ChessCoordinate('g', piece.getRank()));
+                                    }
+                                } else {
+                                    legalMoves.add(new ChessCoordinate('g', piece.getRank()));
+                                    if(this.getPieceAt('h', piece.getRank()) != null) {
+                                        if(this.getPieceAt('h', piece.getRank()).getColor() != piece.getColor()) {
+                                            legalMoves.add(new ChessCoordinate('h', piece.getRank()));
+                                        }
+                                    } else {
+                                        legalMoves.add(new ChessCoordinate('h', piece.getRank()));
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                break;
+            case 'c':
+                if(this.getPieceAt('b', piece.getRank()) != null) {
+                    if(this.getPieceAt('b', piece.getRank()).getColor() != piece.getColor()) {
+                        legalMoves.add(new ChessCoordinate('b', piece.getRank()));
+                    }
+                } else {
+                        legalMoves.add(new ChessCoordinate('b', piece.getRank()));
+                        if(this.getPieceAt('a', piece.getRank()) != null) {
+                            if(this.getPieceAt('a', piece.getRank()).getColor() != piece.getColor()) {
+                                legalMoves.add(new ChessCoordinate('a', piece.getRank()));
+                            } 
+                        } else {
+                            legalMoves.add(new ChessCoordinate('a', piece.getRank()));
+                        }
+                    }
+                
+                if(this.getPieceAt('d', piece.getRank()) != null) {
+                    if(this.getPieceAt('d', piece.getRank()).getColor() != piece.getColor()) {
+                        legalMoves.add(new ChessCoordinate('d', piece.getRank()));
+                    }
+                } else {
+                    legalMoves.add(new ChessCoordinate('d', piece.getRank()));
+                    if(this.getPieceAt('e', piece.getRank()) != null) {
+                        if(this.getPieceAt('e', piece.getRank()).getColor() != piece.getColor()) {
+                            legalMoves.add(new ChessCoordinate('e', piece.getRank()));
+                        }
+                    } else {
+                        legalMoves.add(new ChessCoordinate('e', piece.getRank()));
+                        if(this.getPieceAt('f', piece.getRank()) != null) {
+                            if(this.getPieceAt('f', piece.getRank()).getColor() != piece.getColor()) {
+                                legalMoves.add(new ChessCoordinate('f', piece.getRank()));
+                            }
+                        } else {
+                            legalMoves.add(new ChessCoordinate('f', piece.getRank()));
+                            if(this.getPieceAt('g', piece.getRank()) != null) {
+                                if(this.getPieceAt('g', piece.getRank()).getColor() != piece.getColor()) {
+                                    legalMoves.add(new ChessCoordinate('g', piece.getRank()));
+                                }
+                            } else {
+                                legalMoves.add(new ChessCoordinate('g', piece.getRank()));
+                                if(this.getPieceAt('h', piece.getRank()) != null) {
+                                    if(this.getPieceAt('h', piece.getRank()).getColor() != piece.getColor()) {
+                                        legalMoves.add(new ChessCoordinate('h', piece.getRank()));
+                                    }
+                                } else {
+                                    legalMoves.add(new ChessCoordinate('h', piece.getRank()));
+                                }
+                            }
+                        }
+                    }
+                }
+                break;
+            case 'd':
+                if(this.getPieceAt('c', piece.getRank()) != null) {
+                    if(this.getPieceAt('c', piece.getRank()).getColor() != piece.getColor()) {
+                        legalMoves.add(new ChessCoordinate('c', piece.getRank()));
+                    }
+                } else {
+                        legalMoves.add(new ChessCoordinate('c', piece.getRank()));
+                        if(this.getPieceAt('b', piece.getRank()) != null) {
+                            if(this.getPieceAt('b', piece.getRank()).getColor() != piece.getColor()) {
+                                legalMoves.add(new ChessCoordinate('b', piece.getRank()));
+                            } 
+                        } else {
+                            legalMoves.add(new ChessCoordinate('b', piece.getRank()));
+                            if(this.getPieceAt('a', piece.getRank()) != null) {
+                                if(this.getPieceAt('a', piece.getRank()).getColor() != piece.getColor()) {
+                                    legalMoves.add(new ChessCoordinate('a', piece.getRank()));
+                                }
+                            } else {
+                                legalMoves.add(new ChessCoordinate('a', piece.getRank()));
+                            }
+                        }
+                    }
+                
+                if(this.getPieceAt('e', piece.getRank()) != null) {
+                    if(this.getPieceAt('e', piece.getRank()).getColor() != piece.getColor()) {
+                        legalMoves.add(new ChessCoordinate('e', piece.getRank()));
+                    }
+                } else {
+                    legalMoves.add(new ChessCoordinate('e', piece.getRank()));
+                    if(this.getPieceAt('f', piece.getRank()) != null) {
+                        if(this.getPieceAt('f', piece.getRank()).getColor() != piece.getColor()) {
+                            legalMoves.add(new ChessCoordinate('f', piece.getRank()));
+                        }
+                    } else {
+                        legalMoves.add(new ChessCoordinate('f', piece.getRank()));
+                        if(this.getPieceAt('g', piece.getRank()) != null) {
+                            if(this.getPieceAt('g', piece.getRank()).getColor() != piece.getColor()) {
+                                legalMoves.add(new ChessCoordinate('g', piece.getRank()));
+                            }
+                        } else {
+                            legalMoves.add(new ChessCoordinate('g', piece.getRank()));
+                            if(this.getPieceAt('h', piece.getRank()) != null) {
+                                if(this.getPieceAt('h', piece.getRank()).getColor() != piece.getColor()) {
+                                    legalMoves.add(new ChessCoordinate('h', piece.getRank()));
+                                }
+                            } else {
+                                legalMoves.add(new ChessCoordinate('h', piece.getRank()));
+                            }
+                        }
+                    }
+                }
+                break;
+            case 'e':
+                if(this.getPieceAt('d', piece.getRank()) != null) {
+                    if(this.getPieceAt('d', piece.getRank()).getColor() != piece.getColor()) {
+                        legalMoves.add(new ChessCoordinate('d', piece.getRank()));
+                    }
+                } else {
+                        legalMoves.add(new ChessCoordinate('d', piece.getRank()));
+                        if(this.getPieceAt('c', piece.getRank()) != null) {
+                            if(this.getPieceAt('c', piece.getRank()).getColor() != piece.getColor()) {
+                                legalMoves.add(new ChessCoordinate('c', piece.getRank()));
+                            } 
+                        } else {
+                            legalMoves.add(new ChessCoordinate('c', piece.getRank()));
+                            if(this.getPieceAt('b', piece.getRank()) != null) {
+                                if(this.getPieceAt('b', piece.getRank()).getColor() != piece.getColor()) {
+                                    legalMoves.add(new ChessCoordinate('b', piece.getRank()));
+                                }
+                            } else {
+                                legalMoves.add(new ChessCoordinate('b', piece.getRank()));
+                                if(this.getPieceAt('a', piece.getRank()) != null) {
+                                    if(this.getPieceAt('a', piece.getRank()).getColor() != piece.getColor()) {
+                                        legalMoves.add(new ChessCoordinate('a', piece.getRank()));
+                                    }
+                                } else {
+                                    legalMoves.add(new ChessCoordinate('a', piece.getRank()));
+                                }
+                            }
+                        }
+                    }    
+
+                if(this.getPieceAt('f', piece.getRank()) != null) {
+                    if(this.getPieceAt('f', piece.getRank()).getColor() != piece.getColor()) {
+                        legalMoves.add(new ChessCoordinate('f', piece.getRank()));
+                    }
+                } else {
+                    legalMoves.add(new ChessCoordinate('f', piece.getRank()));
+                    if(this.getPieceAt('g', piece.getRank()) != null) {
+                        if(this.getPieceAt('g', piece.getRank()).getColor() != piece.getColor()) {
+                            legalMoves.add(new ChessCoordinate('g', piece.getRank()));
+                        }
+                    } else {
+                        legalMoves.add(new ChessCoordinate('g', piece.getRank()));
+                        if(this.getPieceAt('h', piece.getRank()) != null) {
+                            if(this.getPieceAt('h', piece.getRank()).getColor() != piece.getColor()) {
+                                legalMoves.add(new ChessCoordinate('h', piece.getRank()));
+                            }
+                        } else {
+                            legalMoves.add(new ChessCoordinate('h', piece.getRank()));
+                        }
+                    }
+                }
+                break;
+            case 'f':
+                if(this.getPieceAt('e', piece.getRank()) != null) {
+                    if(this.getPieceAt('e', piece.getRank()).getColor() != piece.getColor()) {
+                        legalMoves.add(new ChessCoordinate('e', piece.getRank()));
+                    }
+                } else {
+                        legalMoves.add(new ChessCoordinate('e', piece.getRank()));
+                        if(this.getPieceAt('d', piece.getRank()) != null) {
+                            if(this.getPieceAt('d', piece.getRank()).getColor() != piece.getColor()) {
+                                legalMoves.add(new ChessCoordinate('d', piece.getRank()));
+                            } 
+                        } else {
+                            legalMoves.add(new ChessCoordinate('d', piece.getRank()));
+                            if(this.getPieceAt('c', piece.getRank()) != null) {
+                                if(this.getPieceAt('c', piece.getRank()).getColor() != piece.getColor()) {
+                                    legalMoves.add(new ChessCoordinate('c', piece.getRank()));
+                                }
+                            } else {
+                                legalMoves.add(new ChessCoordinate('c', piece.getRank()));
+                                if(this.getPieceAt('b', piece.getRank()) != null) {
+                                    if(this.getPieceAt('b', piece.getRank()).getColor() != piece.getColor()) {
+                                        legalMoves.add(new ChessCoordinate('b', piece.getRank()));
+                                    }
+                                } else {
+                                    legalMoves.add(new ChessCoordinate('b', piece.getRank()));
+                                    if(this.getPieceAt('a', piece.getRank()) != null) {
+                                        if(this.getPieceAt('a', piece.getRank()).getColor() != piece.getColor()) {
+                                            legalMoves.add(new ChessCoordinate('a', piece.getRank()));
+                                        }
+                                    } else {
+                                        legalMoves.add(new ChessCoordinate('a', piece.getRank()));
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                if(this.getPieceAt('g', piece.getRank()) != null) {
+                    if(this.getPieceAt('g', piece.getRank()).getColor() != piece.getColor()) {
+                        legalMoves.add(new ChessCoordinate('g', piece.getRank()));
+                    }
+                } else {
+                    legalMoves.add(new ChessCoordinate('g', piece.getRank()));
+                    if(this.getPieceAt('h', piece.getRank()) != null) {
+                        if(this.getPieceAt('h', piece.getRank()).getColor() != piece.getColor()) {
+                            legalMoves.add(new ChessCoordinate('h', piece.getRank()));
+                        }
+                    } else {
+                        legalMoves.add(new ChessCoordinate('h', piece.getRank()));
+                    }
+                }
+                break;
+            case 'g':
+                if(this.getPieceAt('f', piece.getRank()) != null) {
+                    if(this.getPieceAt('f', piece.getRank()).getColor() != piece.getColor()) {
+                        legalMoves.add(new ChessCoordinate('f', piece.getRank()));
+                    }
+                } else {
+                        legalMoves.add(new ChessCoordinate('f', piece.getRank()));
+                        if(this.getPieceAt('e', piece.getRank()) != null) {
+                            if(this.getPieceAt('e', piece.getRank()).getColor() != piece.getColor()) {
+                                legalMoves.add(new ChessCoordinate('e', piece.getRank()));
+                            } 
+                        } else {
+                            legalMoves.add(new ChessCoordinate('e', piece.getRank()));
+                            if(this.getPieceAt('d', piece.getRank()) != null) {
+                                if(this.getPieceAt('d', piece.getRank()).getColor() != piece.getColor()) {
+                                    legalMoves.add(new ChessCoordinate('d', piece.getRank()));
+                                }
+                            } else {
+                                legalMoves.add(new ChessCoordinate('d', piece.getRank()));
+                                if(this.getPieceAt('c', piece.getRank()) != null) {
+                                    if(this.getPieceAt('c', piece.getRank()).getColor() != piece.getColor()) {
+                                        legalMoves.add(new ChessCoordinate('c', piece.getRank()));
+                                    }
+                                } else {
+                                    legalMoves.add(new ChessCoordinate('c', piece.getRank()));
+                                    if(this.getPieceAt('b', piece.getRank()) != null) {
+                                        if(this.getPieceAt('b', piece.getRank()).getColor() != piece.getColor()) {
+                                            legalMoves.add(new ChessCoordinate('b', piece.getRank()));
+                                        }
+                                    } else {
+                                        legalMoves.add(new ChessCoordinate('b', piece.getRank()));
+                                        if(this.getPieceAt('a', piece.getRank()) != null) {
+                                            if(this.getPieceAt('a', piece.getRank()).getColor() != piece.getColor()) {
+                                                legalMoves.add(new ChessCoordinate('a', piece.getRank()));
+                                            }
+                                        } else {
+                                            legalMoves.add(new ChessCoordinate('a', piece.getRank()));
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                
+                if(this.getPieceAt('h', piece.getRank()) != null) {
+                    if(this.getPieceAt('h', piece.getRank()).getColor() != piece.getColor()) {
+                        legalMoves.add(new ChessCoordinate('h', piece.getRank()));
+                    }
+                } else {
+                    legalMoves.add(new ChessCoordinate('h', piece.getRank()));
+                }
+                break;
+            case 'h':
+                if(this.getPieceAt('g', piece.getRank()) != null) {
+                    if(this.getPieceAt('g', piece.getRank()).getColor() != piece.getColor()) {
+                        legalMoves.add(new ChessCoordinate('g', piece.getRank()));
+                    }
+                } else {
+                        legalMoves.add(new ChessCoordinate('g', piece.getRank()));
+                        if(this.getPieceAt('f', piece.getRank()) != null) {
+                            if(this.getPieceAt('f', piece.getRank()).getColor() != piece.getColor()) {
+                                legalMoves.add(new ChessCoordinate('f', piece.getRank()));
+                            } 
+                        } else {
+                            legalMoves.add(new ChessCoordinate('f', piece.getRank()));
+                            if(this.getPieceAt('e', piece.getRank()) != null) {
+                                if(this.getPieceAt('e', piece.getRank()).getColor() != piece.getColor()) {
+                                    legalMoves.add(new ChessCoordinate('e', piece.getRank()));
+                                }
+                            } else {
+                                legalMoves.add(new ChessCoordinate('e', piece.getRank()));
+                                if(this.getPieceAt('d', piece.getRank()) != null) {
+                                    if(this.getPieceAt('d', piece.getRank()).getColor() != piece.getColor()) {
+                                        legalMoves.add(new ChessCoordinate('d', piece.getRank()));
+                                    }
+                                } else {
+                                    legalMoves.add(new ChessCoordinate('d', piece.getRank()));
+                                    if(this.getPieceAt('c', piece.getRank()) != null) {
+                                        if(this.getPieceAt('c', piece.getRank()).getColor() != piece.getColor()) {
+                                            legalMoves.add(new ChessCoordinate('c', piece.getRank()));
+                                        }
+                                    } else {
+                                        legalMoves.add(new ChessCoordinate('c', piece.getRank()));
+                                        if(this.getPieceAt('b', piece.getRank()) != null) {
+                                            if(this.getPieceAt('b', piece.getRank()).getColor() != piece.getColor()) {
+                                                legalMoves.add(new ChessCoordinate('b', piece.getRank()));
+                                            }
+                                        } else {
+                                            legalMoves.add(new ChessCoordinate('b', piece.getRank()));
+                                            if(this.getPieceAt('a', piece.getRank()) != null) {
+                                                if(this.getPieceAt('a', piece.getRank()).getColor() != piece.getColor()) {
+                                                    legalMoves.add(new ChessCoordinate('a', piece.getRank()));
+                                                }
+                                            } else {
+                                                legalMoves.add(new ChessCoordinate('a', piece.getRank()));
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                break; 
+        }
+
+        //Checks for legal up-down moves 
+        switch(piece.getRank()) {
+            case 1: 
+                if(this.getPieceAt(piece.getFile(), 2) != null) {
+                    if(this.getPieceAt(piece.getFile(), 2).getColor() != piece.getColor()) {
+                        legalMoves.add(new ChessCoordinate(piece.getFile(), 2));
+                    }
+                } else {
+                    legalMoves.add(new ChessCoordinate(piece.getFile(), 2));
+                    if(this.getPieceAt(piece.getFile(), 3) != null) {
+                        if(this.getPieceAt(piece.getFile(), 3).getColor() != piece.getColor()) {
+                            legalMoves.add(new ChessCoordinate(piece.getFile(), 3));
+                        }
+                    } else {
+                        legalMoves.add(new ChessCoordinate(piece.getFile(), 3));
+                        if(this.getPieceAt(piece.getFile(), 4) != null) {
+                            if(this.getPieceAt(piece.getFile(), 4).getColor() != piece.getColor()) {
+                                legalMoves.add(new ChessCoordinate(piece.getFile(), 4));
+                            }
+                        } else {
+                            legalMoves.add(new ChessCoordinate(piece.getFile(), 4));
+                            if(this.getPieceAt(piece.getFile(), 5) != null) {
+                                if(this.getPieceAt(piece.getFile(), 5).getColor() != piece.getColor()) {
+                                    legalMoves.add(new ChessCoordinate(piece.getFile(), 5));
+                                }
+                            } else {
+                                legalMoves.add(new ChessCoordinate(piece.getFile(), 5));
+                                if(this.getPieceAt(piece.getFile(), 6) != null) {
+                                    if(this.getPieceAt(piece.getFile(), 6).getColor() != piece.getColor()) {
+                                        legalMoves.add(new ChessCoordinate(piece.getFile(), 6));
+                                    }
+                                } else {
+                                    legalMoves.add(new ChessCoordinate(piece.getFile(), 6));
+                                    if(this.getPieceAt(piece.getFile(), 7) != null) {
+                                        if(this.getPieceAt(piece.getFile(), 7).getColor() != piece.getColor()) {
+                                            legalMoves.add(new ChessCoordinate(piece.getFile(), 7));
+                                        }
+                                    } else {
+                                        legalMoves.add(new ChessCoordinate(piece.getFile(), 7));
+                                        if(this.getPieceAt(piece.getFile(), 8) != null) {
+                                            if(this.getPieceAt(piece.getFile(), 8).getColor() != piece.getColor()) {
+                                                legalMoves.add(new ChessCoordinate(piece.getFile(), 8));
+                                            }
+                                        } else {
+                                            legalMoves.add(new ChessCoordinate(piece.getFile(), 8));
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                break;
+            case 2:
+                if(this.getPieceAt(piece.getFile(), 1) != null) {
+                    if(this.getPieceAt(piece.getFile(), 1).getColor() != piece.getColor()) {
+                        legalMoves.add(new ChessCoordinate(piece.getFile(), 1));
+                    }
+                } else {
+                    legalMoves.add(new ChessCoordinate(piece.getFile(), 1));
+                }
+
+                if(this.getPieceAt(piece.getFile(), 3) != null) {
+                    if(this.getPieceAt(piece.getFile(), 3).getColor() != piece.getColor()) {
+                        legalMoves.add(new ChessCoordinate(piece.getFile(), 3));
+                    }
+                } else {
+                    legalMoves.add(new ChessCoordinate(piece.getFile(), 3));
+                    if(this.getPieceAt(piece.getFile(), 4) != null) {
+                        if(this.getPieceAt(piece.getFile(), 4).getColor() != piece.getColor()) {
+                            legalMoves.add(new ChessCoordinate(piece.getFile(), 4));
+                        }
+                    } else {
+                        legalMoves.add(new ChessCoordinate(piece.getFile(), 4));
+                        if(this.getPieceAt(piece.getFile(), 5) != null) {
+                            if(this.getPieceAt(piece.getFile(), 5).getColor() != piece.getColor()) {
+                                legalMoves.add(new ChessCoordinate(piece.getFile(), 5));
+                            }
+                        } else {
+                            legalMoves.add(new ChessCoordinate(piece.getFile(), 5));
+                            if(this.getPieceAt(piece.getFile(), 6) != null) {
+                                if(this.getPieceAt(piece.getFile(), 6).getColor() != piece.getColor()) {
+                                    legalMoves.add(new ChessCoordinate(piece.getFile(), 6));
+                                }
+                            } else {
+                                legalMoves.add(new ChessCoordinate(piece.getFile(), 6));
+                                if(this.getPieceAt(piece.getFile(), 7) != null) {
+                                    if(this.getPieceAt(piece.getFile(), 7).getColor() != piece.getColor()) {
+                                        legalMoves.add(new ChessCoordinate(piece.getFile(), 7));
+                                    }
+                                } else {
+                                    legalMoves.add(new ChessCoordinate(piece.getFile(), 7));
+                                    if(this.getPieceAt(piece.getFile(), 8) != null) {
+                                        if(this.getPieceAt(piece.getFile(), 8).getColor() != piece.getColor()) {
+                                            legalMoves.add(new ChessCoordinate(piece.getFile(), 8));
+                                        }
+                                    } else {
+                                        legalMoves.add(new ChessCoordinate(piece.getFile(), 8));
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                break;
+            case 3:
+                if(this.getPieceAt(piece.getFile(), 2) != null) {
+                    if(this.getPieceAt(piece.getFile(), 2).getColor() != piece.getColor()) {
+                        legalMoves.add(new ChessCoordinate(piece.getFile(), 2));
+                    }
+                } else {
+                    legalMoves.add(new ChessCoordinate(piece.getFile(), 2));
+                    if(this.getPieceAt(piece.getFile(), 1) != null) {
+                        if(this.getPieceAt(piece.getFile(), 1).getColor() != piece.getColor()) {
+                            legalMoves.add(new ChessCoordinate(piece.getFile(), 1));
+                        }
+                    } else {
+                        legalMoves.add(new ChessCoordinate(piece.getFile(), 1));
+                    }
+                }
+
+                if(this.getPieceAt(piece.getFile(), 4) != null) {
+                    if(this.getPieceAt(piece.getFile(), 4).getColor() != piece.getColor()) {
+                        legalMoves.add(new ChessCoordinate(piece.getFile(), 4));
+                    }
+                } else {
+                    legalMoves.add(new ChessCoordinate(piece.getFile(), 4));
+                    if(this.getPieceAt(piece.getFile(), 5) != null) {
+                        if(this.getPieceAt(piece.getFile(), 5).getColor() != piece.getColor()) {
+                            legalMoves.add(new ChessCoordinate(piece.getFile(), 5));
+                        }
+                    } else {
+                        legalMoves.add(new ChessCoordinate(piece.getFile(), 5));
+                        if(this.getPieceAt(piece.getFile(), 6) != null) {
+                            if(this.getPieceAt(piece.getFile(), 6).getColor() != piece.getColor()) {
+                                legalMoves.add(new ChessCoordinate(piece.getFile(), 6));
+                            }
+                        } else {
+                            legalMoves.add(new ChessCoordinate(piece.getFile(), 6));
+                            if(this.getPieceAt(piece.getFile(), 7) != null) {
+                                if(this.getPieceAt(piece.getFile(), 7).getColor() != piece.getColor()) {
+                                    legalMoves.add(new ChessCoordinate(piece.getFile(), 7));
+                                }
+                            } else {
+                                legalMoves.add(new ChessCoordinate(piece.getFile(), 7));
+                                if(this.getPieceAt(piece.getFile(), 8) != null) {
+                                    if(this.getPieceAt(piece.getFile(), 8).getColor() != piece.getColor()) {
+                                        legalMoves.add(new ChessCoordinate(piece.getFile(), 8));
+                                    }
+                                } else {
+                                    legalMoves.add(new ChessCoordinate(piece.getFile(), 8));
+                                }
+                            }
+                        }
+                    }
+                }
+                break;
+            case 4:
+                if(this.getPieceAt(piece.getFile(), 3) != null) {
+                    if(this.getPieceAt(piece.getFile(), 3).getColor() != piece.getColor()) {
+                        legalMoves.add(new ChessCoordinate(piece.getFile(), 3));
+                    }
+                } else {
+                    legalMoves.add(new ChessCoordinate(piece.getFile(), 3));
+                    if(this.getPieceAt(piece.getFile(), 2) != null) {
+                        if(this.getPieceAt(piece.getFile(), 2).getColor() != piece.getColor()) {
+                            legalMoves.add(new ChessCoordinate(piece.getFile(), 2));
+                        }
+                    } else {
+                        legalMoves.add(new ChessCoordinate(piece.getFile(), 2));
+                        if(this.getPieceAt(piece.getFile(), 1) != null) {
+                            if(this.getPieceAt(piece.getFile(), 1).getColor() != piece.getColor()) {
+                                legalMoves.add(new ChessCoordinate(piece.getFile(), 1));
+                            }
+                        } else {
+                            legalMoves.add(new ChessCoordinate(piece.getFile(), 1));
+                        }
+                    }
+                }
+
+                if(this.getPieceAt(piece.getFile(), 5) != null) {
+                    if(this.getPieceAt(piece.getFile(), 5).getColor() != piece.getColor()) {
+                        legalMoves.add(new ChessCoordinate(piece.getFile(), 5));
+                    }
+                } else {
+                    legalMoves.add(new ChessCoordinate(piece.getFile(), 5));
+                    if(this.getPieceAt(piece.getFile(), 6) != null) {
+                        if(this.getPieceAt(piece.getFile(), 6).getColor() != piece.getColor()) {
+                            legalMoves.add(new ChessCoordinate(piece.getFile(), 6));
+                        }
+                    } else {
+                        legalMoves.add(new ChessCoordinate(piece.getFile(), 6));
+                        if(this.getPieceAt(piece.getFile(), 7) != null) {
+                            if(this.getPieceAt(piece.getFile(), 7).getColor() != piece.getColor()) {
+                                legalMoves.add(new ChessCoordinate(piece.getFile(), 7));
+                            }
+                        } else {
+                            legalMoves.add(new ChessCoordinate(piece.getFile(), 7));
+                            if(this.getPieceAt(piece.getFile(), 8) != null) {
+                                if(this.getPieceAt(piece.getFile(), 8).getColor() != piece.getColor()) {
+                                    legalMoves.add(new ChessCoordinate(piece.getFile(), 8));
+                                }
+                            } else {
+                                legalMoves.add(new ChessCoordinate(piece.getFile(), 8));
+                            }
+                        }
+                    }
+                }
+                break;
+            case 5:
+                if(this.getPieceAt(piece.getFile(), 4) != null) {
+                    if(this.getPieceAt(piece.getFile(), 4).getColor() != piece.getColor()) {
+                        legalMoves.add(new ChessCoordinate(piece.getFile(), 4));
+                    }
+                } else {
+                    legalMoves.add(new ChessCoordinate(piece.getFile(), 4));
+                    if(this.getPieceAt(piece.getFile(), 3) != null) {
+                        if(this.getPieceAt(piece.getFile(), 3).getColor() != piece.getColor()) {
+                            legalMoves.add(new ChessCoordinate(piece.getFile(), 3));
+                        }
+                    } else {
+                        legalMoves.add(new ChessCoordinate(piece.getFile(), 3));
+                        if(this.getPieceAt(piece.getFile(), 2) != null) {
+                            if(this.getPieceAt(piece.getFile(), 2).getColor() != piece.getColor()) {
+                                legalMoves.add(new ChessCoordinate(piece.getFile(), 2));
+                            }
+                        } else {
+                            legalMoves.add(new ChessCoordinate(piece.getFile(), 2));
+                            if(this.getPieceAt(piece.getFile(), 1) != null) {
+                                if(this.getPieceAt(piece.getFile(), 1).getColor() != piece.getColor()) {
+                                    legalMoves.add(new ChessCoordinate(piece.getFile(), 1));
+                                }
+                            } else {
+                                legalMoves.add(new ChessCoordinate(piece.getFile(), 1));
+                            }
+                        }
+                    }
+                }
+
+                if(this.getPieceAt(piece.getFile(), 6) != null) {
+                    if(this.getPieceAt(piece.getFile(), 6).getColor() != piece.getColor()) {
+                        legalMoves.add(new ChessCoordinate(piece.getFile(), 6));
+                    }
+                } else {
+                    legalMoves.add(new ChessCoordinate(piece.getFile(), 6));
+                    if(this.getPieceAt(piece.getFile(), 7) != null) {
+                        if(this.getPieceAt(piece.getFile(), 7).getColor() != piece.getColor()) {
+                            legalMoves.add(new ChessCoordinate(piece.getFile(), 7));
+                        }
+                    } else {
+                        legalMoves.add(new ChessCoordinate(piece.getFile(), 7));
+                        if(this.getPieceAt(piece.getFile(), 8) != null) {
+                            if(this.getPieceAt(piece.getFile(), 8).getColor() != piece.getColor()) {
+                                legalMoves.add(new ChessCoordinate(piece.getFile(), 8));
+                            }
+                        } else {
+                            legalMoves.add(new ChessCoordinate(piece.getFile(), 8));
+                        }
+                    }
+                }
+                break;
+            case 6:
+                if(this.getPieceAt(piece.getFile(), 5) != null) {
+                    if(this.getPieceAt(piece.getFile(), 5).getColor() != piece.getColor()) {
+                        legalMoves.add(new ChessCoordinate(piece.getFile(), 5));
+                    }
+                } else {
+                    legalMoves.add(new ChessCoordinate(piece.getFile(), 5));
+                    if(this.getPieceAt(piece.getFile(), 4) != null) {
+                        if(this.getPieceAt(piece.getFile(), 4).getColor() != piece.getColor()) {
+                            legalMoves.add(new ChessCoordinate(piece.getFile(), 4));
+                        }
+                    } else {
+                        legalMoves.add(new ChessCoordinate(piece.getFile(), 4));
+                        if(this.getPieceAt(piece.getFile(), 3) != null) {
+                            if(this.getPieceAt(piece.getFile(), 3).getColor() != piece.getColor()) {
+                                legalMoves.add(new ChessCoordinate(piece.getFile(), 3));
+                            }
+                        } else {
+                            legalMoves.add(new ChessCoordinate(piece.getFile(), 3));
+                            if(this.getPieceAt(piece.getFile(), 2) != null) {
+                                if(this.getPieceAt(piece.getFile(), 2).getColor() != piece.getColor()) {
+                                    legalMoves.add(new ChessCoordinate(piece.getFile(), 2));
+                                }
+                            } else {
+                                legalMoves.add(new ChessCoordinate(piece.getFile(), 2));
+                                if(this.getPieceAt(piece.getFile(), 1) != null) {
+                                    if(this.getPieceAt(piece.getFile(), 1).getColor() != piece.getColor()) {
+                                        legalMoves.add(new ChessCoordinate(piece.getFile(), 1));
+                                    }
+                                } else {
+                                    legalMoves.add(new ChessCoordinate(piece.getFile(), 1));
+                                }
+                            }
+                        }
+                    }
+                }
+
+                if(this.getPieceAt(piece.getFile(), 7) != null) {
+                    if(this.getPieceAt(piece.getFile(), 7).getColor() != piece.getColor()) {
+                        legalMoves.add(new ChessCoordinate(piece.getFile(), 7));
+                    }
+                } else {
+                    legalMoves.add(new ChessCoordinate(piece.getFile(), 7));
+                    if(this.getPieceAt(piece.getFile(), 8) != null) {
+                        if(this.getPieceAt(piece.getFile(), 8).getColor() != piece.getColor()) {
+                            legalMoves.add(new ChessCoordinate(piece.getFile(), 8));
+                        }
+                    } else {
+                        legalMoves.add(new ChessCoordinate(piece.getFile(), 8));
+                    }
+                }
+                break;
+            case 7:
+                if(this.getPieceAt(piece.getFile(), 6) != null) {
+                    if(this.getPieceAt(piece.getFile(), 6).getColor() != piece.getColor()) {
+                        legalMoves.add(new ChessCoordinate(piece.getFile(), 6));
+                    }
+                } else {
+                    legalMoves.add(new ChessCoordinate(piece.getFile(), 6));
+                    if(this.getPieceAt(piece.getFile(), 5) != null) {
+                        if(this.getPieceAt(piece.getFile(), 5).getColor() != piece.getColor()) {
+                            legalMoves.add(new ChessCoordinate(piece.getFile(), 5));
+                        }
+                    } else {
+                        legalMoves.add(new ChessCoordinate(piece.getFile(), 5));
+                        if(this.getPieceAt(piece.getFile(), 4) != null) {
+                            if(this.getPieceAt(piece.getFile(), 4).getColor() != piece.getColor()) {
+                                legalMoves.add(new ChessCoordinate(piece.getFile(), 4));
+                            }
+                        } else {
+                            legalMoves.add(new ChessCoordinate(piece.getFile(), 4));
+                            if(this.getPieceAt(piece.getFile(), 3) != null) {
+                                if(this.getPieceAt(piece.getFile(), 3).getColor() != piece.getColor()) {
+                                    legalMoves.add(new ChessCoordinate(piece.getFile(), 3));
+                                }
+                            } else {
+                                legalMoves.add(new ChessCoordinate(piece.getFile(), 3));
+                                if(this.getPieceAt(piece.getFile(), 2) != null) {
+                                    if(this.getPieceAt(piece.getFile(), 2).getColor() != piece.getColor()) {
+                                        legalMoves.add(new ChessCoordinate(piece.getFile(), 2));
+                                    }
+                                } else {
+                                    legalMoves.add(new ChessCoordinate(piece.getFile(), 2));
+                                    if(this.getPieceAt(piece.getFile(), 1) != null) {
+                                        if(this.getPieceAt(piece.getFile(), 1).getColor() != piece.getColor()) {
+                                            legalMoves.add(new ChessCoordinate(piece.getFile(), 1));
+                                        }
+                                    } else {
+                                        legalMoves.add(new ChessCoordinate(piece.getFile(), 1));
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                if(this.getPieceAt(piece.getFile(), 8) != null) {
+                    if(this.getPieceAt(piece.getFile(), 8).getColor() != piece.getColor()) {
+                        legalMoves.add(new ChessCoordinate(piece.getFile(), 8));
+                    }
+                } else {
+                    legalMoves.add(new ChessCoordinate(piece.getFile(), 8));
+                }
+                break;
+            case 8:
+                if(this.getPieceAt(piece.getFile(), 7) != null) {
+                    if(this.getPieceAt(piece.getFile(), 7).getColor() != piece.getColor()) {
+                        legalMoves.add(new ChessCoordinate(piece.getFile(), 7));
+                    }
+                } else {
+                    legalMoves.add(new ChessCoordinate(piece.getFile(), 7));
+                    if(this.getPieceAt(piece.getFile(), 6) != null) {
+                        if(this.getPieceAt(piece.getFile(), 6).getColor() != piece.getColor()) {
+                            legalMoves.add(new ChessCoordinate(piece.getFile(), 6));
+                        }
+                    } else {
+                        legalMoves.add(new ChessCoordinate(piece.getFile(), 6));
+                        if(this.getPieceAt(piece.getFile(), 5) != null) {
+                            if(this.getPieceAt(piece.getFile(), 5).getColor() != piece.getColor()) {
+                                legalMoves.add(new ChessCoordinate(piece.getFile(), 5));
+                            }
+                        } else {
+                            legalMoves.add(new ChessCoordinate(piece.getFile(), 5));
+                            if(this.getPieceAt(piece.getFile(), 4) != null) {
+                                if(this.getPieceAt(piece.getFile(), 4).getColor() != piece.getColor()) {
+                                    legalMoves.add(new ChessCoordinate(piece.getFile(), 4));
+                                }
+                            } else {
+                                legalMoves.add(new ChessCoordinate(piece.getFile(), 4));
+                                if(this.getPieceAt(piece.getFile(), 3) != null) {
+                                    if(this.getPieceAt(piece.getFile(), 3).getColor() != piece.getColor()) {
+                                        legalMoves.add(new ChessCoordinate(piece.getFile(), 3));
+                                    }
+                                } else {
+                                    legalMoves.add(new ChessCoordinate(piece.getFile(), 3));
+                                    if(this.getPieceAt(piece.getFile(), 2) != null) {
+                                        if(this.getPieceAt(piece.getFile(), 2).getColor() != piece.getColor()) {
+                                            legalMoves.add(new ChessCoordinate(piece.getFile(), 2));
+                                        }
+                                    } else {
+                                        legalMoves.add(new ChessCoordinate(piece.getFile(), 2));
+                                        if(this.getPieceAt(piece.getFile(), 1) != null) {
+                                            if(this.getPieceAt(piece.getFile(), 1).getColor() != piece.getColor()) {
+                                                legalMoves.add(new ChessCoordinate(piece.getFile(), 1));
+                                            }
+                                        } else {
+                                            legalMoves.add(new ChessCoordinate(piece.getFile(), 1));
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                break; 
+        }
+
+        return legalMoves;
     }
 
     // Returns a piece that is at a given square 
