@@ -543,7 +543,7 @@ public class ChessBoard {
     }
 
     //Returns the legal moves that a rook piece can make 
-    private ArrayList<ChessCoordinate> getLegalRookMoves(Rook piece) {
+    private ArrayList<ChessCoordinate> getLegalRookMoves(ChessPiece piece) {
         ArrayList<ChessCoordinate> legalMoves = new ArrayList<ChessCoordinate>();
 
         //Checks for legal left-right moves 
@@ -1382,6 +1382,11 @@ public class ChessBoard {
                 break; 
         }
 
+        return legalMoves;
+    }
+
+    public ArrayList<ChessCoordinate> getLegalBishopMoves(ChessPiece piece) {
+        ArrayList<ChessCoordinate> legalMoves = new ArrayList<ChessCoordinate>();
         return legalMoves;
     }
 
