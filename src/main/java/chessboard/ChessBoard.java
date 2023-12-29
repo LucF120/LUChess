@@ -1387,99 +1387,15 @@ public class ChessBoard {
 
     public ArrayList<ChessCoordinate> getLegalBishopMoves(ChessPiece piece) {
         ArrayList<ChessCoordinate> legalMoves = new ArrayList<ChessCoordinate>();
-
         int upRankLeft = piece.getRank() + 1;
         int downRankLeft = piece.getRank() - 1; 
         int upRankRight = piece.getRank() + 1;
         int downRankRight = piece.getRank() - 1; 
-        char[] rightFiles; 
-        char[] leftFiles; 
+        char[] rightFiles = this.getRightFiles(piece.getFile());
+        char[] leftFiles = this.getLeftFiles(piece.getFile());
         int pos = 0;
-        int maxLeftPos; 
-        int maxRightPos; 
-        if(piece.getFile() == 'a') {
-            leftFiles = new char[0];
-            rightFiles = new char[7];
-            rightFiles[0] = 'b';
-            rightFiles[1] = 'c';
-            rightFiles[2] = 'd';
-            rightFiles[3] = 'e';
-            rightFiles[4] = 'f';
-            rightFiles[5] = 'g';
-            rightFiles[6] = 'h';
-        } else if(piece.getFile() == 'b') {
-            leftFiles = new char[1];
-            leftFiles[0] = 'a';
-            rightFiles = new char[6];
-            rightFiles[0] = 'c';
-            rightFiles[1] = 'd';
-            rightFiles[2] = 'e';
-            rightFiles[3] = 'f';
-            rightFiles[4] = 'g';
-            rightFiles[5] = 'h';
-        } else if(piece.getFile() == 'c') {
-            leftFiles = new char[2];
-            leftFiles[0] = 'b';
-            leftFiles[1] = 'a';
-            rightFiles = new char[5];
-            rightFiles[0] = 'd';
-            rightFiles[1] = 'e';
-            rightFiles[2] = 'f';
-            rightFiles[3] = 'g';
-            rightFiles[4] = 'h';
-        } else if(piece.getFile() == 'd') {
-            leftFiles = new char[3];
-            leftFiles[0] = 'c';
-            leftFiles[1] = 'b';
-            leftFiles[2] = 'a';
-            rightFiles = new char[4];
-            rightFiles[0] = 'e';
-            rightFiles[1] = 'f';
-            rightFiles[2] = 'g';
-            rightFiles[3] = 'h';
-        } else if(piece.getFile() == 'e') {
-            leftFiles = new char[4];
-            leftFiles[0] = 'd';
-            leftFiles[1] = 'c';
-            leftFiles[2] = 'b';
-            leftFiles[3] = 'a';
-            rightFiles = new char[3];
-            rightFiles[0] = 'f';
-            rightFiles[1] = 'g';
-            rightFiles[2] = 'h';
-        } else if(piece.getFile() == 'f') {
-            leftFiles = new char[5];
-            leftFiles[0] = 'e';
-            leftFiles[1] = 'd';
-            leftFiles[2] = 'c';
-            leftFiles[3] = 'b';
-            leftFiles[4] = 'a';
-            rightFiles = new char[2];
-            rightFiles[0] = 'g';
-            rightFiles[1] = 'h';
-        } else if(piece.getFile() == 'g') {
-            leftFiles = new char[6];
-            leftFiles[0] = 'f';
-            leftFiles[1] = 'e';
-            leftFiles[2] = 'd';
-            leftFiles[3] = 'c';
-            leftFiles[4] = 'b';
-            leftFiles[5] = 'a';
-            rightFiles = new char[1];
-            rightFiles[0] = 'h';
-        } else {
-            rightFiles = new char[0];
-            leftFiles = new char[7];
-            leftFiles[0] = 'g';
-            leftFiles[1] = 'f';
-            leftFiles[2] = 'e';
-            leftFiles[3] = 'd';
-            leftFiles[4] = 'c';
-            leftFiles[5] = 'b';
-            leftFiles[6] = 'a';
-        }
-        maxLeftPos = leftFiles.length - 1;
-        maxRightPos = rightFiles.length - 1;
+        int maxLeftPos = leftFiles.length - 1;
+        int maxRightPos = rightFiles.length - 1;
 
         while(upRankLeft <= 8 && pos <= maxLeftPos) {
             if(this.getPieceAt(leftFiles[pos], upRankLeft) != null) {
@@ -1539,7 +1455,7 @@ public class ChessBoard {
                 downRankRight--;
             }
         }
-        
+
         return legalMoves;
     }
 
@@ -1645,5 +1561,108 @@ public class ChessBoard {
         }
 
         return total;
+    }
+
+    //Returns the files to the left of a given file 
+    private char[] getLeftFiles(char file) {
+        char[] leftFiles; 
+        if(file == 'a') {
+            leftFiles = new char[0];
+        } else if(file == 'b') {
+            leftFiles = new char[1];
+            leftFiles[0] = 'a';
+        } else if(file == 'c') {
+            leftFiles = new char[2];
+            leftFiles[0] = 'b';
+            leftFiles[1] = 'a';
+        } else if(file == 'd') {
+            leftFiles = new char[3];
+            leftFiles[0] = 'c';
+            leftFiles[1] = 'b';
+            leftFiles[2] = 'a';
+        } else if(file == 'e') {
+            leftFiles = new char[4];
+            leftFiles[0] = 'd';
+            leftFiles[1] = 'c';
+            leftFiles[2] = 'b';
+            leftFiles[3] = 'a';
+        } else if(file == 'f') {
+            leftFiles = new char[5];
+            leftFiles[0] = 'e';
+            leftFiles[1] = 'd';
+            leftFiles[2] = 'c';
+            leftFiles[3] = 'b';
+            leftFiles[4] = 'a';
+        } else if(file == 'g') {
+            leftFiles = new char[6];
+            leftFiles[0] = 'f';
+            leftFiles[1] = 'e';
+            leftFiles[2] = 'd';
+            leftFiles[3] = 'c';
+            leftFiles[4] = 'b';
+            leftFiles[5] = 'a';
+        } else {
+            leftFiles = new char[7];
+            leftFiles[0] = 'g';
+            leftFiles[1] = 'f';
+            leftFiles[2] = 'e';
+            leftFiles[3] = 'd';
+            leftFiles[4] = 'c';
+            leftFiles[5] = 'b';
+            leftFiles[6] = 'a';
+        }
+
+        return leftFiles;
+    }
+
+    private char[] getRightFiles(char file) {
+        char[] rightFiles; 
+        if(file == 'a') {
+            rightFiles = new char[7];
+            rightFiles[0] = 'b';
+            rightFiles[1] = 'c';
+            rightFiles[2] = 'd';
+            rightFiles[3] = 'e';
+            rightFiles[4] = 'f';
+            rightFiles[5] = 'g';
+            rightFiles[6] = 'h';
+        } else if(file == 'b') {
+            rightFiles = new char[6];
+            rightFiles[0] = 'c';
+            rightFiles[1] = 'd';
+            rightFiles[2] = 'e';
+            rightFiles[3] = 'f';
+            rightFiles[4] = 'g';
+            rightFiles[5] = 'h';
+        } else if(file == 'c') {
+            rightFiles = new char[5];
+            rightFiles[0] = 'd';
+            rightFiles[1] = 'e';
+            rightFiles[2] = 'f';
+            rightFiles[3] = 'g';
+            rightFiles[4] = 'h';
+        } else if(file == 'd') {
+            rightFiles = new char[4];
+            rightFiles[0] = 'e';
+            rightFiles[1] = 'f';
+            rightFiles[2] = 'g';
+            rightFiles[3] = 'h';
+        } else if(file == 'e') {
+            rightFiles = new char[3];
+            rightFiles[0] = 'f';
+            rightFiles[1] = 'g';
+            rightFiles[2] = 'h';
+        } else if(file == 'f') {
+            rightFiles = new char[2];
+            rightFiles[0] = 'g';
+            rightFiles[1] = 'h';
+        } else if(file == 'g') {
+            rightFiles = new char[1];
+            rightFiles[0] = 'h';
+        } else {
+            rightFiles = new char[0];
+        }
+
+        return rightFiles;
     }
 }
