@@ -99,18 +99,24 @@ public class ChessBoard {
             return this.getLegalBishopMoves((Bishop) piece);
         }
         else if(piece instanceof Queen) {
-            ArrayList<ChessCoordinate> legalQueenMoves = this.getLegalRookMoves(piece);
-            ArrayList<ChessCoordinate> legalBishopMoves = this.getLegalBishopMoves(piece); 
-            for(ChessCoordinate coord : legalBishopMoves) {
-                legalQueenMoves.add(coord);
-            }
-            return legalQueenMoves;
+            return this.getLegalQueenMoves((Queen) piece);
         }
         else {
             return legalMoves; 
         }
     }
 
+    //Returns an array of the legal queen moves given a queen 
+    private ArrayList<ChessCoordinate> getLegalQueenMoves(Queen piece) {
+        ArrayList<ChessCoordinate> legalMoves = this.getLegalRookMoves(piece);
+        ArrayList<ChessCoordinate> legalBishopMoves = this.getLegalBishopMoves(piece); 
+        for(ChessCoordinate coord : legalBishopMoves) {
+            legalMoves.add(coord);
+        }
+        return legalMoves;
+    }
+
+    //Returns an array of the legal pawn moves given a pawn 
     private ArrayList<ChessCoordinate> getLegalPawnMoves(Pawn piece) {
         ArrayList<ChessCoordinate> legalMoves = new ArrayList<ChessCoordinate>();
         //White pawn movements 
