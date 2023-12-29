@@ -96,7 +96,7 @@ public class ChessBoard {
             return legalMoves; 
         }
         else if(piece instanceof Bishop) {
-            return legalMoves; 
+            return this.getLegalBishopMoves((Bishop) piece);
         }
         else if(piece instanceof Queen) {
             return legalMoves; 
@@ -1387,6 +1387,527 @@ public class ChessBoard {
 
     public ArrayList<ChessCoordinate> getLegalBishopMoves(ChessPiece piece) {
         ArrayList<ChessCoordinate> legalMoves = new ArrayList<ChessCoordinate>();
+
+        switch(piece.getFile()) {
+            case 'a':
+                int upRankRight = piece.getRank() + 1;
+                char[] rightFiles = {'b', 'c', 'd', 'e', 'f', 'g', 'h'};
+                int pos = 0; 
+                while(upRankRight <= 8 && pos <= 6) {
+                    if(this.getPieceAt(rightFiles[pos], upRankRight) != null) {
+                        if(this.getPieceAt(rightFiles[pos], upRankRight).getColor() != piece.getColor()) {
+                            legalMoves.add(new ChessCoordinate(rightFiles[pos], upRankRight));
+                            break;
+                        }
+                        break;
+                    } else {
+                        legalMoves.add(new ChessCoordinate(rightFiles[pos], upRankRight));
+                        pos++;
+                        upRankRight++;
+                    }
+                }
+
+                pos = 0;
+                int downRankRight = piece.getRank() - 1;
+                while(downRankRight >= 1 && pos <= 6) {
+                    if(this.getPieceAt(rightFiles[pos], downRankRight) != null) {
+                        if(this.getPieceAt(rightFiles[pos], downRankRight).getColor() != piece.getColor()) {
+                            legalMoves.add(new ChessCoordinate(rightFiles[pos], downRankRight));
+                            break;
+                        }
+                        break;
+                    } else {
+                        legalMoves.add(new ChessCoordinate(rightFiles[pos], downRankRight));
+                        pos++;
+                        downRankRight--;
+                    }
+                }
+                break;
+            case 'b':
+                int upRankLeft = piece.getRank() + 1;
+                char[] leftFiles = {'a'};
+                pos = 0; 
+                while(upRankLeft <= 8 && pos <= 0) {
+                    if(this.getPieceAt(leftFiles[pos], upRankLeft) != null) {
+                        if(this.getPieceAt(leftFiles[pos], upRankLeft).getColor() != piece.getColor()) {
+                            legalMoves.add(new ChessCoordinate(leftFiles[pos], upRankLeft));
+                            break;
+                        }
+                        break;
+                    } else {
+                        legalMoves.add(new ChessCoordinate(leftFiles[pos], upRankLeft));
+                        pos++;
+                        upRankLeft++;
+                    }
+                }
+
+                pos = 0;
+                int downRankLeft = piece.getRank() - 1;
+                while(downRankLeft >= 1 && pos <= 0) {
+                    if(this.getPieceAt(leftFiles[pos], downRankLeft) != null) {
+                        if(this.getPieceAt(leftFiles[pos], downRankLeft).getColor() != piece.getColor()) {
+                            legalMoves.add(new ChessCoordinate(leftFiles[pos], downRankLeft));
+                            break;
+                        }
+                        break;
+                    } else {
+                        legalMoves.add(new ChessCoordinate(leftFiles[pos], downRankLeft));
+                        pos++;
+                        downRankLeft--;
+                    }
+                }
+
+                upRankRight = piece.getRank() + 1;
+                rightFiles = new char[6];
+                rightFiles[0] = 'c';
+                rightFiles[1] = 'd';
+                rightFiles[2] = 'e';
+                rightFiles[3] = 'f';
+                rightFiles[4] = 'g';
+                rightFiles[5] = 'h';
+                pos = 0; 
+                while(upRankRight <= 8 && pos <= 5) {
+                    if(this.getPieceAt(rightFiles[pos], upRankRight) != null) {
+                        if(this.getPieceAt(rightFiles[pos], upRankRight).getColor() != piece.getColor()) {
+                            legalMoves.add(new ChessCoordinate(rightFiles[pos], upRankRight));
+                            break;
+                        }
+                        break;
+                    } else {
+                        legalMoves.add(new ChessCoordinate(rightFiles[pos], upRankRight));
+                        pos++;
+                        upRankRight++;
+                    }
+                }
+
+                pos = 0;
+                downRankRight = piece.getRank() - 1;
+                while(downRankRight >= 1 && pos <= 5) {
+                    if(this.getPieceAt(rightFiles[pos], downRankRight) != null) {
+                        if(this.getPieceAt(rightFiles[pos], downRankRight).getColor() != piece.getColor()) {
+                            legalMoves.add(new ChessCoordinate(rightFiles[pos], downRankRight));
+                            break;
+                        }
+                        break;
+                    } else {
+                        legalMoves.add(new ChessCoordinate(rightFiles[pos], downRankRight));
+                        pos++;
+                        downRankRight--;
+                    }
+                }
+                break;
+            case 'c':
+                upRankLeft = piece.getRank() + 1;
+                leftFiles = new char[2];
+                leftFiles[0] = 'b';
+                leftFiles[1] = 'a';
+                pos = 0; 
+                while(upRankLeft <= 8 && pos <= 1) {
+                    if(this.getPieceAt(leftFiles[pos], upRankLeft) != null) {
+                        if(this.getPieceAt(leftFiles[pos], upRankLeft).getColor() != piece.getColor()) {
+                            legalMoves.add(new ChessCoordinate(leftFiles[pos], upRankLeft));
+                            break;
+                        }
+                        break;
+                    } else {
+                        legalMoves.add(new ChessCoordinate(leftFiles[pos], upRankLeft));
+                        pos++;
+                        upRankLeft++;
+                    }
+                }
+
+                pos = 0;
+                downRankLeft = piece.getRank() - 1;
+                while(downRankLeft >= 1 && pos <= 1) {
+                    if(this.getPieceAt(leftFiles[pos], downRankLeft) != null) {
+                        if(this.getPieceAt(leftFiles[pos], downRankLeft).getColor() != piece.getColor()) {
+                            legalMoves.add(new ChessCoordinate(leftFiles[pos], downRankLeft));
+                            break;
+                        }
+                        break;
+                    } else {
+                        legalMoves.add(new ChessCoordinate(leftFiles[pos], downRankLeft));
+                        pos++;
+                        downRankLeft--;
+                    }
+                }
+
+                upRankRight = piece.getRank() + 1;
+                rightFiles = new char[5];
+                rightFiles[0] = 'd';
+                rightFiles[1] = 'e';
+                rightFiles[2] = 'f';
+                rightFiles[3] = 'g';
+                rightFiles[4] = 'h';
+                pos = 0; 
+                while(upRankRight <= 8 && pos <= 4) {
+                    if(this.getPieceAt(rightFiles[pos], upRankRight) != null) {
+                        if(this.getPieceAt(rightFiles[pos], upRankRight).getColor() != piece.getColor()) {
+                            legalMoves.add(new ChessCoordinate(rightFiles[pos], upRankRight));
+                            break;
+                        }
+                        break;
+                    } else {
+                        legalMoves.add(new ChessCoordinate(rightFiles[pos], upRankRight));
+                        pos++;
+                        upRankRight++;
+                    }
+                }
+
+                pos = 0;
+                downRankRight = piece.getRank() - 1;
+                while(downRankRight >= 1 && pos <= 4) {
+                    if(this.getPieceAt(rightFiles[pos], downRankRight) != null) {
+                        if(this.getPieceAt(rightFiles[pos], downRankRight).getColor() != piece.getColor()) {
+                            legalMoves.add(new ChessCoordinate(rightFiles[pos], downRankRight));
+                            break;
+                        }
+                        break;
+                    } else {
+                        legalMoves.add(new ChessCoordinate(rightFiles[pos], downRankRight));
+                        pos++;
+                        downRankRight--;
+                    }
+                }
+                break;
+            case 'd':
+                upRankLeft = piece.getRank() + 1;
+                leftFiles = new char[3];
+                leftFiles[0] = 'c';
+                leftFiles[1] = 'b';
+                leftFiles[2] = 'a';
+                pos = 0; 
+                while(upRankLeft <= 8 && pos <= 2) {
+                    if(this.getPieceAt(leftFiles[pos], upRankLeft) != null) {
+                        if(this.getPieceAt(leftFiles[pos], upRankLeft).getColor() != piece.getColor()) {
+                            legalMoves.add(new ChessCoordinate(leftFiles[pos], upRankLeft));
+                            break;
+                        }
+                        break;
+                    } else {
+                        legalMoves.add(new ChessCoordinate(leftFiles[pos], upRankLeft));
+                        pos++;
+                        upRankLeft++;
+                    }
+                }
+
+                pos = 0;
+                downRankLeft = piece.getRank() - 1;
+                while(downRankLeft >= 1 && pos <= 2) {
+                    if(this.getPieceAt(leftFiles[pos], downRankLeft) != null) {
+                        if(this.getPieceAt(leftFiles[pos], downRankLeft).getColor() != piece.getColor()) {
+                            legalMoves.add(new ChessCoordinate(leftFiles[pos], downRankLeft));
+                            break;
+                        }
+                        break;
+                    } else {
+                        legalMoves.add(new ChessCoordinate(leftFiles[pos], downRankLeft));
+                        pos++;
+                        downRankLeft--;
+                    }
+                }
+
+                upRankRight = piece.getRank() + 1;
+                rightFiles = new char[4];
+                rightFiles[0] = 'e';
+                rightFiles[1] = 'f';
+                rightFiles[2] = 'g';
+                rightFiles[3] = 'h';
+                pos = 0; 
+                while(upRankRight <= 8 && pos <= 3) {
+                    if(this.getPieceAt(rightFiles[pos], upRankRight) != null) {
+                        if(this.getPieceAt(rightFiles[pos], upRankRight).getColor() != piece.getColor()) {
+                            legalMoves.add(new ChessCoordinate(rightFiles[pos], upRankRight));
+                            break;
+                        }
+                        break;
+                    } else {
+                        legalMoves.add(new ChessCoordinate(rightFiles[pos], upRankRight));
+                        pos++;
+                        upRankRight++;
+                    }
+                }
+
+                pos = 0;
+                downRankRight = piece.getRank() - 1;
+                while(downRankRight >= 1 && pos <= 3) {
+                    if(this.getPieceAt(rightFiles[pos], downRankRight) != null) {
+                        if(this.getPieceAt(rightFiles[pos], downRankRight).getColor() != piece.getColor()) {
+                            legalMoves.add(new ChessCoordinate(rightFiles[pos], downRankRight));
+                            break;
+                        }
+                        break;
+                    } else {
+                        legalMoves.add(new ChessCoordinate(rightFiles[pos], downRankRight));
+                        pos++;
+                        downRankRight--;
+                    }
+                }
+                break;
+            case 'e':
+                upRankLeft = piece.getRank() + 1;
+                leftFiles = new char[4];
+                leftFiles[0] = 'd';
+                leftFiles[1] = 'c';
+                leftFiles[2] = 'b';
+                leftFiles[3] = 'a';
+                pos = 0; 
+                while(upRankLeft <= 8 && pos <= 3) {
+                    if(this.getPieceAt(leftFiles[pos], upRankLeft) != null) {
+                        if(this.getPieceAt(leftFiles[pos], upRankLeft).getColor() != piece.getColor()) {
+                            legalMoves.add(new ChessCoordinate(leftFiles[pos], upRankLeft));
+                            break;
+                        }
+                        break;
+                    } else {
+                        legalMoves.add(new ChessCoordinate(leftFiles[pos], upRankLeft));
+                        pos++;
+                        upRankLeft++;
+                    }
+                }
+
+                pos = 0;
+                downRankLeft = piece.getRank() - 1;
+                while(downRankLeft >= 1 && pos <= 3) {
+                    if(this.getPieceAt(leftFiles[pos], downRankLeft) != null) {
+                        if(this.getPieceAt(leftFiles[pos], downRankLeft).getColor() != piece.getColor()) {
+                            legalMoves.add(new ChessCoordinate(leftFiles[pos], downRankLeft));
+                            break;
+                        }
+                        break;
+                    } else {
+                        legalMoves.add(new ChessCoordinate(leftFiles[pos], downRankLeft));
+                        pos++;
+                        downRankLeft--;
+                    }
+                }
+
+                upRankRight = piece.getRank() + 1;
+                rightFiles = new char[3];
+                rightFiles[0] = 'f';
+                rightFiles[1] = 'g';
+                rightFiles[2] = 'h';
+                pos = 0; 
+                while(upRankRight <= 8 && pos <= 2) {
+                    if(this.getPieceAt(rightFiles[pos], upRankRight) != null) {
+                        if(this.getPieceAt(rightFiles[pos], upRankRight).getColor() != piece.getColor()) {
+                            legalMoves.add(new ChessCoordinate(rightFiles[pos], upRankRight));
+                            break;
+                        }
+                        break;
+                    } else {
+                        legalMoves.add(new ChessCoordinate(rightFiles[pos], upRankRight));
+                        pos++;
+                        upRankRight++;
+                    }
+                }
+
+                pos = 0;
+                downRankRight = piece.getRank() - 1;
+                while(downRankRight >= 1 && pos <= 2) {
+                    if(this.getPieceAt(rightFiles[pos], downRankRight) != null) {
+                        if(this.getPieceAt(rightFiles[pos], downRankRight).getColor() != piece.getColor()) {
+                            legalMoves.add(new ChessCoordinate(rightFiles[pos], downRankRight));
+                            break;
+                        }
+                        break;
+                    } else {
+                        legalMoves.add(new ChessCoordinate(rightFiles[pos], downRankRight));
+                        pos++;
+                        downRankRight--;
+                    }
+                }
+                break;
+            case 'f':
+                upRankLeft = piece.getRank() + 1;
+                leftFiles = new char[5];
+                leftFiles[0] = 'e';
+                leftFiles[1] = 'd';
+                leftFiles[2] = 'c';
+                leftFiles[3] = 'b';
+                leftFiles[4] = 'a';
+                pos = 0; 
+                while(upRankLeft <= 8 && pos <= 4) {
+                    if(this.getPieceAt(leftFiles[pos], upRankLeft) != null) {
+                        if(this.getPieceAt(leftFiles[pos], upRankLeft).getColor() != piece.getColor()) {
+                            legalMoves.add(new ChessCoordinate(leftFiles[pos], upRankLeft));
+                            break;
+                        }
+                        break;
+                    } else {
+                        legalMoves.add(new ChessCoordinate(leftFiles[pos], upRankLeft));
+                        pos++;
+                        upRankLeft++;
+                    }
+                }
+
+                pos = 0;
+                downRankLeft = piece.getRank() - 1;
+                while(downRankLeft >= 1 && pos <= 4) {
+                    if(this.getPieceAt(leftFiles[pos], downRankLeft) != null) {
+                        if(this.getPieceAt(leftFiles[pos], downRankLeft).getColor() != piece.getColor()) {
+                            legalMoves.add(new ChessCoordinate(leftFiles[pos], downRankLeft));
+                            break;
+                        }
+                        break;
+                    } else {
+                        legalMoves.add(new ChessCoordinate(leftFiles[pos], downRankLeft));
+                        pos++;
+                        downRankLeft--;
+                    }
+                }
+
+                upRankRight = piece.getRank() + 1;
+                rightFiles = new char[2];
+                rightFiles[0] = 'g';
+                rightFiles[1] = 'h';
+                pos = 0; 
+                while(upRankRight <= 8 && pos <= 1) {
+                    if(this.getPieceAt(rightFiles[pos], upRankRight) != null) {
+                        if(this.getPieceAt(rightFiles[pos], upRankRight).getColor() != piece.getColor()) {
+                            legalMoves.add(new ChessCoordinate(rightFiles[pos], upRankRight));
+                            break;
+                        }
+                        break;
+                    } else {
+                        legalMoves.add(new ChessCoordinate(rightFiles[pos], upRankRight));
+                        pos++;
+                        upRankRight++;
+                    }
+                }
+
+                pos = 0;
+                downRankRight = piece.getRank() - 1;
+                while(downRankRight >= 1 && pos <= 1) {
+                    if(this.getPieceAt(rightFiles[pos], downRankRight) != null) {
+                        if(this.getPieceAt(rightFiles[pos], downRankRight).getColor() != piece.getColor()) {
+                            legalMoves.add(new ChessCoordinate(rightFiles[pos], downRankRight));
+                            break;
+                        }
+                        break;
+                    } else {
+                        legalMoves.add(new ChessCoordinate(rightFiles[pos], downRankRight));
+                        pos++;
+                        downRankRight--;
+                    }
+                }
+                break;
+            case 'g':
+                upRankLeft = piece.getRank() + 1;
+                leftFiles = new char[6];
+                leftFiles[0] = 'f';
+                leftFiles[1] = 'e';
+                leftFiles[2] = 'd';
+                leftFiles[3] = 'c';
+                leftFiles[4] = 'b';
+                leftFiles[5] = 'a';
+                pos = 0; 
+                while(upRankLeft <= 8 && pos <= 5) {
+                    if(this.getPieceAt(leftFiles[pos], upRankLeft) != null) {
+                        if(this.getPieceAt(leftFiles[pos], upRankLeft).getColor() != piece.getColor()) {
+                            legalMoves.add(new ChessCoordinate(leftFiles[pos], upRankLeft));
+                            break;
+                        }
+                        break;
+                    } else {
+                        legalMoves.add(new ChessCoordinate(leftFiles[pos], upRankLeft));
+                        pos++;
+                        upRankLeft++;
+                    }
+                }
+
+                pos = 0;
+                downRankLeft = piece.getRank() - 1;
+                while(downRankLeft >= 1 && pos <= 5) {
+                    if(this.getPieceAt(leftFiles[pos], downRankLeft) != null) {
+                        if(this.getPieceAt(leftFiles[pos], downRankLeft).getColor() != piece.getColor()) {
+                            legalMoves.add(new ChessCoordinate(leftFiles[pos], downRankLeft));
+                            break;
+                        }
+                        break;
+                    } else {
+                        legalMoves.add(new ChessCoordinate(leftFiles[pos], downRankLeft));
+                        pos++;
+                        downRankLeft--;
+                    }
+                }
+
+                upRankRight = piece.getRank() + 1;
+                rightFiles = new char[1];
+                rightFiles[0] = 'h';
+                pos = 0; 
+                while(upRankRight <= 8 && pos <= 0) {
+                    if(this.getPieceAt(rightFiles[pos], upRankRight) != null) {
+                        if(this.getPieceAt(rightFiles[pos], upRankRight).getColor() != piece.getColor()) {
+                            legalMoves.add(new ChessCoordinate(rightFiles[pos], upRankRight));
+                            break;
+                        }
+                        break;
+                    } else {
+                        legalMoves.add(new ChessCoordinate(rightFiles[pos], upRankRight));
+                        pos++;
+                        upRankRight++;
+                    }
+                }
+
+                pos = 0;
+                downRankRight = piece.getRank() - 1;
+                while(downRankRight >= 1 && pos <= 0) {
+                    if(this.getPieceAt(rightFiles[pos], downRankRight) != null) {
+                        if(this.getPieceAt(rightFiles[pos], downRankRight).getColor() != piece.getColor()) {
+                            legalMoves.add(new ChessCoordinate(rightFiles[pos], downRankRight));
+                            break;
+                        }
+                        break;
+                    } else {
+                        legalMoves.add(new ChessCoordinate(rightFiles[pos], downRankRight));
+                        pos++;
+                        downRankRight--;
+                    }
+                }
+                break;
+            case 'h':
+                upRankLeft = piece.getRank() + 1;
+                leftFiles = new char[7];
+                leftFiles[0] = 'g';
+                leftFiles[1] = 'f';
+                leftFiles[2] = 'e';
+                leftFiles[3] = 'd';
+                leftFiles[4] = 'c';
+                leftFiles[5] = 'b';
+                leftFiles[6] = 'a';
+                pos = 0; 
+                while(upRankLeft <= 8 && pos <= 6) {
+                    if(this.getPieceAt(leftFiles[pos], upRankLeft) != null) {
+                        if(this.getPieceAt(leftFiles[pos], upRankLeft).getColor() != piece.getColor()) {
+                            legalMoves.add(new ChessCoordinate(leftFiles[pos], upRankLeft));
+                            break;
+                        }
+                        break;
+                    } else {
+                        legalMoves.add(new ChessCoordinate(leftFiles[pos], upRankLeft));
+                        pos++;
+                        upRankLeft++;
+                    }
+                }
+
+                pos = 0;
+                downRankLeft = piece.getRank() - 1;
+                while(downRankLeft >= 1 && pos <= 6) {
+                    if(this.getPieceAt(leftFiles[pos], downRankLeft) != null) {
+                        if(this.getPieceAt(leftFiles[pos], downRankLeft).getColor() != piece.getColor()) {
+                            legalMoves.add(new ChessCoordinate(leftFiles[pos], downRankLeft));
+                            break;
+                        }
+                        break;
+                    } else {
+                        legalMoves.add(new ChessCoordinate(leftFiles[pos], downRankLeft));
+                        pos++;
+                        downRankLeft--;
+                    }
+                }
+                break;
+        }
         return legalMoves;
     }
 
