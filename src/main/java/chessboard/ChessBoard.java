@@ -545,841 +545,69 @@ public class ChessBoard {
     //Returns the legal moves that a rook piece can make 
     private ArrayList<ChessCoordinate> getLegalRookMoves(ChessPiece piece) {
         ArrayList<ChessCoordinate> legalMoves = new ArrayList<ChessCoordinate>();
+        int upRank = piece.getRank() + 1;
+        int downRank = piece.getRank() - 1;
+        char[] rightFiles = this.getRightFiles(piece.getFile());
+        char[] leftFiles = this.getLeftFiles(piece.getFile());
+        int pos = 0;
+        int maxLeftPos = leftFiles.length - 1;
+        int maxRightPos = rightFiles.length - 1;
 
-        //Checks for legal left-right moves 
-        switch(piece.getFile()) {
-            case 'a':
-                if(this.getPieceAt('b', piece.getRank()) != null) {
-                    if(this.getPieceAt('b', piece.getRank()).getColor() != piece.getColor()) {
-                        legalMoves.add(new ChessCoordinate('b', piece.getRank()));
-                    }
-                } else {
-                    legalMoves.add(new ChessCoordinate('b', piece.getRank()));
-                    if(this.getPieceAt('c', piece.getRank()) != null) {
-                        if(this.getPieceAt('c', piece.getRank()).getColor() != piece.getColor()) {
-                            legalMoves.add(new ChessCoordinate('c', piece.getRank()));
-                        }
-                    } else {
-                        legalMoves.add(new ChessCoordinate('c', piece.getRank()));
-                        if(this.getPieceAt('d', piece.getRank()) != null) {
-                            if(this.getPieceAt('d', piece.getRank()).getColor() != piece.getColor()) {
-                                legalMoves.add(new ChessCoordinate('d', piece.getRank()));
-                            }
-                        } else {
-                            legalMoves.add(new ChessCoordinate('d', piece.getRank()));
-                            if(this.getPieceAt('e', piece.getRank()) != null) {
-                                if(this.getPieceAt('e', piece.getRank()).getColor() != piece.getColor()) {
-                                    legalMoves.add(new ChessCoordinate('e', piece.getRank()));
-                                }
-                            } else {
-                                legalMoves.add(new ChessCoordinate('e', piece.getRank()));
-                                if(this.getPieceAt('f', piece.getRank()) != null) {
-                                    if(this.getPieceAt('f', piece.getRank()).getColor() != piece.getColor()) {
-                                        legalMoves.add(new ChessCoordinate('f', piece.getRank()));
-                                    }
-                                } else {
-                                    legalMoves.add(new ChessCoordinate('f', piece.getRank()));
-                                    if(this.getPieceAt('g', piece.getRank()) != null) {
-                                        if(this.getPieceAt('g', piece.getRank()).getColor() != piece.getColor()) {
-                                            legalMoves.add(new ChessCoordinate('g', piece.getRank()));
-                                        }
-                                    } else {
-                                        legalMoves.add(new ChessCoordinate('g', piece.getRank()));
-                                        if(this.getPieceAt('h', piece.getRank()) != null) {
-                                            if(this.getPieceAt('h', piece.getRank()).getColor() != piece.getColor()) {
-                                                legalMoves.add(new ChessCoordinate('h', piece.getRank()));
-                                            }
-                                        } else {
-                                            legalMoves.add(new ChessCoordinate('h', piece.getRank()));
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                } 
-                break;
-            case 'b':
-                if(this.getPieceAt('a', piece.getRank()) != null) {
-                    if(this.getPieceAt('a', piece.getRank()).getColor() != piece.getColor()) {
-                        legalMoves.add(new ChessCoordinate('a', piece.getRank()));
-                    } 
-                } else {
-                        legalMoves.add(new ChessCoordinate('a', piece.getRank()));
-                    }
-                
-                if(this.getPieceAt('c', piece.getRank()) != null) {
-                    if(this.getPieceAt('c', piece.getRank()).getColor() != piece.getColor()) {
-                        legalMoves.add(new ChessCoordinate('c', piece.getRank()));
-                    }
-                } else {
-                    legalMoves.add(new ChessCoordinate('c', piece.getRank()));
-                    if(this.getPieceAt('d', piece.getRank()) != null) {
-                        if(this.getPieceAt('d', piece.getRank()).getColor() != piece.getColor()) {
-                            legalMoves.add(new ChessCoordinate('d', piece.getRank()));
-                        }
-                    } else {
-                        legalMoves.add(new ChessCoordinate('d', piece.getRank()));
-                        if(this.getPieceAt('e', piece.getRank()) != null) {
-                            if(this.getPieceAt('e', piece.getRank()).getColor() != piece.getColor()) {
-                                legalMoves.add(new ChessCoordinate('e', piece.getRank()));
-                            }
-                        } else {
-                            legalMoves.add(new ChessCoordinate('e', piece.getRank()));
-                            if(this.getPieceAt('f', piece.getRank()) != null) {
-                                if(this.getPieceAt('f', piece.getRank()).getColor() != piece.getColor()) {
-                                    legalMoves.add(new ChessCoordinate('f', piece.getRank()));
-                                }
-                            } else {
-                                legalMoves.add(new ChessCoordinate('f', piece.getRank()));
-                                if(this.getPieceAt('g', piece.getRank()) != null) {
-                                    if(this.getPieceAt('g', piece.getRank()).getColor() != piece.getColor()) {
-                                        legalMoves.add(new ChessCoordinate('g', piece.getRank()));
-                                    }
-                                } else {
-                                    legalMoves.add(new ChessCoordinate('g', piece.getRank()));
-                                    if(this.getPieceAt('h', piece.getRank()) != null) {
-                                        if(this.getPieceAt('h', piece.getRank()).getColor() != piece.getColor()) {
-                                            legalMoves.add(new ChessCoordinate('h', piece.getRank()));
-                                        }
-                                    } else {
-                                        legalMoves.add(new ChessCoordinate('h', piece.getRank()));
-                                    }
-                                }
-                            }
-                        }
-                    }
+        //Check for legal leftwards rook moves 
+        while(pos <= maxLeftPos) {
+            if(this.getPieceAt(leftFiles[pos], piece.getRank()) != null) {
+                if(this.getPieceAt(leftFiles[pos], piece.getRank()).getColor() != piece.getColor()) {
+                    legalMoves.add(new ChessCoordinate(leftFiles[pos], piece.getRank()));
+                    break;
                 }
                 break;
-            case 'c':
-                if(this.getPieceAt('b', piece.getRank()) != null) {
-                    if(this.getPieceAt('b', piece.getRank()).getColor() != piece.getColor()) {
-                        legalMoves.add(new ChessCoordinate('b', piece.getRank()));
-                    }
-                } else {
-                        legalMoves.add(new ChessCoordinate('b', piece.getRank()));
-                        if(this.getPieceAt('a', piece.getRank()) != null) {
-                            if(this.getPieceAt('a', piece.getRank()).getColor() != piece.getColor()) {
-                                legalMoves.add(new ChessCoordinate('a', piece.getRank()));
-                            } 
-                        } else {
-                            legalMoves.add(new ChessCoordinate('a', piece.getRank()));
-                        }
-                    }
-                
-                if(this.getPieceAt('d', piece.getRank()) != null) {
-                    if(this.getPieceAt('d', piece.getRank()).getColor() != piece.getColor()) {
-                        legalMoves.add(new ChessCoordinate('d', piece.getRank()));
-                    }
-                } else {
-                    legalMoves.add(new ChessCoordinate('d', piece.getRank()));
-                    if(this.getPieceAt('e', piece.getRank()) != null) {
-                        if(this.getPieceAt('e', piece.getRank()).getColor() != piece.getColor()) {
-                            legalMoves.add(new ChessCoordinate('e', piece.getRank()));
-                        }
-                    } else {
-                        legalMoves.add(new ChessCoordinate('e', piece.getRank()));
-                        if(this.getPieceAt('f', piece.getRank()) != null) {
-                            if(this.getPieceAt('f', piece.getRank()).getColor() != piece.getColor()) {
-                                legalMoves.add(new ChessCoordinate('f', piece.getRank()));
-                            }
-                        } else {
-                            legalMoves.add(new ChessCoordinate('f', piece.getRank()));
-                            if(this.getPieceAt('g', piece.getRank()) != null) {
-                                if(this.getPieceAt('g', piece.getRank()).getColor() != piece.getColor()) {
-                                    legalMoves.add(new ChessCoordinate('g', piece.getRank()));
-                                }
-                            } else {
-                                legalMoves.add(new ChessCoordinate('g', piece.getRank()));
-                                if(this.getPieceAt('h', piece.getRank()) != null) {
-                                    if(this.getPieceAt('h', piece.getRank()).getColor() != piece.getColor()) {
-                                        legalMoves.add(new ChessCoordinate('h', piece.getRank()));
-                                    }
-                                } else {
-                                    legalMoves.add(new ChessCoordinate('h', piece.getRank()));
-                                }
-                            }
-                        }
-                    }
-                }
-                break;
-            case 'd':
-                if(this.getPieceAt('c', piece.getRank()) != null) {
-                    if(this.getPieceAt('c', piece.getRank()).getColor() != piece.getColor()) {
-                        legalMoves.add(new ChessCoordinate('c', piece.getRank()));
-                    }
-                } else {
-                        legalMoves.add(new ChessCoordinate('c', piece.getRank()));
-                        if(this.getPieceAt('b', piece.getRank()) != null) {
-                            if(this.getPieceAt('b', piece.getRank()).getColor() != piece.getColor()) {
-                                legalMoves.add(new ChessCoordinate('b', piece.getRank()));
-                            } 
-                        } else {
-                            legalMoves.add(new ChessCoordinate('b', piece.getRank()));
-                            if(this.getPieceAt('a', piece.getRank()) != null) {
-                                if(this.getPieceAt('a', piece.getRank()).getColor() != piece.getColor()) {
-                                    legalMoves.add(new ChessCoordinate('a', piece.getRank()));
-                                }
-                            } else {
-                                legalMoves.add(new ChessCoordinate('a', piece.getRank()));
-                            }
-                        }
-                    }
-                
-                if(this.getPieceAt('e', piece.getRank()) != null) {
-                    if(this.getPieceAt('e', piece.getRank()).getColor() != piece.getColor()) {
-                        legalMoves.add(new ChessCoordinate('e', piece.getRank()));
-                    }
-                } else {
-                    legalMoves.add(new ChessCoordinate('e', piece.getRank()));
-                    if(this.getPieceAt('f', piece.getRank()) != null) {
-                        if(this.getPieceAt('f', piece.getRank()).getColor() != piece.getColor()) {
-                            legalMoves.add(new ChessCoordinate('f', piece.getRank()));
-                        }
-                    } else {
-                        legalMoves.add(new ChessCoordinate('f', piece.getRank()));
-                        if(this.getPieceAt('g', piece.getRank()) != null) {
-                            if(this.getPieceAt('g', piece.getRank()).getColor() != piece.getColor()) {
-                                legalMoves.add(new ChessCoordinate('g', piece.getRank()));
-                            }
-                        } else {
-                            legalMoves.add(new ChessCoordinate('g', piece.getRank()));
-                            if(this.getPieceAt('h', piece.getRank()) != null) {
-                                if(this.getPieceAt('h', piece.getRank()).getColor() != piece.getColor()) {
-                                    legalMoves.add(new ChessCoordinate('h', piece.getRank()));
-                                }
-                            } else {
-                                legalMoves.add(new ChessCoordinate('h', piece.getRank()));
-                            }
-                        }
-                    }
-                }
-                break;
-            case 'e':
-                if(this.getPieceAt('d', piece.getRank()) != null) {
-                    if(this.getPieceAt('d', piece.getRank()).getColor() != piece.getColor()) {
-                        legalMoves.add(new ChessCoordinate('d', piece.getRank()));
-                    }
-                } else {
-                        legalMoves.add(new ChessCoordinate('d', piece.getRank()));
-                        if(this.getPieceAt('c', piece.getRank()) != null) {
-                            if(this.getPieceAt('c', piece.getRank()).getColor() != piece.getColor()) {
-                                legalMoves.add(new ChessCoordinate('c', piece.getRank()));
-                            } 
-                        } else {
-                            legalMoves.add(new ChessCoordinate('c', piece.getRank()));
-                            if(this.getPieceAt('b', piece.getRank()) != null) {
-                                if(this.getPieceAt('b', piece.getRank()).getColor() != piece.getColor()) {
-                                    legalMoves.add(new ChessCoordinate('b', piece.getRank()));
-                                }
-                            } else {
-                                legalMoves.add(new ChessCoordinate('b', piece.getRank()));
-                                if(this.getPieceAt('a', piece.getRank()) != null) {
-                                    if(this.getPieceAt('a', piece.getRank()).getColor() != piece.getColor()) {
-                                        legalMoves.add(new ChessCoordinate('a', piece.getRank()));
-                                    }
-                                } else {
-                                    legalMoves.add(new ChessCoordinate('a', piece.getRank()));
-                                }
-                            }
-                        }
-                    }    
-
-                if(this.getPieceAt('f', piece.getRank()) != null) {
-                    if(this.getPieceAt('f', piece.getRank()).getColor() != piece.getColor()) {
-                        legalMoves.add(new ChessCoordinate('f', piece.getRank()));
-                    }
-                } else {
-                    legalMoves.add(new ChessCoordinate('f', piece.getRank()));
-                    if(this.getPieceAt('g', piece.getRank()) != null) {
-                        if(this.getPieceAt('g', piece.getRank()).getColor() != piece.getColor()) {
-                            legalMoves.add(new ChessCoordinate('g', piece.getRank()));
-                        }
-                    } else {
-                        legalMoves.add(new ChessCoordinate('g', piece.getRank()));
-                        if(this.getPieceAt('h', piece.getRank()) != null) {
-                            if(this.getPieceAt('h', piece.getRank()).getColor() != piece.getColor()) {
-                                legalMoves.add(new ChessCoordinate('h', piece.getRank()));
-                            }
-                        } else {
-                            legalMoves.add(new ChessCoordinate('h', piece.getRank()));
-                        }
-                    }
-                }
-                break;
-            case 'f':
-                if(this.getPieceAt('e', piece.getRank()) != null) {
-                    if(this.getPieceAt('e', piece.getRank()).getColor() != piece.getColor()) {
-                        legalMoves.add(new ChessCoordinate('e', piece.getRank()));
-                    }
-                } else {
-                        legalMoves.add(new ChessCoordinate('e', piece.getRank()));
-                        if(this.getPieceAt('d', piece.getRank()) != null) {
-                            if(this.getPieceAt('d', piece.getRank()).getColor() != piece.getColor()) {
-                                legalMoves.add(new ChessCoordinate('d', piece.getRank()));
-                            } 
-                        } else {
-                            legalMoves.add(new ChessCoordinate('d', piece.getRank()));
-                            if(this.getPieceAt('c', piece.getRank()) != null) {
-                                if(this.getPieceAt('c', piece.getRank()).getColor() != piece.getColor()) {
-                                    legalMoves.add(new ChessCoordinate('c', piece.getRank()));
-                                }
-                            } else {
-                                legalMoves.add(new ChessCoordinate('c', piece.getRank()));
-                                if(this.getPieceAt('b', piece.getRank()) != null) {
-                                    if(this.getPieceAt('b', piece.getRank()).getColor() != piece.getColor()) {
-                                        legalMoves.add(new ChessCoordinate('b', piece.getRank()));
-                                    }
-                                } else {
-                                    legalMoves.add(new ChessCoordinate('b', piece.getRank()));
-                                    if(this.getPieceAt('a', piece.getRank()) != null) {
-                                        if(this.getPieceAt('a', piece.getRank()).getColor() != piece.getColor()) {
-                                            legalMoves.add(new ChessCoordinate('a', piece.getRank()));
-                                        }
-                                    } else {
-                                        legalMoves.add(new ChessCoordinate('a', piece.getRank()));
-                                    }
-                                }
-                            }
-                        }
-                    }
-
-                if(this.getPieceAt('g', piece.getRank()) != null) {
-                    if(this.getPieceAt('g', piece.getRank()).getColor() != piece.getColor()) {
-                        legalMoves.add(new ChessCoordinate('g', piece.getRank()));
-                    }
-                } else {
-                    legalMoves.add(new ChessCoordinate('g', piece.getRank()));
-                    if(this.getPieceAt('h', piece.getRank()) != null) {
-                        if(this.getPieceAt('h', piece.getRank()).getColor() != piece.getColor()) {
-                            legalMoves.add(new ChessCoordinate('h', piece.getRank()));
-                        }
-                    } else {
-                        legalMoves.add(new ChessCoordinate('h', piece.getRank()));
-                    }
-                }
-                break;
-            case 'g':
-                if(this.getPieceAt('f', piece.getRank()) != null) {
-                    if(this.getPieceAt('f', piece.getRank()).getColor() != piece.getColor()) {
-                        legalMoves.add(new ChessCoordinate('f', piece.getRank()));
-                    }
-                } else {
-                        legalMoves.add(new ChessCoordinate('f', piece.getRank()));
-                        if(this.getPieceAt('e', piece.getRank()) != null) {
-                            if(this.getPieceAt('e', piece.getRank()).getColor() != piece.getColor()) {
-                                legalMoves.add(new ChessCoordinate('e', piece.getRank()));
-                            } 
-                        } else {
-                            legalMoves.add(new ChessCoordinate('e', piece.getRank()));
-                            if(this.getPieceAt('d', piece.getRank()) != null) {
-                                if(this.getPieceAt('d', piece.getRank()).getColor() != piece.getColor()) {
-                                    legalMoves.add(new ChessCoordinate('d', piece.getRank()));
-                                }
-                            } else {
-                                legalMoves.add(new ChessCoordinate('d', piece.getRank()));
-                                if(this.getPieceAt('c', piece.getRank()) != null) {
-                                    if(this.getPieceAt('c', piece.getRank()).getColor() != piece.getColor()) {
-                                        legalMoves.add(new ChessCoordinate('c', piece.getRank()));
-                                    }
-                                } else {
-                                    legalMoves.add(new ChessCoordinate('c', piece.getRank()));
-                                    if(this.getPieceAt('b', piece.getRank()) != null) {
-                                        if(this.getPieceAt('b', piece.getRank()).getColor() != piece.getColor()) {
-                                            legalMoves.add(new ChessCoordinate('b', piece.getRank()));
-                                        }
-                                    } else {
-                                        legalMoves.add(new ChessCoordinate('b', piece.getRank()));
-                                        if(this.getPieceAt('a', piece.getRank()) != null) {
-                                            if(this.getPieceAt('a', piece.getRank()).getColor() != piece.getColor()) {
-                                                legalMoves.add(new ChessCoordinate('a', piece.getRank()));
-                                            }
-                                        } else {
-                                            legalMoves.add(new ChessCoordinate('a', piece.getRank()));
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                
-                if(this.getPieceAt('h', piece.getRank()) != null) {
-                    if(this.getPieceAt('h', piece.getRank()).getColor() != piece.getColor()) {
-                        legalMoves.add(new ChessCoordinate('h', piece.getRank()));
-                    }
-                } else {
-                    legalMoves.add(new ChessCoordinate('h', piece.getRank()));
-                }
-                break;
-            case 'h':
-                if(this.getPieceAt('g', piece.getRank()) != null) {
-                    if(this.getPieceAt('g', piece.getRank()).getColor() != piece.getColor()) {
-                        legalMoves.add(new ChessCoordinate('g', piece.getRank()));
-                    }
-                } else {
-                        legalMoves.add(new ChessCoordinate('g', piece.getRank()));
-                        if(this.getPieceAt('f', piece.getRank()) != null) {
-                            if(this.getPieceAt('f', piece.getRank()).getColor() != piece.getColor()) {
-                                legalMoves.add(new ChessCoordinate('f', piece.getRank()));
-                            } 
-                        } else {
-                            legalMoves.add(new ChessCoordinate('f', piece.getRank()));
-                            if(this.getPieceAt('e', piece.getRank()) != null) {
-                                if(this.getPieceAt('e', piece.getRank()).getColor() != piece.getColor()) {
-                                    legalMoves.add(new ChessCoordinate('e', piece.getRank()));
-                                }
-                            } else {
-                                legalMoves.add(new ChessCoordinate('e', piece.getRank()));
-                                if(this.getPieceAt('d', piece.getRank()) != null) {
-                                    if(this.getPieceAt('d', piece.getRank()).getColor() != piece.getColor()) {
-                                        legalMoves.add(new ChessCoordinate('d', piece.getRank()));
-                                    }
-                                } else {
-                                    legalMoves.add(new ChessCoordinate('d', piece.getRank()));
-                                    if(this.getPieceAt('c', piece.getRank()) != null) {
-                                        if(this.getPieceAt('c', piece.getRank()).getColor() != piece.getColor()) {
-                                            legalMoves.add(new ChessCoordinate('c', piece.getRank()));
-                                        }
-                                    } else {
-                                        legalMoves.add(new ChessCoordinate('c', piece.getRank()));
-                                        if(this.getPieceAt('b', piece.getRank()) != null) {
-                                            if(this.getPieceAt('b', piece.getRank()).getColor() != piece.getColor()) {
-                                                legalMoves.add(new ChessCoordinate('b', piece.getRank()));
-                                            }
-                                        } else {
-                                            legalMoves.add(new ChessCoordinate('b', piece.getRank()));
-                                            if(this.getPieceAt('a', piece.getRank()) != null) {
-                                                if(this.getPieceAt('a', piece.getRank()).getColor() != piece.getColor()) {
-                                                    legalMoves.add(new ChessCoordinate('a', piece.getRank()));
-                                                }
-                                            } else {
-                                                legalMoves.add(new ChessCoordinate('a', piece.getRank()));
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                break; 
+            } else {
+                legalMoves.add(new ChessCoordinate(leftFiles[pos], piece.getRank()));
+                pos++; 
+            }
         }
 
-        //Checks for legal up-down moves 
-        switch(piece.getRank()) {
-            case 1: 
-                if(this.getPieceAt(piece.getFile(), 2) != null) {
-                    if(this.getPieceAt(piece.getFile(), 2).getColor() != piece.getColor()) {
-                        legalMoves.add(new ChessCoordinate(piece.getFile(), 2));
-                    }
-                } else {
-                    legalMoves.add(new ChessCoordinate(piece.getFile(), 2));
-                    if(this.getPieceAt(piece.getFile(), 3) != null) {
-                        if(this.getPieceAt(piece.getFile(), 3).getColor() != piece.getColor()) {
-                            legalMoves.add(new ChessCoordinate(piece.getFile(), 3));
-                        }
-                    } else {
-                        legalMoves.add(new ChessCoordinate(piece.getFile(), 3));
-                        if(this.getPieceAt(piece.getFile(), 4) != null) {
-                            if(this.getPieceAt(piece.getFile(), 4).getColor() != piece.getColor()) {
-                                legalMoves.add(new ChessCoordinate(piece.getFile(), 4));
-                            }
-                        } else {
-                            legalMoves.add(new ChessCoordinate(piece.getFile(), 4));
-                            if(this.getPieceAt(piece.getFile(), 5) != null) {
-                                if(this.getPieceAt(piece.getFile(), 5).getColor() != piece.getColor()) {
-                                    legalMoves.add(new ChessCoordinate(piece.getFile(), 5));
-                                }
-                            } else {
-                                legalMoves.add(new ChessCoordinate(piece.getFile(), 5));
-                                if(this.getPieceAt(piece.getFile(), 6) != null) {
-                                    if(this.getPieceAt(piece.getFile(), 6).getColor() != piece.getColor()) {
-                                        legalMoves.add(new ChessCoordinate(piece.getFile(), 6));
-                                    }
-                                } else {
-                                    legalMoves.add(new ChessCoordinate(piece.getFile(), 6));
-                                    if(this.getPieceAt(piece.getFile(), 7) != null) {
-                                        if(this.getPieceAt(piece.getFile(), 7).getColor() != piece.getColor()) {
-                                            legalMoves.add(new ChessCoordinate(piece.getFile(), 7));
-                                        }
-                                    } else {
-                                        legalMoves.add(new ChessCoordinate(piece.getFile(), 7));
-                                        if(this.getPieceAt(piece.getFile(), 8) != null) {
-                                            if(this.getPieceAt(piece.getFile(), 8).getColor() != piece.getColor()) {
-                                                legalMoves.add(new ChessCoordinate(piece.getFile(), 8));
-                                            }
-                                        } else {
-                                            legalMoves.add(new ChessCoordinate(piece.getFile(), 8));
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
+        //Check for legal rightwards rook moves 
+        pos = 0;
+        while(pos <= maxRightPos) {
+            if(this.getPieceAt(rightFiles[pos], piece.getRank()) != null) {
+                if(this.getPieceAt(rightFiles[pos], piece.getRank()).getColor() != piece.getColor()) {
+                    legalMoves.add(new ChessCoordinate(rightFiles[pos], piece.getRank()));
+                    break;
                 }
                 break;
-            case 2:
-                if(this.getPieceAt(piece.getFile(), 1) != null) {
-                    if(this.getPieceAt(piece.getFile(), 1).getColor() != piece.getColor()) {
-                        legalMoves.add(new ChessCoordinate(piece.getFile(), 1));
-                    }
-                } else {
-                    legalMoves.add(new ChessCoordinate(piece.getFile(), 1));
-                }
+            } else {
+                legalMoves.add(new ChessCoordinate(rightFiles[pos], piece.getRank()));
+                pos++; 
+            }
+        }
 
-                if(this.getPieceAt(piece.getFile(), 3) != null) {
-                    if(this.getPieceAt(piece.getFile(), 3).getColor() != piece.getColor()) {
-                        legalMoves.add(new ChessCoordinate(piece.getFile(), 3));
-                    }
-                } else {
-                    legalMoves.add(new ChessCoordinate(piece.getFile(), 3));
-                    if(this.getPieceAt(piece.getFile(), 4) != null) {
-                        if(this.getPieceAt(piece.getFile(), 4).getColor() != piece.getColor()) {
-                            legalMoves.add(new ChessCoordinate(piece.getFile(), 4));
-                        }
-                    } else {
-                        legalMoves.add(new ChessCoordinate(piece.getFile(), 4));
-                        if(this.getPieceAt(piece.getFile(), 5) != null) {
-                            if(this.getPieceAt(piece.getFile(), 5).getColor() != piece.getColor()) {
-                                legalMoves.add(new ChessCoordinate(piece.getFile(), 5));
-                            }
-                        } else {
-                            legalMoves.add(new ChessCoordinate(piece.getFile(), 5));
-                            if(this.getPieceAt(piece.getFile(), 6) != null) {
-                                if(this.getPieceAt(piece.getFile(), 6).getColor() != piece.getColor()) {
-                                    legalMoves.add(new ChessCoordinate(piece.getFile(), 6));
-                                }
-                            } else {
-                                legalMoves.add(new ChessCoordinate(piece.getFile(), 6));
-                                if(this.getPieceAt(piece.getFile(), 7) != null) {
-                                    if(this.getPieceAt(piece.getFile(), 7).getColor() != piece.getColor()) {
-                                        legalMoves.add(new ChessCoordinate(piece.getFile(), 7));
-                                    }
-                                } else {
-                                    legalMoves.add(new ChessCoordinate(piece.getFile(), 7));
-                                    if(this.getPieceAt(piece.getFile(), 8) != null) {
-                                        if(this.getPieceAt(piece.getFile(), 8).getColor() != piece.getColor()) {
-                                            legalMoves.add(new ChessCoordinate(piece.getFile(), 8));
-                                        }
-                                    } else {
-                                        legalMoves.add(new ChessCoordinate(piece.getFile(), 8));
-                                    }
-                                }
-                            }
-                        }
-                    }
+        //Check for legal downwards rook moves 
+        while(downRank >= 1) {
+            if(this.getPieceAt(piece.getFile(), downRank) != null) {
+                if(this.getPieceAt(piece.getFile(), downRank).getColor() != piece.getColor()) {
+                    legalMoves.add(new ChessCoordinate(piece.getFile(), downRank));
+                    break;
                 }
                 break;
-            case 3:
-                if(this.getPieceAt(piece.getFile(), 2) != null) {
-                    if(this.getPieceAt(piece.getFile(), 2).getColor() != piece.getColor()) {
-                        legalMoves.add(new ChessCoordinate(piece.getFile(), 2));
-                    }
-                } else {
-                    legalMoves.add(new ChessCoordinate(piece.getFile(), 2));
-                    if(this.getPieceAt(piece.getFile(), 1) != null) {
-                        if(this.getPieceAt(piece.getFile(), 1).getColor() != piece.getColor()) {
-                            legalMoves.add(new ChessCoordinate(piece.getFile(), 1));
-                        }
-                    } else {
-                        legalMoves.add(new ChessCoordinate(piece.getFile(), 1));
-                    }
-                }
+            } else {
+                legalMoves.add(new ChessCoordinate(piece.getFile(), downRank));
+                downRank--; 
+            }
+        }
 
-                if(this.getPieceAt(piece.getFile(), 4) != null) {
-                    if(this.getPieceAt(piece.getFile(), 4).getColor() != piece.getColor()) {
-                        legalMoves.add(new ChessCoordinate(piece.getFile(), 4));
-                    }
-                } else {
-                    legalMoves.add(new ChessCoordinate(piece.getFile(), 4));
-                    if(this.getPieceAt(piece.getFile(), 5) != null) {
-                        if(this.getPieceAt(piece.getFile(), 5).getColor() != piece.getColor()) {
-                            legalMoves.add(new ChessCoordinate(piece.getFile(), 5));
-                        }
-                    } else {
-                        legalMoves.add(new ChessCoordinate(piece.getFile(), 5));
-                        if(this.getPieceAt(piece.getFile(), 6) != null) {
-                            if(this.getPieceAt(piece.getFile(), 6).getColor() != piece.getColor()) {
-                                legalMoves.add(new ChessCoordinate(piece.getFile(), 6));
-                            }
-                        } else {
-                            legalMoves.add(new ChessCoordinate(piece.getFile(), 6));
-                            if(this.getPieceAt(piece.getFile(), 7) != null) {
-                                if(this.getPieceAt(piece.getFile(), 7).getColor() != piece.getColor()) {
-                                    legalMoves.add(new ChessCoordinate(piece.getFile(), 7));
-                                }
-                            } else {
-                                legalMoves.add(new ChessCoordinate(piece.getFile(), 7));
-                                if(this.getPieceAt(piece.getFile(), 8) != null) {
-                                    if(this.getPieceAt(piece.getFile(), 8).getColor() != piece.getColor()) {
-                                        legalMoves.add(new ChessCoordinate(piece.getFile(), 8));
-                                    }
-                                } else {
-                                    legalMoves.add(new ChessCoordinate(piece.getFile(), 8));
-                                }
-                            }
-                        }
-                    }
+        //Check for legal upwards rook moves 
+        while(upRank <= 8) {
+            if(this.getPieceAt(piece.getFile(), upRank) != null) {
+                if(this.getPieceAt(piece.getFile(), upRank).getColor() != piece.getColor()) {
+                    legalMoves.add(new ChessCoordinate(piece.getFile(), upRank));
+                    break;
                 }
                 break;
-            case 4:
-                if(this.getPieceAt(piece.getFile(), 3) != null) {
-                    if(this.getPieceAt(piece.getFile(), 3).getColor() != piece.getColor()) {
-                        legalMoves.add(new ChessCoordinate(piece.getFile(), 3));
-                    }
-                } else {
-                    legalMoves.add(new ChessCoordinate(piece.getFile(), 3));
-                    if(this.getPieceAt(piece.getFile(), 2) != null) {
-                        if(this.getPieceAt(piece.getFile(), 2).getColor() != piece.getColor()) {
-                            legalMoves.add(new ChessCoordinate(piece.getFile(), 2));
-                        }
-                    } else {
-                        legalMoves.add(new ChessCoordinate(piece.getFile(), 2));
-                        if(this.getPieceAt(piece.getFile(), 1) != null) {
-                            if(this.getPieceAt(piece.getFile(), 1).getColor() != piece.getColor()) {
-                                legalMoves.add(new ChessCoordinate(piece.getFile(), 1));
-                            }
-                        } else {
-                            legalMoves.add(new ChessCoordinate(piece.getFile(), 1));
-                        }
-                    }
-                }
-
-                if(this.getPieceAt(piece.getFile(), 5) != null) {
-                    if(this.getPieceAt(piece.getFile(), 5).getColor() != piece.getColor()) {
-                        legalMoves.add(new ChessCoordinate(piece.getFile(), 5));
-                    }
-                } else {
-                    legalMoves.add(new ChessCoordinate(piece.getFile(), 5));
-                    if(this.getPieceAt(piece.getFile(), 6) != null) {
-                        if(this.getPieceAt(piece.getFile(), 6).getColor() != piece.getColor()) {
-                            legalMoves.add(new ChessCoordinate(piece.getFile(), 6));
-                        }
-                    } else {
-                        legalMoves.add(new ChessCoordinate(piece.getFile(), 6));
-                        if(this.getPieceAt(piece.getFile(), 7) != null) {
-                            if(this.getPieceAt(piece.getFile(), 7).getColor() != piece.getColor()) {
-                                legalMoves.add(new ChessCoordinate(piece.getFile(), 7));
-                            }
-                        } else {
-                            legalMoves.add(new ChessCoordinate(piece.getFile(), 7));
-                            if(this.getPieceAt(piece.getFile(), 8) != null) {
-                                if(this.getPieceAt(piece.getFile(), 8).getColor() != piece.getColor()) {
-                                    legalMoves.add(new ChessCoordinate(piece.getFile(), 8));
-                                }
-                            } else {
-                                legalMoves.add(new ChessCoordinate(piece.getFile(), 8));
-                            }
-                        }
-                    }
-                }
-                break;
-            case 5:
-                if(this.getPieceAt(piece.getFile(), 4) != null) {
-                    if(this.getPieceAt(piece.getFile(), 4).getColor() != piece.getColor()) {
-                        legalMoves.add(new ChessCoordinate(piece.getFile(), 4));
-                    }
-                } else {
-                    legalMoves.add(new ChessCoordinate(piece.getFile(), 4));
-                    if(this.getPieceAt(piece.getFile(), 3) != null) {
-                        if(this.getPieceAt(piece.getFile(), 3).getColor() != piece.getColor()) {
-                            legalMoves.add(new ChessCoordinate(piece.getFile(), 3));
-                        }
-                    } else {
-                        legalMoves.add(new ChessCoordinate(piece.getFile(), 3));
-                        if(this.getPieceAt(piece.getFile(), 2) != null) {
-                            if(this.getPieceAt(piece.getFile(), 2).getColor() != piece.getColor()) {
-                                legalMoves.add(new ChessCoordinate(piece.getFile(), 2));
-                            }
-                        } else {
-                            legalMoves.add(new ChessCoordinate(piece.getFile(), 2));
-                            if(this.getPieceAt(piece.getFile(), 1) != null) {
-                                if(this.getPieceAt(piece.getFile(), 1).getColor() != piece.getColor()) {
-                                    legalMoves.add(new ChessCoordinate(piece.getFile(), 1));
-                                }
-                            } else {
-                                legalMoves.add(new ChessCoordinate(piece.getFile(), 1));
-                            }
-                        }
-                    }
-                }
-
-                if(this.getPieceAt(piece.getFile(), 6) != null) {
-                    if(this.getPieceAt(piece.getFile(), 6).getColor() != piece.getColor()) {
-                        legalMoves.add(new ChessCoordinate(piece.getFile(), 6));
-                    }
-                } else {
-                    legalMoves.add(new ChessCoordinate(piece.getFile(), 6));
-                    if(this.getPieceAt(piece.getFile(), 7) != null) {
-                        if(this.getPieceAt(piece.getFile(), 7).getColor() != piece.getColor()) {
-                            legalMoves.add(new ChessCoordinate(piece.getFile(), 7));
-                        }
-                    } else {
-                        legalMoves.add(new ChessCoordinate(piece.getFile(), 7));
-                        if(this.getPieceAt(piece.getFile(), 8) != null) {
-                            if(this.getPieceAt(piece.getFile(), 8).getColor() != piece.getColor()) {
-                                legalMoves.add(new ChessCoordinate(piece.getFile(), 8));
-                            }
-                        } else {
-                            legalMoves.add(new ChessCoordinate(piece.getFile(), 8));
-                        }
-                    }
-                }
-                break;
-            case 6:
-                if(this.getPieceAt(piece.getFile(), 5) != null) {
-                    if(this.getPieceAt(piece.getFile(), 5).getColor() != piece.getColor()) {
-                        legalMoves.add(new ChessCoordinate(piece.getFile(), 5));
-                    }
-                } else {
-                    legalMoves.add(new ChessCoordinate(piece.getFile(), 5));
-                    if(this.getPieceAt(piece.getFile(), 4) != null) {
-                        if(this.getPieceAt(piece.getFile(), 4).getColor() != piece.getColor()) {
-                            legalMoves.add(new ChessCoordinate(piece.getFile(), 4));
-                        }
-                    } else {
-                        legalMoves.add(new ChessCoordinate(piece.getFile(), 4));
-                        if(this.getPieceAt(piece.getFile(), 3) != null) {
-                            if(this.getPieceAt(piece.getFile(), 3).getColor() != piece.getColor()) {
-                                legalMoves.add(new ChessCoordinate(piece.getFile(), 3));
-                            }
-                        } else {
-                            legalMoves.add(new ChessCoordinate(piece.getFile(), 3));
-                            if(this.getPieceAt(piece.getFile(), 2) != null) {
-                                if(this.getPieceAt(piece.getFile(), 2).getColor() != piece.getColor()) {
-                                    legalMoves.add(new ChessCoordinate(piece.getFile(), 2));
-                                }
-                            } else {
-                                legalMoves.add(new ChessCoordinate(piece.getFile(), 2));
-                                if(this.getPieceAt(piece.getFile(), 1) != null) {
-                                    if(this.getPieceAt(piece.getFile(), 1).getColor() != piece.getColor()) {
-                                        legalMoves.add(new ChessCoordinate(piece.getFile(), 1));
-                                    }
-                                } else {
-                                    legalMoves.add(new ChessCoordinate(piece.getFile(), 1));
-                                }
-                            }
-                        }
-                    }
-                }
-
-                if(this.getPieceAt(piece.getFile(), 7) != null) {
-                    if(this.getPieceAt(piece.getFile(), 7).getColor() != piece.getColor()) {
-                        legalMoves.add(new ChessCoordinate(piece.getFile(), 7));
-                    }
-                } else {
-                    legalMoves.add(new ChessCoordinate(piece.getFile(), 7));
-                    if(this.getPieceAt(piece.getFile(), 8) != null) {
-                        if(this.getPieceAt(piece.getFile(), 8).getColor() != piece.getColor()) {
-                            legalMoves.add(new ChessCoordinate(piece.getFile(), 8));
-                        }
-                    } else {
-                        legalMoves.add(new ChessCoordinate(piece.getFile(), 8));
-                    }
-                }
-                break;
-            case 7:
-                if(this.getPieceAt(piece.getFile(), 6) != null) {
-                    if(this.getPieceAt(piece.getFile(), 6).getColor() != piece.getColor()) {
-                        legalMoves.add(new ChessCoordinate(piece.getFile(), 6));
-                    }
-                } else {
-                    legalMoves.add(new ChessCoordinate(piece.getFile(), 6));
-                    if(this.getPieceAt(piece.getFile(), 5) != null) {
-                        if(this.getPieceAt(piece.getFile(), 5).getColor() != piece.getColor()) {
-                            legalMoves.add(new ChessCoordinate(piece.getFile(), 5));
-                        }
-                    } else {
-                        legalMoves.add(new ChessCoordinate(piece.getFile(), 5));
-                        if(this.getPieceAt(piece.getFile(), 4) != null) {
-                            if(this.getPieceAt(piece.getFile(), 4).getColor() != piece.getColor()) {
-                                legalMoves.add(new ChessCoordinate(piece.getFile(), 4));
-                            }
-                        } else {
-                            legalMoves.add(new ChessCoordinate(piece.getFile(), 4));
-                            if(this.getPieceAt(piece.getFile(), 3) != null) {
-                                if(this.getPieceAt(piece.getFile(), 3).getColor() != piece.getColor()) {
-                                    legalMoves.add(new ChessCoordinate(piece.getFile(), 3));
-                                }
-                            } else {
-                                legalMoves.add(new ChessCoordinate(piece.getFile(), 3));
-                                if(this.getPieceAt(piece.getFile(), 2) != null) {
-                                    if(this.getPieceAt(piece.getFile(), 2).getColor() != piece.getColor()) {
-                                        legalMoves.add(new ChessCoordinate(piece.getFile(), 2));
-                                    }
-                                } else {
-                                    legalMoves.add(new ChessCoordinate(piece.getFile(), 2));
-                                    if(this.getPieceAt(piece.getFile(), 1) != null) {
-                                        if(this.getPieceAt(piece.getFile(), 1).getColor() != piece.getColor()) {
-                                            legalMoves.add(new ChessCoordinate(piece.getFile(), 1));
-                                        }
-                                    } else {
-                                        legalMoves.add(new ChessCoordinate(piece.getFile(), 1));
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-
-                if(this.getPieceAt(piece.getFile(), 8) != null) {
-                    if(this.getPieceAt(piece.getFile(), 8).getColor() != piece.getColor()) {
-                        legalMoves.add(new ChessCoordinate(piece.getFile(), 8));
-                    }
-                } else {
-                    legalMoves.add(new ChessCoordinate(piece.getFile(), 8));
-                }
-                break;
-            case 8:
-                if(this.getPieceAt(piece.getFile(), 7) != null) {
-                    if(this.getPieceAt(piece.getFile(), 7).getColor() != piece.getColor()) {
-                        legalMoves.add(new ChessCoordinate(piece.getFile(), 7));
-                    }
-                } else {
-                    legalMoves.add(new ChessCoordinate(piece.getFile(), 7));
-                    if(this.getPieceAt(piece.getFile(), 6) != null) {
-                        if(this.getPieceAt(piece.getFile(), 6).getColor() != piece.getColor()) {
-                            legalMoves.add(new ChessCoordinate(piece.getFile(), 6));
-                        }
-                    } else {
-                        legalMoves.add(new ChessCoordinate(piece.getFile(), 6));
-                        if(this.getPieceAt(piece.getFile(), 5) != null) {
-                            if(this.getPieceAt(piece.getFile(), 5).getColor() != piece.getColor()) {
-                                legalMoves.add(new ChessCoordinate(piece.getFile(), 5));
-                            }
-                        } else {
-                            legalMoves.add(new ChessCoordinate(piece.getFile(), 5));
-                            if(this.getPieceAt(piece.getFile(), 4) != null) {
-                                if(this.getPieceAt(piece.getFile(), 4).getColor() != piece.getColor()) {
-                                    legalMoves.add(new ChessCoordinate(piece.getFile(), 4));
-                                }
-                            } else {
-                                legalMoves.add(new ChessCoordinate(piece.getFile(), 4));
-                                if(this.getPieceAt(piece.getFile(), 3) != null) {
-                                    if(this.getPieceAt(piece.getFile(), 3).getColor() != piece.getColor()) {
-                                        legalMoves.add(new ChessCoordinate(piece.getFile(), 3));
-                                    }
-                                } else {
-                                    legalMoves.add(new ChessCoordinate(piece.getFile(), 3));
-                                    if(this.getPieceAt(piece.getFile(), 2) != null) {
-                                        if(this.getPieceAt(piece.getFile(), 2).getColor() != piece.getColor()) {
-                                            legalMoves.add(new ChessCoordinate(piece.getFile(), 2));
-                                        }
-                                    } else {
-                                        legalMoves.add(new ChessCoordinate(piece.getFile(), 2));
-                                        if(this.getPieceAt(piece.getFile(), 1) != null) {
-                                            if(this.getPieceAt(piece.getFile(), 1).getColor() != piece.getColor()) {
-                                                legalMoves.add(new ChessCoordinate(piece.getFile(), 1));
-                                            }
-                                        } else {
-                                            legalMoves.add(new ChessCoordinate(piece.getFile(), 1));
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-                break; 
+            } else {
+                legalMoves.add(new ChessCoordinate(piece.getFile(), upRank));
+                upRank++; 
+            }
         }
 
         return legalMoves;
@@ -1397,6 +625,7 @@ public class ChessBoard {
         int maxLeftPos = leftFiles.length - 1;
         int maxRightPos = rightFiles.length - 1;
 
+        //Check for legal diagonal up-and-left bishop moves 
         while(upRankLeft <= 8 && pos <= maxLeftPos) {
             if(this.getPieceAt(leftFiles[pos], upRankLeft) != null) {
                 if(this.getPieceAt(leftFiles[pos], upRankLeft).getColor() != piece.getColor()) {
@@ -1411,6 +640,7 @@ public class ChessBoard {
             }
         }
 
+        //Check for legal diagonal down-and-left bishop moves 
         pos = 0;
         while(downRankLeft >= 1 && pos <= maxLeftPos) {
             if(this.getPieceAt(leftFiles[pos], downRankLeft) != null) {
@@ -1426,6 +656,7 @@ public class ChessBoard {
             }
         }
 
+        //Check for legal diagonal up-and-right bishop moves 
         pos = 0; 
         while(upRankRight <= 8 && pos <= maxRightPos) {
             if(this.getPieceAt(rightFiles[pos], upRankRight) != null) {
@@ -1441,6 +672,7 @@ public class ChessBoard {
             }
         }
 
+        //Check for legal diagonal down-and-right bishop moves 
         pos = 0;
         while(downRankRight >= 1 && pos <= maxRightPos) {
             if(this.getPieceAt(rightFiles[pos], downRankRight) != null) {
