@@ -928,4 +928,39 @@ public class ChessBoardTests {
         
     }
 
+    @Test
+    public void queenTests() {
+        ChessPiece[][] pieces = new ChessPiece[8][8];
+        ChessBoard board = new ChessBoard(pieces);
+        board.setPieceAt('e', 4, new Queen('e', 4, true, 0));
+        ArrayList<ChessCoordinate> legalMoves = new ArrayList<ChessCoordinate>();
+        legalMoves.add(new ChessCoordinate('d', 4));
+        legalMoves.add(new ChessCoordinate('c', 4));
+        legalMoves.add(new ChessCoordinate('b', 4));
+        legalMoves.add(new ChessCoordinate('a', 4));
+        legalMoves.add(new ChessCoordinate('f', 4));
+        legalMoves.add(new ChessCoordinate('g', 4));
+        legalMoves.add(new ChessCoordinate('h', 4));
+        legalMoves.add(new ChessCoordinate('e', 3));
+        legalMoves.add(new ChessCoordinate('e', 2));
+        legalMoves.add(new ChessCoordinate('e', 1));
+        legalMoves.add(new ChessCoordinate('e', 5));
+        legalMoves.add(new ChessCoordinate('e', 6));
+        legalMoves.add(new ChessCoordinate('e', 7));
+        legalMoves.add(new ChessCoordinate('e', 8));
+        legalMoves.add(new ChessCoordinate('d', 5));
+        legalMoves.add(new ChessCoordinate('c', 6));
+        legalMoves.add(new ChessCoordinate('b', 7));
+        legalMoves.add(new ChessCoordinate('a', 8));
+        legalMoves.add(new ChessCoordinate('d', 3));
+        legalMoves.add(new ChessCoordinate('c', 2));
+        legalMoves.add(new ChessCoordinate('b', 1));
+        legalMoves.add(new ChessCoordinate('f', 5));
+        legalMoves.add(new ChessCoordinate('g', 6));
+        legalMoves.add(new ChessCoordinate('h', 7));
+        legalMoves.add(new ChessCoordinate('f', 3));
+        legalMoves.add(new ChessCoordinate('g', 2));
+        legalMoves.add(new ChessCoordinate('h', 1));
+        assert(board.getLegalMoves('e', 4).equals(legalMoves));
+    }
 }
