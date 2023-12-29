@@ -99,7 +99,12 @@ public class ChessBoard {
             return this.getLegalBishopMoves((Bishop) piece);
         }
         else if(piece instanceof Queen) {
-            return legalMoves; 
+            ArrayList<ChessCoordinate> legalQueenMoves = this.getLegalRookMoves(piece);
+            ArrayList<ChessCoordinate> legalBishopMoves = this.getLegalBishopMoves(piece); 
+            for(ChessCoordinate coord : legalBishopMoves) {
+                legalQueenMoves.add(coord);
+            }
+            return legalQueenMoves;
         }
         else {
             return legalMoves; 
