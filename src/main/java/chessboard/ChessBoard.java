@@ -113,10 +113,12 @@ public class ChessBoard {
         char[] leftFiles = this.getLeftFiles(piece.getFile());
         char[] rightFiles = this.getRightFiles(piece.getFile());
         
+        //Removed the king from the board temporarily in order to check for legal king moves 
+        this.setPieceAt(piece.getFile(), piece.getRank(), null);
+
         //Checks move to left 
         if(leftFiles.length > 0) {
             char leftFile = leftFiles[0];
-
             if(this.isSquareUnderAttack(leftFile, piece.getRank(), piece.getColor()) == false) {
                 if(this.getPieceAt(leftFile, piece.getRank()) != null) {
                     if(this.getPieceAt(leftFile, piece.getRank()).getColor() != piece.getColor()) {
@@ -228,6 +230,9 @@ public class ChessBoard {
                 }
             }
         }
+
+        //Add the king back to the board at the end of checking for legal king moves 
+        this.setPieceAt(piece.getFile(), piece.getRank(), piece);
 
         return legalMoves;
     }
