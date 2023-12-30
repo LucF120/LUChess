@@ -1046,6 +1046,7 @@ public class ChessBoardTests {
         board.setPieceAt('e', 8, new King('e', 8, true, 1));
         board.setPieceAt('h', 8, new Rook('h', 8, true, 1));
 
+        //Test long and short castle for white king 
         ArrayList<ChessCoordinate> legalMoves = new ArrayList<ChessCoordinate>();
         legalMoves.add(new ChessCoordinate('d', 1));
         legalMoves.add(new ChessCoordinate('f', 1));
@@ -1056,6 +1057,7 @@ public class ChessBoardTests {
         legalMoves.add(new ChessCoordinate('g', 1));
         assert(board.getLegalMoves('e', 1).equals(legalMoves));
 
+        //Test long and short castle for black king 
         legalMoves = new ArrayList<ChessCoordinate>();
         legalMoves.add(new ChessCoordinate('d', 8));
         legalMoves.add(new ChessCoordinate('f', 8));
@@ -1065,5 +1067,58 @@ public class ChessBoardTests {
         legalMoves.add(new ChessCoordinate('c', 8));
         legalMoves.add(new ChessCoordinate('g', 8));
         assert(board.getLegalMoves('e', 8).equals(legalMoves));
+
+        King whiteKing = (King) board.getPieceAt('e', 1);
+        King blackKing = (King) board.getPieceAt('e', 8);
+        whiteKing.setHasMoved();
+        blackKing.setHasMoved();
+
+        //Test that white king can't castle if it has moved
+        legalMoves = new ArrayList<ChessCoordinate>();
+        legalMoves.add(new ChessCoordinate('d', 1));
+        legalMoves.add(new ChessCoordinate('f', 1));
+        legalMoves.add(new ChessCoordinate('e', 2));
+        legalMoves.add(new ChessCoordinate('d', 2));
+        legalMoves.add(new ChessCoordinate('f', 2));
+        assert(board.getLegalMoves('e', 1).equals(legalMoves));
+
+        //Test that black king can't castle if it has moved 
+        legalMoves = new ArrayList<ChessCoordinate>();
+        legalMoves.add(new ChessCoordinate('d', 8));
+        legalMoves.add(new ChessCoordinate('f', 8));
+        legalMoves.add(new ChessCoordinate('e', 7));
+        legalMoves.add(new ChessCoordinate('d', 7));
+        legalMoves.add(new ChessCoordinate('f', 7));
+        assert(board.getLegalMoves('e', 8).equals(legalMoves));
+
+        board.setPieceAt('e', 1, new King('e', 1, true, 0));
+        board.setPieceAt('e', 8, new King('e', 8, true, 1));
+        Rook a1Rook = (Rook) board.getPieceAt('a', 1);
+        Rook h1Rook = (Rook) board.getPieceAt('h', 1);
+        Rook a8Rook = (Rook) board.getPieceAt('a', 8);
+        Rook h8Rook = (Rook) board.getPieceAt('h', 8);
+        a1Rook.setHasMoved();
+        h1Rook.setHasMoved();
+        a8Rook.setHasMoved();
+        h8Rook.setHasMoved();
+
+        //Test that white king can't castle if the rooks have moved 
+        legalMoves = new ArrayList<ChessCoordinate>();
+        legalMoves.add(new ChessCoordinate('d', 1));
+        legalMoves.add(new ChessCoordinate('f', 1));
+        legalMoves.add(new ChessCoordinate('e', 2));
+        legalMoves.add(new ChessCoordinate('d', 2));
+        legalMoves.add(new ChessCoordinate('f', 2));
+        assert(board.getLegalMoves('e', 1).equals(legalMoves));
+
+        //Test that black king can't castle if the rooks have moved 
+        legalMoves = new ArrayList<ChessCoordinate>();
+        legalMoves.add(new ChessCoordinate('d', 8));
+        legalMoves.add(new ChessCoordinate('f', 8));
+        legalMoves.add(new ChessCoordinate('e', 7));
+        legalMoves.add(new ChessCoordinate('d', 7));
+        legalMoves.add(new ChessCoordinate('f', 7));
+        assert(board.getLegalMoves('e', 8).equals(legalMoves));
+
     }
 }
