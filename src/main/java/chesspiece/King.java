@@ -8,6 +8,7 @@ public class King implements ChessPiece {
     private boolean isAlive; 
     private int value; 
     private int color;
+    private boolean hasMoved; 
 
     //Constructor for a King 
     public King(char file, int rank, boolean isAlive, int color) {
@@ -15,6 +16,7 @@ public class King implements ChessPiece {
         this.isAlive = isAlive; 
         this.value = 200; 
         this.color = color; 
+        this.hasMoved = false;
     }
 
     //Returns the file that the piece is currently in (a-h)
@@ -42,5 +44,10 @@ public class King implements ChessPiece {
     //Returns 0 if a piece is white, 1 if a piece is black 
     public int getColor() {
         return this.color; 
+    }
+
+    //Returns whether or not the king has moved 
+    public boolean hasMoved() {
+        return this.hasMoved; 
     }
 }
