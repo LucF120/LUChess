@@ -962,5 +962,30 @@ public class ChessBoardTests {
         legalMoves.add(new ChessCoordinate('g', 2));
         legalMoves.add(new ChessCoordinate('h', 1));
         assert(board.getLegalMoves('e', 4).equals(legalMoves));
+        
+        //Surrounded by pieces of same color 
+        legalMoves = new ArrayList<ChessCoordinate>();
+        board.setPieceAt('f', 4, new Bishop('f', 4, true, 0));
+        board.setPieceAt('d', 4, new Knight('d', 4, true, 0));
+        board.setPieceAt('e', 3, new Queen('e', 3, true, 0));
+        board.setPieceAt('e', 5, new Pawn('e', 5, true, 0));
+        board.setPieceAt('d', 5, new Bishop('d', 5, true, 0));
+        board.setPieceAt('d', 3, new Knight('d', 3, true, 0));
+        board.setPieceAt('f', 5, new Queen('f', 5, true, 0));
+        board.setPieceAt('f', 3, new Rook('f', 3, true, 0));
+        assert(board.getLegalMoves('e', 4).equals(new ArrayList<ChessCoordinate>()));
+
+        //Surrounded by pieces of opposite color 
+        legalMoves = new ArrayList<ChessCoordinate>();
+        board.setPieceAt('e', 4, new Queen('e', 4, true, 1));
+        legalMoves.add(new ChessCoordinate('d', 4));
+        legalMoves.add(new ChessCoordinate('f', 4));
+        legalMoves.add(new ChessCoordinate('e', 3));
+        legalMoves.add(new ChessCoordinate('e', 5));
+        legalMoves.add(new ChessCoordinate('d', 5));
+        legalMoves.add(new ChessCoordinate('d', 3));
+        legalMoves.add(new ChessCoordinate('f', 5));
+        legalMoves.add(new ChessCoordinate('f', 3));
+        assert(board.getLegalMoves('e', 4).equals(legalMoves));
     }
 }
