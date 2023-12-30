@@ -988,4 +988,20 @@ public class ChessBoardTests {
         legalMoves.add(new ChessCoordinate('f', 3));
         assert(board.getLegalMoves('e', 4).equals(legalMoves));
     }
+    
+    @Test
+    public void castlingTest() {
+        ChessPiece[][] pieces = new ChessPiece[8][8];
+        ChessBoard board = new ChessBoard(pieces);
+        board.setPieceAt('a', 1, new Rook('a', 1, true, 0));
+        board.setPieceAt('e', 1, new King('e', 1, true, 0));
+        ArrayList<ChessCoordinate> legalMovesLongCastle = new ArrayList<ChessCoordinate>();
+        legalMovesLongCastle.add(new ChessCoordinate('d', 1));
+        legalMovesLongCastle.add(new ChessCoordinate('f', 1));
+        legalMovesLongCastle.add(new ChessCoordinate('e', 2));
+        legalMovesLongCastle.add(new ChessCoordinate('d', 2));
+        legalMovesLongCastle.add(new ChessCoordinate('f', 2));
+        // legalMovesLongCastle.add(new ChessCoordinate('c', 1));
+        assert(board.getLegalMoves('e', 1).equals(legalMovesLongCastle));
+    }
 }
