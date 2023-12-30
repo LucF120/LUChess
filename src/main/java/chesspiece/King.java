@@ -50,4 +50,9 @@ public class King implements ChessPiece {
     public boolean hasMoved() {
         return this.hasMoved; 
     }
+
+    //Sets the hasMoved boolean to true 
+    public void setHasMoved() {
+        this.hasMoved = true;
+    }
 }
