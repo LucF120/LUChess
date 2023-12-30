@@ -102,8 +102,134 @@ public class ChessBoard {
             return this.getLegalQueenMoves((Queen) piece);
         }
         else {
-            return legalMoves; 
+            return this.getLegalKingMoves((King) piece);
         }
+    }
+
+    //Returns an array of the legal king moves given a king 
+    private ArrayList<ChessCoordinate> getLegalKingMoves(King piece) {
+        ArrayList<ChessCoordinate> legalMoves = new ArrayList<ChessCoordinate>();
+
+        char[] leftFiles = this.getLeftFiles(piece.getFile());
+        char[] rightFiles = this.getRightFiles(piece.getFile());
+        
+        //Checks move to left 
+        if(leftFiles.length > 0) {
+            char leftFile = leftFiles[0];
+
+            if(this.isSquareUnderAttack(leftFile, piece.getRank(), piece.getColor()) == false) {
+                if(this.getPieceAt(leftFile, piece.getRank()) != null) {
+                    if(this.getPieceAt(leftFile, piece.getRank()).getColor() != piece.getColor()) {
+                        legalMoves.add(new ChessCoordinate(leftFile, piece.getRank()));
+                    }
+                } else {
+                    legalMoves.add(new ChessCoordinate(leftFile, piece.getRank()));
+                }
+            }
+        }
+
+        //Checks move to right
+        if(rightFiles.length > 0) {
+            char rightFile = rightFiles[0];
+
+            if(this.isSquareUnderAttack(rightFile, piece.getRank(), piece.getColor()) == false) {
+                if(this.getPieceAt(rightFile, piece.getRank()) != null) {
+                    if(this.getPieceAt(rightFile, piece.getRank()).getColor() != piece.getColor()) {
+                        legalMoves.add(new ChessCoordinate(rightFile, piece.getRank()));
+                    }
+                } else {
+                    legalMoves.add(new ChessCoordinate(rightFile, piece.getRank()));
+                }
+            }
+        }
+
+        //Checks move up 
+        if(piece.getRank() + 1 <= 8) {
+            if(this.isSquareUnderAttack(piece.getFile(), piece.getRank() + 1, piece.getColor()) == false) {
+                if(this.getPieceAt(piece.getFile(), piece.getRank() + 1) != null) {
+                    if(this.getPieceAt(piece.getFile(), piece.getRank() + 1).getColor() != piece.getColor()) {
+                        legalMoves.add(new ChessCoordinate(piece.getFile(), piece.getRank() + 1));
+                    }
+                } else {
+                    legalMoves.add(new ChessCoordinate(piece.getFile(), piece.getRank() + 1));
+                }
+            }
+        }
+
+        //Checks move down 
+        if(piece.getRank() - 1 >= 1) {
+            if(this.isSquareUnderAttack(piece.getFile(), piece.getRank() - 1, piece.getColor()) == false) {
+                if(this.getPieceAt(piece.getFile(), piece.getRank() - 1) != null) {
+                    if(this.getPieceAt(piece.getFile(), piece.getRank() - 1).getColor() != piece.getColor()) {
+                        legalMoves.add(new ChessCoordinate(piece.getFile(), piece.getRank() - 1));
+                    }
+                } else {
+                    legalMoves.add(new ChessCoordinate(piece.getFile(), piece.getRank() - 1));
+                }
+            }
+        }
+
+        //Checks move diagonal up and left 
+        if(leftFiles.length > 0 && piece.getRank() + 1 <= 8) {
+            char leftFile = leftFiles[0];
+
+            if(this.isSquareUnderAttack(leftFile, piece.getRank() + 1, piece.getColor()) == false) {
+                if(this.getPieceAt(leftFile, piece.getRank() + 1) != null) {
+                    if(this.getPieceAt(leftFile, piece.getRank() + 1).getColor() != piece.getColor()) {
+                        legalMoves.add(new ChessCoordinate(leftFile, piece.getRank() + 1));
+                    }
+                } else {
+                    legalMoves.add(new ChessCoordinate(leftFile, piece.getRank() + 1));
+                }
+            }
+        }
+
+        //Checks move diagonal down and left 
+        if(leftFiles.length > 0 && piece.getRank() - 1 >= 1) {
+            char leftFile = leftFiles[0];
+
+            if(this.isSquareUnderAttack(leftFile, piece.getRank() - 1, piece.getColor()) == false) {
+                if(this.getPieceAt(leftFile, piece.getRank() - 1) != null) {
+                    if(this.getPieceAt(leftFile, piece.getRank() - 1).getColor() != piece.getColor()) {
+                        legalMoves.add(new ChessCoordinate(leftFile, piece.getRank() - 1));
+                    }
+                } else {
+                    legalMoves.add(new ChessCoordinate(leftFile, piece.getRank() - 1));
+                }
+            }
+        }
+
+        //Checks move diagonal up and right
+        if(rightFiles.length > 0 && piece.getRank() + 1 <= 8) {
+            char rightFile = rightFiles[0];
+
+            if(this.isSquareUnderAttack(rightFile, piece.getRank() + 1, piece.getColor()) == false) {
+                if(this.getPieceAt(rightFile, piece.getRank() + 1) != null) {
+                    if(this.getPieceAt(rightFile, piece.getRank() + 1).getColor() != piece.getColor()) {
+                        legalMoves.add(new ChessCoordinate(rightFile, piece.getRank() + 1));
+                    }
+                } else {
+                    legalMoves.add(new ChessCoordinate(rightFile, piece.getRank() + 1));
+                }
+            }
+        }
+
+        //Checks move diagonal down and right
+        if(rightFiles.length > 0 && piece.getRank() - 1 >= 1) {
+            char rightFile = rightFiles[0];
+
+            if(this.isSquareUnderAttack(rightFile, piece.getRank() - 1, piece.getColor()) == false) {
+                if(this.getPieceAt(rightFile, piece.getRank() - 1) != null) {
+                    if(this.getPieceAt(rightFile, piece.getRank() - 1).getColor() != piece.getColor()) {
+                        legalMoves.add(new ChessCoordinate(rightFile, piece.getRank() - 1));
+                    }
+                } else {
+                    legalMoves.add(new ChessCoordinate(rightFile, piece.getRank() - 1));
+                }
+            }
+        }
+
+        return legalMoves;
     }
 
     //Returns an array of the legal queen moves given a queen 
@@ -624,7 +750,7 @@ public class ChessBoard {
         return legalMoves;
     }
 
-    public ArrayList<ChessCoordinate> getLegalBishopMoves(ChessPiece piece) {
+    private ArrayList<ChessCoordinate> getLegalBishopMoves(ChessPiece piece) {
         ArrayList<ChessCoordinate> legalMoves = new ArrayList<ChessCoordinate>();
         int upRankLeft = piece.getRank() + 1;
         int downRankLeft = piece.getRank() - 1; 
@@ -770,6 +896,23 @@ public class ChessBoard {
 
     // boolean isCheckmate(); 
 
+    //Takes in a file, rank, and a color, and checks if that square is currently attacked by the opposite color 
+    private boolean isSquareUnderAttack(char file, int rank, int color) {
+        char[] files = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'};
+        for(char f : files) {
+            for(int i=1 ; i<9 ; i++) {
+                if(!(this.getPieceAt(f, i) instanceof King)) {
+                    ArrayList<ChessCoordinate> legalMoves = this.getLegalMoves(f, i);
+                    if(legalMoves.size() > 0) {
+                        if(legalMoves.contains(new ChessCoordinate(file, rank)) && this.getPieceAt(f, i).getColor() != color) {
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+        return false; 
+    }
 
 
     //Returns the total value of the white pieces currently
