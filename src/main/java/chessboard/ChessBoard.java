@@ -231,6 +231,71 @@ public class ChessBoard {
             }
         }
 
+        //Check for long and short castle 
+        if(piece.hasMoved() == false) {
+            if(piece.getColor() == 0 && piece.getFile() == 'e' && piece.getRank() == 1) {
+                if(this.getPieceAt('a', 1) != null) {
+                    if(this.getPieceAt('a', 1) instanceof Rook) {
+                        Rook a1Rook = (Rook) this.getPieceAt('a', 1);
+                        if(a1Rook.hasMoved() == false
+                            && this.getPieceAt('b', 1) == null
+                            && this.getPieceAt('c', 1) == null
+                            && this.getPieceAt('d', 1) == null
+                            && this.isSquareUnderAttack('c', 1, 0) == false
+                            && this.isSquareUnderAttack('d', 1, 0) == false
+                            && this.isSquareUnderAttack('e', 1, 0) == false) {
+                                legalMoves.add(new ChessCoordinate('c', 1));
+                            }
+                    }
+                }
+
+                if(this.getPieceAt('h', 1) != null) {
+                    if(this.getPieceAt('h', 1) instanceof Rook) {
+                        Rook h1Rook = (Rook) this.getPieceAt('h', 1);
+                        if(h1Rook.hasMoved() == false
+                            && this.getPieceAt('f', 1) == null
+                            && this.getPieceAt('g', 1) == null
+                            && this.isSquareUnderAttack('e', 1, 0) == false
+                            && this.isSquareUnderAttack('f', 1, 0) == false
+                            && this.isSquareUnderAttack('g', 1, 0) == false) {
+                                legalMoves.add(new ChessCoordinate('g', 1));
+                            }
+                    }
+                }
+            }
+
+            if(piece.getColor() == 1 && piece.getFile() == 'e' && piece.getRank() == 8) {
+                if(this.getPieceAt('a', 8) != null) {
+                    if(this.getPieceAt('a', 8) instanceof Rook) {
+                        Rook a8Rook = (Rook) this.getPieceAt('a', 8);
+                        if(a8Rook.hasMoved() == false
+                            && this.getPieceAt('b', 8) == null
+                            && this.getPieceAt('c', 8) == null
+                            && this.getPieceAt('d', 8) == null
+                            && this.isSquareUnderAttack('c', 8, 1) == false
+                            && this.isSquareUnderAttack('d', 8, 1) == false
+                            && this.isSquareUnderAttack('e', 8, 1) == false) {
+                                legalMoves.add(new ChessCoordinate('c', 8));
+                            }
+                    }
+                }
+
+                if(this.getPieceAt('h', 8) != null) {
+                    if(this.getPieceAt('h', 8) instanceof Rook) {
+                        Rook h8Rook = (Rook) this.getPieceAt('h', 8);
+                        if(h8Rook.hasMoved() == false
+                            && this.getPieceAt('f', 8) == null
+                            && this.getPieceAt('g', 8) == null
+                            && this.isSquareUnderAttack('e', 8, 1) == false
+                            && this.isSquareUnderAttack('f', 8, 1) == false
+                            && this.isSquareUnderAttack('g', 8, 1) == false) {
+                                legalMoves.add(new ChessCoordinate('g', 8));
+                            }
+                    }
+                }
+            }
+        }
+
         //Add the king back to the board at the end of checking for legal king moves 
         this.setPieceAt(piece.getFile(), piece.getRank(), piece);
 
