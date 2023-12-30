@@ -990,18 +990,53 @@ public class ChessBoardTests {
     }
     
     @Test
-    public void castlingTest() {
+    public void kingTest() {
         ChessPiece[][] pieces = new ChessPiece[8][8];
         ChessBoard board = new ChessBoard(pieces);
         board.setPieceAt('a', 1, new Rook('a', 1, true, 0));
         board.setPieceAt('e', 1, new King('e', 1, true, 0));
-        ArrayList<ChessCoordinate> legalMovesLongCastle = new ArrayList<ChessCoordinate>();
-        legalMovesLongCastle.add(new ChessCoordinate('d', 1));
-        legalMovesLongCastle.add(new ChessCoordinate('f', 1));
-        legalMovesLongCastle.add(new ChessCoordinate('e', 2));
-        legalMovesLongCastle.add(new ChessCoordinate('d', 2));
-        legalMovesLongCastle.add(new ChessCoordinate('f', 2));
+        ArrayList<ChessCoordinate> legalMoves = new ArrayList<ChessCoordinate>();
+        legalMoves.add(new ChessCoordinate('d', 1));
+        legalMoves.add(new ChessCoordinate('f', 1));
+        legalMoves.add(new ChessCoordinate('e', 2));
+        legalMoves.add(new ChessCoordinate('d', 2));
+        legalMoves.add(new ChessCoordinate('f', 2));
         // legalMovesLongCastle.add(new ChessCoordinate('c', 1));
-        assert(board.getLegalMoves('e', 1).equals(legalMovesLongCastle));
+        assert(board.getLegalMoves('e', 1).equals(legalMoves));
+
+
+        //King with no legal moves due to attacks by rooks 
+        legalMoves = new ArrayList<ChessCoordinate>();
+        board.setPieceAt('a', 1, new Rook('a', 1, true, 1));
+        board.setPieceAt('a', 2, new Rook('a', 2, true, 1));
+        assert(board.getLegalMoves('e', 1).equals(legalMoves));
+
+        //King surrounded by opposite color bishops 
+        legalMoves = new ArrayList<ChessCoordinate>();
+        board.setPieceAt('a', 1, null);
+        board.setPieceAt('a', 2, null);
+        board.setPieceAt('d', 1, new Bishop('d', 1, true, 1));
+        board.setPieceAt('f', 1, new Bishop('f', 1, true, 1));
+        board.setPieceAt('d', 2, new Bishop('d', 2, true, 1));
+        board.setPieceAt('f', 2, new Bishop('f', 2, true, 1));
+        board.setPieceAt('e', 2, new Bishop('e', 2, true, 1));
+        legalMoves.add(new ChessCoordinate('d', 1));
+        legalMoves.add(new ChessCoordinate('f', 1));
+        legalMoves.add(new ChessCoordinate('e', 2));
+        legalMoves.add(new ChessCoordinate('d', 2));
+        legalMoves.add(new ChessCoordinate('f', 2));
+        assert(board.getLegalMoves('e', 1).equals(legalMoves));
+
+        //King surrounded by same color bishops 
+        legalMoves = new ArrayList<ChessCoordinate>();
+        board.setPieceAt('d', 1, new Bishop('d', 1, true, 0));
+        board.setPieceAt('f', 1, new Bishop('f', 1, true, 0));
+        board.setPieceAt('d', 2, new Bishop('d', 2, true, 0));
+        board.setPieceAt('f', 2, new Bishop('f', 2, true, 0));
+        board.setPieceAt('e', 2, new Bishop('e', 2, true, 0));
+        assert(board.getLegalMoves('e', 1).equals(legalMoves));
+
+
+
     }
 }
