@@ -1120,5 +1120,54 @@ public class ChessBoardTests {
         legalMoves.add(new ChessCoordinate('f', 7));
         assert(board.getLegalMoves('e', 8).equals(legalMoves));
 
+        //Test that white king can't castle if the C1 square and F1 square is hit 
+        board.setPieceAt('a', 1, new Rook('a', 1, true, 0));
+        board.setPieceAt('h', 1, new Rook('h', 1, true, 0));
+        board.setPieceAt('a', 8, new Rook('a', 8, true, 1));
+        board.setPieceAt('h', 8, new Rook('h', 8, true, 1));
+        board.setPieceAt('c', 4, new Queen('c', 4, true, 1));
+        legalMoves = new ArrayList<ChessCoordinate>();
+        legalMoves.add(new ChessCoordinate('d', 1));
+        legalMoves.add(new ChessCoordinate('d', 2));
+        legalMoves.add(new ChessCoordinate('f', 2));
+        assert(board.getLegalMoves('e', 1).equals(legalMoves));
+
+        //Tests that white king can't castle if the D1 and G1 square is hit 
+        board.setPieceAt('c', 4, null);
+        board.setPieceAt('d', 4, new Queen('d', 4, true, 1));
+        legalMoves = new ArrayList<ChessCoordinate>();
+        legalMoves.add(new ChessCoordinate('f', 1));
+        legalMoves.add(new ChessCoordinate('e', 2));
+        assert(board.getLegalMoves('e', 1).equals(legalMoves));
+
+        //Tests that white king can't castle if it is in check 
+        board.setPieceAt('d', 4, null);
+        board.setPieceAt('e', 2, new Queen('e', 2, true, 1));
+        legalMoves = new ArrayList<ChessCoordinate>();
+        legalMoves.add(new ChessCoordinate('e', 2));
+        assert(board.getLegalMoves('e', 1).equals(legalMoves));
+
+        //Test that black king can't castle if the C8 square and F8 square is hit 
+        board.setPieceAt('c', 5, new Queen('c', 5, true, 0));
+        legalMoves = new ArrayList<ChessCoordinate>();
+        legalMoves.add(new ChessCoordinate('d', 8));
+        legalMoves.add(new ChessCoordinate('d', 7));
+        legalMoves.add(new ChessCoordinate('f', 7));
+        assert(board.getLegalMoves('e', 8).equals(legalMoves));
+
+        //Tests that black king can't castle if the D8 and G8 square is hit 
+        board.setPieceAt('c', 5, null);
+        board.setPieceAt('d', 5, new Queen('d', 5, true, 0));
+        legalMoves = new ArrayList<ChessCoordinate>();
+        legalMoves.add(new ChessCoordinate('f', 8));
+        legalMoves.add(new ChessCoordinate('e', 7));
+        assert(board.getLegalMoves('e', 8).equals(legalMoves));
+
+        //Tests that black king can't castle if it is in check 
+        board.setPieceAt('d', 5, null);
+        board.setPieceAt('e', 7, new Queen('e', 7, true, 0));
+        legalMoves = new ArrayList<ChessCoordinate>();
+        legalMoves.add(new ChessCoordinate('e', 7));
+        assert(board.getLegalMoves('e', 8).equals(legalMoves));
     }
 }
