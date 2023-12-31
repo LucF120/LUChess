@@ -93,7 +93,7 @@ public class ChessBoard {
             return this.getLegalRookMoves((Rook) piece);
         } 
         else if(piece instanceof Knight) {
-            return legalMoves; 
+            return this.getLegalKnightMoves((Knight) piece);
         }
         else if(piece instanceof Bishop) {
             return this.getLegalBishopMoves((Bishop) piece);
@@ -820,6 +820,112 @@ public class ChessBoard {
         return legalMoves;
     }
 
+    //Returns an arraylist of the legal knight moves for a given piece 
+    private ArrayList<ChessCoordinate> getLegalKnightMoves(ChessPiece piece) {
+        ArrayList<ChessCoordinate> legalMoves = new ArrayList<ChessCoordinate>();
+        char[] rightFiles = this.getRightFiles(piece.getFile());
+        char[] leftFiles = this.getLeftFiles(piece.getFile());
+
+        if(leftFiles.length >= 2) {
+            if(piece.getRank() + 1 <= 8) {
+                ChessPiece otherPiece = this.getPieceAt(leftFiles[1], piece.getRank() + 1);
+                if(otherPiece != null) {
+                    if(otherPiece.getColor() != piece.getColor()) {
+                        legalMoves.add(new ChessCoordinate(leftFiles[1], piece.getRank() + 1));
+                    }
+                } else {
+                    legalMoves.add(new ChessCoordinate(leftFiles[1], piece.getRank() + 1));
+                }
+            }
+
+            if(piece.getRank() - 1 >= 1) {
+                ChessPiece otherPiece = this.getPieceAt(leftFiles[1], piece.getRank() - 1);
+                if(otherPiece != null) {
+                    if(otherPiece.getColor() != piece.getColor()) {
+                        legalMoves.add(new ChessCoordinate(leftFiles[1], piece.getRank() - 1));
+                    }
+                } else {
+                    legalMoves.add(new ChessCoordinate(leftFiles[1], piece.getRank() - 1));
+                }
+            }
+        }
+
+        if(leftFiles.length >= 1) {
+            if(piece.getRank() + 2 <= 8) {
+                ChessPiece otherPiece = this.getPieceAt(leftFiles[0], piece.getRank() + 2);
+                if(otherPiece != null) {
+                    if(otherPiece.getColor() != piece.getColor()) {
+                        legalMoves.add(new ChessCoordinate(leftFiles[0], piece.getRank() + 2));
+                    }
+                } else {
+                    legalMoves.add(new ChessCoordinate(leftFiles[0], piece.getRank() + 2));
+                }
+            }
+
+            if(piece.getRank() - 2 >= 1) {
+                ChessPiece otherPiece = this.getPieceAt(leftFiles[0], piece.getRank() - 2);
+                if(otherPiece != null) {
+                    if(otherPiece.getColor() != piece.getColor()) {
+                        legalMoves.add(new ChessCoordinate(leftFiles[0], piece.getRank() - 2));
+                    }
+                } else {
+                    legalMoves.add(new ChessCoordinate(leftFiles[0], piece.getRank() - 2));
+                }
+            }
+        }
+
+        if(rightFiles.length >= 2) {
+            if(piece.getRank() + 1 <= 8) {
+                ChessPiece otherPiece = this.getPieceAt(rightFiles[1], piece.getRank() + 1);
+                if(otherPiece != null) {
+                    if(otherPiece.getColor() != piece.getColor()) {
+                        legalMoves.add(new ChessCoordinate(rightFiles[1], piece.getRank() + 1));
+                    }
+                } else {
+                    legalMoves.add(new ChessCoordinate(rightFiles[1], piece.getRank() + 1));
+                }
+            }
+
+            if(piece.getRank() - 1 >= 1) {
+                ChessPiece otherPiece = this.getPieceAt(rightFiles[1], piece.getRank() - 1);
+                if(otherPiece != null) {
+                    if(otherPiece.getColor() != piece.getColor()) {
+                        legalMoves.add(new ChessCoordinate(rightFiles[1], piece.getRank() - 1));
+                    }
+                } else {
+                    legalMoves.add(new ChessCoordinate(rightFiles[1], piece.getRank() - 1));
+                }
+            }
+        }
+
+        if(rightFiles.length >= 1) {
+            if(piece.getRank() + 2 <= 8) {
+                ChessPiece otherPiece = this.getPieceAt(rightFiles[0], piece.getRank() + 2);
+                if(otherPiece != null) {
+                    if(otherPiece.getColor() != piece.getColor()) {
+                        legalMoves.add(new ChessCoordinate(rightFiles[0], piece.getRank() + 2));
+                    }
+                } else {
+                    legalMoves.add(new ChessCoordinate(rightFiles[0], piece.getRank() + 2));
+                }
+            }
+
+            if(piece.getRank() - 2 >= 1) {
+                ChessPiece otherPiece = this.getPieceAt(rightFiles[0], piece.getRank() - 2);
+                if(otherPiece != null) {
+                    if(otherPiece.getColor() != piece.getColor()) {
+                        legalMoves.add(new ChessCoordinate(rightFiles[0], piece.getRank() - 2));
+                    }
+                } else {
+                    legalMoves.add(new ChessCoordinate(rightFiles[0], piece.getRank() - 2));
+                }
+            }
+        }
+
+        return legalMoves; 
+    }
+
+    //Returns an arraylist of the legal bishop moves for a given piece 
     private ArrayList<ChessCoordinate> getLegalBishopMoves(ChessPiece piece) {
         ArrayList<ChessCoordinate> legalMoves = new ArrayList<ChessCoordinate>();
         int upRankLeft = piece.getRank() + 1;
