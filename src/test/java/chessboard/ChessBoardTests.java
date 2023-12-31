@@ -1262,4 +1262,54 @@ public class ChessBoardTests {
         legalMoves.add(new ChessCoordinate('f', 7));
         assert(board.getLegalMoves('e', 8).equals(legalMoves));
     }
+
+    @Test
+    public void knightTests() {
+        ChessPiece[][] pieces = new ChessPiece[8][8];
+        ChessBoard board = new ChessBoard(pieces);
+        
+        //Tests legal moves for a knight in the middle of the board with nothing else on board 
+        board.setPieceAt('e', 4, new Knight('e', 4, true, 0));
+        ArrayList<ChessCoordinate> legalMoves = new ArrayList<ChessCoordinate>();
+        legalMoves.add(new ChessCoordinate('c', 5));
+        legalMoves.add(new ChessCoordinate('c', 3));
+        legalMoves.add(new ChessCoordinate('d', 6));
+        legalMoves.add(new ChessCoordinate('d', 2));
+        legalMoves.add(new ChessCoordinate('g', 5));
+        legalMoves.add(new ChessCoordinate('g', 3));
+        legalMoves.add(new ChessCoordinate('f', 6));
+        legalMoves.add(new ChessCoordinate('f', 2));
+        assert(board.getLegalMoves('e', 4).equals(legalMoves));
+
+        //Tests that the knight has the same legal moves if all 8 squares have capturable pieces 
+        board.setPieceAt('c', 5, new Knight('c', 5, true, 1));
+        board.setPieceAt('c', 3, new Bishop('c', 3, true, 1));
+        board.setPieceAt('d', 6, new Rook('d', 6, true, 1));
+        board.setPieceAt('d', 2, new Queen('d', 2, true, 1));
+        board.setPieceAt('g', 5, new Pawn('g', 5, true, 1));
+        board.setPieceAt('g', 3, new Pawn('g', 3, true, 1));
+        board.setPieceAt('f', 6, new Knight('f', 6, true, 1));
+        board.setPieceAt('f', 2, new Rook('f', 2, true, 1));
+        assert(board.getLegalMoves('e', 4).equals(legalMoves));
+
+        //Tests that the knight has no legal moves if all 8 squares have pieces of the same color 
+        board.setPieceAt('e', 4, new Knight('e', 4, true, 1));
+        assert(board.getLegalMoves('e', 4).equals(new ArrayList<ChessCoordinate>()));
+
+        //Test legal moves for a knight on the a file 
+        board = new ChessBoard(new ChessPiece[8][8]);
+        board.setPieceAt('a', 1, new Knight('a', 1, true, 0));
+        legalMoves = new ArrayList<ChessCoordinate>();
+        legalMoves.add(new ChessCoordinate('c', 2));
+        legalMoves.add(new ChessCoordinate('b', 3));
+        assert(board.getLegalMoves('a', 1).equals(legalMoves));
+        
+        //Test legal moves for a knight on the h file 
+        board = new ChessBoard(new ChessPiece[8][8]);
+        board.setPieceAt('h', 8, new Knight('h', 8, true, 1));
+        legalMoves = new ArrayList<ChessCoordinate>();
+        legalMoves.add(new ChessCoordinate('f', 7));
+        legalMoves.add(new ChessCoordinate('g', 6));
+        assert(board.getLegalMoves('h', 8).equals(legalMoves));
+    }
 }
