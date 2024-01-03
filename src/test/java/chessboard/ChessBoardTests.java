@@ -1312,4 +1312,132 @@ public class ChessBoardTests {
         legalMoves.add(new ChessCoordinate('g', 6));
         assert(board.getLegalMoves('h', 8).equals(legalMoves));
     }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void getLegalMovesFileOutOfBoundsException() {
+        ChessBoard board = new ChessBoard(); 
+        board.getLegalMoves('i', 1);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void getLegalMovesRankOutOfBoundsException() {
+        ChessBoard board = new ChessBoard(); 
+        board.getLegalMoves('i', 9);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void movePieceFileOutOfBoundsException() {
+        ChessBoard board = new ChessBoard(); 
+        board.movePiece('i', 1, 'h', 4);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void movePieceRankOutOfBoundsException() {
+        ChessBoard board = new ChessBoard(); 
+        board.movePiece('h', 9, 'h', 4);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void movePieceDestFileOutOfBoundsException() {
+        ChessBoard board = new ChessBoard(); 
+        board.movePiece('h', 8, 'i', 4);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void movePieceDestRankOutOfBoundsException() {
+        ChessBoard board = new ChessBoard(); 
+        board.movePiece('h', 8, 'h', 9);
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void moveEmptySquareException() {
+        ChessBoard board = new ChessBoard(); 
+        board.movePiece('h', 4, 'h', 5);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void movePieceIllegally() {
+        ChessBoard board = new ChessBoard();
+        board.movePiece('a', 2, 'a', 5);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void movePieceIllegally2() {
+        ChessBoard board = new ChessBoard();
+        board.movePiece('h', 1, 'h', 2);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void movePieceIllegally3() {
+        ChessBoard board = new ChessBoard();
+        board.movePiece('e', 1, 'e', 3);
+    }
+
+    @Test
+    public void movePieceCastling() {
+        ChessPiece[][] pieces = new ChessPiece[8][8];
+        ChessBoard board = new ChessBoard(pieces);
+
+        board.setPieceAt('a', 1, new Rook('a', 1, true, 0));
+        board.setPieceAt('e', 1, new King('e', 1, true, 0));
+        board.movePiece('e', 1, 'c', 1);
+
+        assert(board.getPieceAt('a', 1) == null);
+        assert(board.getPieceAt('e', 1) == null);
+        assert(board.getPieceAt('c', 1) instanceof King);
+        assert(board.getPieceAt('d', 1) instanceof Rook);
+
+        //Assert that the king can no longer castle
+        ArrayList<ChessCoordinate> legalMoves = new ArrayList<ChessCoordinate>();
+        legalMoves.add(new ChessCoordinate('b', 1));
+        legalMoves.add(new ChessCoordinate('c', 2));
+        legalMoves.add(new ChessCoordinate('b', 2));
+        legalMoves.add(new ChessCoordinate('d', 2));
+        assert(board.getLegalMoves('c', 1).equals(legalMoves));
+
+        //Assert that rook legal moves are correct 
+        legalMoves = new ArrayList<ChessCoordinate>();
+        legalMoves.add(new ChessCoordinate('e', 1));
+        legalMoves.add(new ChessCoordinate('f', 1));
+        legalMoves.add(new ChessCoordinate('g', 1));
+        legalMoves.add(new ChessCoordinate('h', 1));
+        legalMoves.add(new ChessCoordinate('d', 2));
+        legalMoves.add(new ChessCoordinate('d', 3));
+        legalMoves.add(new ChessCoordinate('d', 4));
+        legalMoves.add(new ChessCoordinate('d', 5));
+        legalMoves.add(new ChessCoordinate('d', 6));
+        legalMoves.add(new ChessCoordinate('d', 7));
+        legalMoves.add(new ChessCoordinate('d', 8));
+        assert(board.getLegalMoves('d', 1).equals(legalMoves));
+
+        board.setPieceAt('c', 1, null);
+        board.setPieceAt('d', 1, null);
+        board.setPieceAt('e', 1, new King('e', 1, true, 0));
+        board.setPieceAt('h', 1, new Rook('h', 1, true, 0));
+        board.movePiece('e', 1, 'g', 1);
+        assert(board.getPieceAt('f', 1) instanceof Rook);
+        assert(board.getPieceAt('g', 1) instanceof King);
+        assert(board.getPieceAt('e', 1) == null);
+        assert(board.getPieceAt('h', 1) == null);
+
+        board.setPieceAt('f', 1, null);
+        board.setPieceAt('g', 1, null);
+        board.setPieceAt('e', 8, new King('e', 8, true, 1));
+        board.setPieceAt('a', 8, new Rook('a', 8, true, 1));
+        board.movePiece('e', 8, 'c', 8);
+        assert(board.getPieceAt('c', 8) instanceof King);
+        assert(board.getPieceAt('d', 8) instanceof Rook);
+        assert(board.getPieceAt('e', 8) == null);
+        assert(board.getPieceAt('a', 8) == null);
+
+        board.setPieceAt('c', 8, null);
+        board.setPieceAt('d', 8, null);
+        board.setPieceAt('e', 8, new King('e', 8, true, 1));
+        board.setPieceAt('h', 8, new Rook('h', 8, true, 1));
+        board.movePiece('e', 8, 'g', 8);
+        assert(board.getPieceAt('g', 8) instanceof King);
+        assert(board.getPieceAt('f', 8) instanceof Rook);
+        assert(board.getPieceAt('h', 8) == null);
+        assert(board.getPieceAt('e', 8) == null);
+    }
 }
