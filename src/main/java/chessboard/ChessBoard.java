@@ -96,13 +96,9 @@ public class ChessBoard {
         if(!(legalMoves.contains(destination))) {
             throw new IllegalArgumentException("This is not a valid move");
         } else {
-            this.setPieceAt(file, rank, null);
-
             if(piece instanceof King && Math.abs(this.fileToInt(file) - this.fileToInt(destFile)) == 2) {
                 King king = (King) piece;
                 king.setHasMoved();
-                king.changeLocation(destFile, destRank);
-                this.setPieceAt(destFile, destRank, king);
                 if(destFile == 'c' && destRank == 1) {
                     Rook rook = (Rook) this.getPieceAt('a', 1);
                     rook.setHasMoved();
@@ -135,6 +131,30 @@ public class ChessBoard {
                     this.setPieceAt('h', 8, null);
                 }
             }
+
+            if(piece instanceof Pawn && this.getPieceAt(destFile, destRank) == null) {
+                if(piece.getColor() == 0) {
+                    this.setPieceAt(destFile, destRank - 1, null);
+                }
+
+                if(piece.getColor() == 1) {
+                    this.setPieceAt(destFile, destRank + 1, null);
+                }
+            }
+
+            if(piece instanceof Pawn && Math.abs(rank - destRank) == 2) {
+                piece = new Pawn(piece.getFile(), piece.getRank(), piece.isAlive(), piece.getColor(), true);
+            }
+
+            //Delete the piece from its original location 
+            this.setPieceAt(file, rank, null);
+            
+            //Move the piece to its new location 
+            piece.changeLocation(destFile, destRank);
+            this.setPieceAt(destFile, destRank, piece);
+
+            //Make it so en passant is no longer possible for all pawns, except the one that just moved 
+            cancelAllEnPassantPossibilities(destFile, destRank); 
         }
 
 
@@ -1322,6 +1342,22 @@ public class ChessBoard {
                 return 8;
             default:
                 throw new IllegalArgumentException("File must be between a-h");
+        }
+    }
+
+    //Change all pawns on the board isFirstMove values to false, except for the given file and rank 
+    private void cancelAllEnPassantPossibilities(char file, int rank) {
+        char[] files = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'};
+
+        for(int i=0 ; i<files.length ; i++) {
+            for (int j=1 ; j<9 ; j++) {
+                if(files[i] != file && j != rank) {
+                    ChessPiece piece = this.getPieceAt(files[i], j);
+                    if(piece instanceof Pawn) {
+                        this.setPieceAt(files[i], j, new Pawn(piece.getFile(), piece.getRank(), piece.isAlive(), piece.getColor()));
+                    }
+                } 
+            }
         }
     }
 }
