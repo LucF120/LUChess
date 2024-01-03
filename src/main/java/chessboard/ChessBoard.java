@@ -69,6 +69,79 @@ public class ChessBoard {
         return this.pieces; 
     }
 
+    //Move a piece at a given file and rank to the given destination file and destination rank if the move is legal 
+    public void movePiece(char file, int rank, char destFile, int destRank) throws IllegalArgumentException, NullPointerException {
+        if (file != 'a' && file != 'b' && file != 'c' && file != 'd' && file != 'e' && file != 'f' && file != 'g' && file != 'h') {
+            throw new IllegalArgumentException("The file of the piece to be moved must be between a-h");
+        }
+        if (rank <= 0 || rank > 8) {
+            throw new IllegalArgumentException("The rank of the piece to be moved must be between 1-8");
+        }
+
+        if (destFile != 'a' && destFile != 'b' && destFile != 'c' && destFile != 'd' && destFile != 'e' && destFile != 'f' && destFile != 'g' && destFile != 'h') {
+            throw new IllegalArgumentException("The destination file of the piece being moved must be between a-h");
+        }
+        if (destRank <= 0 || destRank > 8) {
+            throw new IllegalArgumentException("The destination rank of the piece being moved must be between 1-8");
+        }
+
+        if(this.getPieceAt(file, rank) == null) {
+            throw new NullPointerException("There is no piece at " + file + rank);
+        } 
+
+        ChessPiece piece = this.getPieceAt(file, rank);
+        ArrayList<ChessCoordinate> legalMoves = this.getLegalMoves(file, rank);
+        ChessCoordinate destination = new ChessCoordinate(destFile, destRank);
+
+        if(!(legalMoves.contains(destination))) {
+            throw new IllegalArgumentException("This is not a valid move");
+        } else {
+            this.setPieceAt(file, rank, null);
+
+            if(piece instanceof King && Math.abs(this.fileToInt(file) - this.fileToInt(destFile)) == 2) {
+                King king = (King) piece;
+                king.setHasMoved();
+                king.changeLocation(destFile, destRank);
+                this.setPieceAt(destFile, destRank, king);
+                if(destFile == 'c' && destRank == 1) {
+                    Rook rook = (Rook) this.getPieceAt('a', 1);
+                    rook.setHasMoved();
+                    rook.changeLocation('d', 1);
+                    this.setPieceAt('d', 1, rook);
+                    this.setPieceAt('a', 1, null);
+                }
+
+                if(destFile == 'g' && destRank == 1) {
+                    Rook rook = (Rook) this.getPieceAt('h', 1);
+                    rook.setHasMoved();
+                    rook.changeLocation('f', 1);
+                    this.setPieceAt('f', 1, rook);
+                    this.setPieceAt('h', 1, null);
+                }
+
+                if(destFile == 'c' && destRank == 8) {
+                    Rook rook = (Rook) this.getPieceAt('a', 8);
+                    rook.setHasMoved();
+                    rook.changeLocation('d', 8);
+                    this.setPieceAt('d', 8, rook);
+                    this.setPieceAt('a', 8, null);
+                }
+
+                if(destFile == 'g' && destRank == 8) {
+                    Rook rook = (Rook) this.getPieceAt('h', 8);
+                    rook.setHasMoved();
+                    rook.changeLocation('f', 8);
+                    this.setPieceAt('f', 8, rook);
+                    this.setPieceAt('h', 8, null);
+                }
+            }
+        }
+
+
+
+
+    }
+
     //Returns the legal moves for a piece at a given coordinate 
     //If the inputted file and rank is not a square on the board, throws IllegalArgumentException 
     public ArrayList<ChessCoordinate> getLegalMoves(char file, int rank) throws IllegalArgumentException {
@@ -1226,5 +1299,29 @@ public class ChessBoard {
         }
 
         return rightFiles;
+    }
+
+    //Converts a file to an integer: For calculation purposes 
+    private int fileToInt(char file) throws IllegalArgumentException {
+        switch(file) {
+            case 'a':
+                return 1;
+            case 'b':
+                return 2;
+            case 'c':
+                return 3;
+            case 'd':
+                return 4;
+            case 'e':
+                return 5;
+            case 'f':
+                return 6;
+            case 'g':
+                return 7;
+            case 'h':
+                return 8;
+            default:
+                throw new IllegalArgumentException("File must be between a-h");
+        }
     }
 }
