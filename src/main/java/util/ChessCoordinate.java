@@ -29,6 +29,16 @@ public class ChessCoordinate {
         return this.rank; 
     }
 
+    //Sets the file of the ChessCoordinate object
+    public void setFile(char file) {
+        this.file = file;
+    }
+
+    //Sets the rank of the ChessCoordinate object
+    public void setRank(int rank) {
+        this.rank = rank;
+    }
+
     //Overriding the equals method for a ChessCoordinate object 
     @Override
     public boolean equals(Object obj) {
