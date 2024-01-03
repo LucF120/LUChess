@@ -55,4 +55,10 @@ public class Rook implements ChessPiece {
     public void setHasMoved() {
         this.hasMoved = true;
     }
+
+    //Changes the location of a rook
+    public void changeLocation(char file, int rank) {
+        this.location.setFile(file);
+        this.location.setRank(rank);
+    }
 }

@@ -55,4 +55,10 @@ public class King implements ChessPiece {
     public void setHasMoved() {
         this.hasMoved = true;
     }
+
+    //Changes the location of a king
+    public void changeLocation(char file, int rank) {
+        this.location.setFile(file);
+        this.location.setRank(rank);
+    }
 }

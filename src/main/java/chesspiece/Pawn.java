@@ -59,4 +59,10 @@ public class Pawn implements ChessPiece {
     public boolean isFirstMove() {
         return this.isFirstMove; 
     }
+
+    //Changes the location of a pawn
+    public void changeLocation(char file, int rank) {
+        this.location.setFile(file);
+        this.location.setRank(rank);
+    }
 }

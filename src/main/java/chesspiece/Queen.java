@@ -43,4 +43,10 @@ public class Queen implements ChessPiece {
     public int getColor() {
         return this.color; 
     }
+
+    //Changes the location of a queen
+    public void changeLocation(char file, int rank) {
+        this.location.setFile(file);
+        this.location.setRank(rank);
+    }
 }
