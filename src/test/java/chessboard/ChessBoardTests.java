@@ -1440,4 +1440,145 @@ public class ChessBoardTests {
         assert(board.getPieceAt('h', 8) == null);
         assert(board.getPieceAt('e', 8) == null);
     }
+
+    @Test
+    public void enPassantMoveTest() {
+        ChessPiece[][] pieces = new ChessPiece[8][8];
+        ChessBoard board = new ChessBoard(pieces);
+
+        board.setPieceAt('e', 4, new Pawn('e', 4, true, 0, true));
+        board.setPieceAt('f', 4, new Pawn('f', 4, true, 1));
+        board.movePiece('f', 4, 'e', 3);
+        assert(board.getPieceAt('e', 4) == null);
+        assert(board.getPieceAt('f', 4) == null);
+        assert(board.getPieceAt('e', 3) instanceof Pawn);
+        Pawn pawn = (Pawn) board.getPieceAt('e', 3);
+        assert(pawn.getColor() == 1);
+
+        board.setPieceAt('e', 3, null);
+        board.setPieceAt('h', 7, new Pawn('h', 7, true, 1));
+        board.setPieceAt('g', 5, new Pawn('g', 5, true, 0));
+        board.movePiece('h', 7, 'h', 5);
+        board.movePiece('g', 5, 'h', 6);
+        assert(board.getPieceAt('h', 7) == null);
+        assert(board.getPieceAt('h', 5) == null);
+        assert(board.getPieceAt('g', 5) == null);
+        assert(board.getPieceAt('h', 6) instanceof Pawn);
+        assert(board.getPieceAt('h', 6).getColor() == 0);
+
+        //Assert that a newly moved pawn gets marked as isFirstMove() after jumping 2 squares, and then is no longer marked this after any other move 
+        board.setPieceAt('h', 6, null);
+        board.setPieceAt('e', 2, new Pawn('e', 2, true, 0));
+        board.setPieceAt('h', 7, new Pawn('h', 7, true, 1));
+        board.movePiece('e', 2, 'e', 4);
+        assert(board.getPieceAt('e', 2) == null);
+        assert(board.getPieceAt('e', 4) instanceof Pawn);
+        Pawn pawn2 = (Pawn) board.getPieceAt('e', 4);
+        assert(pawn2.isFirstMove() == true);
+        board.movePiece('h', 7, 'h', 6);
+        pawn2 = (Pawn) board.getPieceAt('e', 4);
+        Pawn pawn3 = (Pawn) board.getPieceAt('h', 6);
+        assert((pawn2.isFirstMove()) == false);
+        assert(pawn3.isFirstMove() == false);
+    }
+
+    @Test
+    public void knightMoveCaptureTest() {
+        ChessPiece[][] pieces = new ChessPiece[8][8];
+        ChessBoard board = new ChessBoard(pieces);
+
+        board.setPieceAt('e', 4, new Knight('e', 4, true, 0));
+        board.setPieceAt('f', 6, new Knight('f', 6, true, 1));
+        board.movePiece('e', 4, 'f', 6);
+        assert(board.getPieceAt('e', 4) == null);
+        assert(board.getPieceAt('f', 6) instanceof Knight);
+        assert(board.getPieceAt('f', 6).getColor() == 0);
+    }
+
+    @Test
+    public void bishopMoveCaptureTest() {
+        ChessPiece[][] pieces = new ChessPiece[8][8];
+        ChessBoard board = new ChessBoard(pieces);
+
+        board.setPieceAt('a', 1, new Bishop('a', 1, true, 0));
+        board.setPieceAt('h', 8, new Rook('h', 8, true, 1));
+        board.movePiece('a', 1, 'h', 8);
+        assert(board.getPieceAt('a', 1) == null);
+        assert(board.getPieceAt('h', 8) instanceof Bishop);
+        assert(board.getPieceAt('h', 8).getColor() == 0);
+    }
+
+    @Test
+    public void rookMoveCaptureTest() {
+        ChessPiece[][] pieces = new ChessPiece[8][8];
+        ChessBoard board = new ChessBoard(pieces);
+
+        board.setPieceAt('a', 2, new Rook('a', 2, true, 1));
+        board.setPieceAt('c', 2, new Rook('c', 2, true, 0));
+        board.movePiece('a', 2, 'c', 2);
+        assert(board.getPieceAt('a', 2) == null);
+        assert(board.getPieceAt('c', 2) instanceof Rook);
+        assert(board.getPieceAt('c', 2).getColor() == 1);
+    }
+
+    @Test
+    public void regularPawnCaptureTest() {
+        ChessPiece[][] pieces = new ChessPiece[8][8];
+        ChessBoard board = new ChessBoard(pieces);
+
+        board.setPieceAt('e', 4, new Pawn('e', 4, true, 0));
+        board.setPieceAt('f', 5, new Pawn('f', 5, true, 1));
+        board.movePiece('f', 5, 'e', 4);
+        assert(board.getPieceAt('f', 5) == null);
+        assert(board.getPieceAt('e', 4) instanceof Pawn);
+        assert(board.getPieceAt('e', 4).getColor() == 1);
+    }
+
+    @Test
+    public void kingMoveCaptureTest() {
+        ChessPiece[][] pieces = new ChessPiece[8][8];
+        ChessBoard board = new ChessBoard(pieces);
+
+        board.setPieceAt('e', 1, new King('e', 1, true, 0));
+        board.setPieceAt('e', 2, new Queen('e', 2, true, 1));
+        board.movePiece('e', 1, 'e', 2);
+        assert(board.getPieceAt('e', 1) == null);
+        assert(board.getPieceAt('e', 2) instanceof King);
+        assert(board.getPieceAt('e', 2).getColor() == 0);
+    }
+
+
+    @Test
+    public void moveQueenTest() {
+        ChessPiece[][] pieces = new ChessPiece[8][8];
+        ChessBoard board = new ChessBoard(pieces);
+
+        board.setPieceAt('e', 4, new Queen('e', 4, true, 1));
+        board.setPieceAt('e', 8, new Bishop('e', 8, true, 0));
+        board.setPieceAt('a', 8, new Knight('a', 8, true, 0));
+        board.movePiece('e', 4, 'e', 8);
+        board.movePiece('e', 8, 'a', 8);
+        assert(board.getPieceAt('e', 4) == null);
+        assert(board.getPieceAt('e', 8) == null);
+        assert(board.getPieceAt('a', 8) instanceof Queen);
+        assert(board.getPieceAt('a', 8).getColor() == 1);
+    }
+
+    @Test
+    public void castleThenCaptureWithRook() {
+        ChessPiece[][] pieces = new ChessPiece[8][8];
+        ChessBoard board = new ChessBoard(pieces);
+
+        board.setPieceAt('a', 1, new Rook('a', 1, true, 0));
+        board.setPieceAt('e', 1, new King('e', 1, true, 0));
+        board.setPieceAt('d', 8, new Bishop('c', 8, true, 1));
+        board.movePiece('e', 1, 'c', 1);
+        board.movePiece('d', 1, 'd', 8);
+        assert(board.getPieceAt('e', 1) == null);
+        assert(board.getPieceAt('a', 1) == null);
+        assert(board.getPieceAt('c', 1) instanceof King);
+        assert(board.getPieceAt('d', 1) == null);
+        assert(board.getPieceAt('d', 8) instanceof Rook);
+        assert(board.getPieceAt('d', 8).getColor() == 0);
+    }
 }
