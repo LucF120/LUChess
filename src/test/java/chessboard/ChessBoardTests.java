@@ -1581,4 +1581,39 @@ public class ChessBoardTests {
         assert(board.getPieceAt('d', 8) instanceof Rook);
         assert(board.getPieceAt('d', 8).getColor() == 0);
     }
+
+    @Test
+    public void checkTest() {
+        ChessBoard board = new ChessBoard();
+        assert(board.isWhiteInCheck() == false);
+        assert(board.isBlackInCheck() == false);
+
+        board = new ChessBoard(new ChessPiece[8][8]);
+        board.setPieceAt('e', 1, new King('e', 1, true, 0));
+        board.setPieceAt('a', 1, new Rook('a', 1, true, 1));
+        board.setPieceAt('e', 8, new King('e', 8, true, 1));
+        board.setPieceAt('g', 6, new Bishop('g', 6, true, 0));
+        assert(board.isWhiteInCheck() == true);
+        assert(board.isBlackInCheck() == true);
+    }
+    @Test
+    public void checkMateTest() {
+        ChessBoard board = new ChessBoard();
+        assert(board.isWhiteCheckmated() == false);
+        assert(board.isBlackCheckmated() == false);
+
+        board = new ChessBoard(new ChessPiece[8][8]);
+        board.setPieceAt('e', 1, new King('e', 1, true, 0));
+        board.setPieceAt('a', 1, new Rook('a', 1, true, 1));
+        board.setPieceAt('b', 2, new Queen('b', 2, true, 1));
+        board.setPieceAt('h', 1, new Rook('h', 1, true, 0));
+        board.setPieceAt('f', 2, new Pawn('f', 2, true, 0));
+        board.setPieceAt('h', 4, new Bishop('h', 4, true, 0));
+        board.setPieceAt('f', 8, new Queen('f', 8, true, 0));
+        board.setPieceAt('h', 8, new Knight('h', 8, true, 0));
+
+
+        assert(board.isWhiteCheckmated() == true);
+    
+    }
 }

@@ -5,6 +5,8 @@ import util.*;
 
 import java.util.ArrayList;
 
+import java.util.Arrays;
+
 //Represents a 64-square chess board 
 public class ChessBoard {
     private ChessPiece[][] pieces = new ChessPiece[8][8];
@@ -156,10 +158,114 @@ public class ChessBoard {
             //Make it so en passant is no longer possible for all pawns, except the one that just moved 
             cancelAllEnPassantPossibilities(destFile, destRank); 
         }
+    }
 
+    //Returns true if white's king is in checkmate 
+    public boolean isWhiteCheckmated() throws NullPointerException {
+        ChessCoordinate whiteKingLocation = this.getWhiteKingCoords();
+        char whiteKingFile = whiteKingLocation.getFile();
+        int whiteKingRank = whiteKingLocation.getRank(); 
+        
+        char [] files = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h',};
 
+        ChessPiece[][] piecesCopy = new ChessPiece[8][8];
 
+        for(int i=0 ; i<pieces.length ; i++) {
+            piecesCopy[i] = Arrays.copyOf(pieces[i], pieces[i].length);
+        }
 
+        //Check if the white king is in check 
+        if(this.isWhiteInCheck() == false) {
+            return false;
+        } else {
+            //Check if the white king has any legal moves 
+            if(this.getLegalMoves(whiteKingFile, whiteKingRank).size() > 0) {
+                return true;
+            }
+
+            //Check if there are any non-king moves that get the white king out of check 
+            for(int i=0 ; i<files.length ; i++) {
+                for(int j=1 ; j<9 ; j++) {
+                    if(this.getPieceAt(files[i], j) != null) {
+                        if(this.getPieceAt(files[i], j).getColor() == 0) {
+                            for (int k=0 ; k < this.getLegalMoves(files[i], j).size() ; k++) {
+                                ChessCoordinate destination = this.getLegalMoves(files[i], j).get(k);
+                                this.movePiece(files[i], j, destination.getFile(), destination.getRank());
+                                if(this.isWhiteInCheck() == false) {
+                                    for(int l=0 ; l<pieces.length ; l++) {
+                                        pieces[l] = Arrays.copyOf(piecesCopy[l], piecesCopy[l].length);
+                                    }
+                                    return false;
+                                }
+                                for(int l=0 ; l<pieces.length ; l++) {
+                                    pieces[l] = Arrays.copyOf(piecesCopy[l], piecesCopy[l].length);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        //If there are no legal moves that get the king out of check, return true 
+        return true; 
+    }
+
+    //Returns true if black's king is in checkmate 
+    public boolean isBlackCheckmated() throws NullPointerException {
+        if(this.isBlackInCheck() == false) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    //Returns true if the white king is in check
+    public boolean isWhiteInCheck() throws NullPointerException {
+        ChessCoordinate whiteKingLocation = this.getWhiteKingCoords();
+        return this.isSquareUnderAttack(whiteKingLocation.getFile(), whiteKingLocation.getRank(), 0);
+    }
+
+    //Returns true if the black king is in check
+    public boolean isBlackInCheck() throws NullPointerException {
+        ChessCoordinate blackKingLocation = this.getBlackKingCoords();
+        return this.isSquareUnderAttack(blackKingLocation.getFile(), blackKingLocation.getRank(), 1);
+    }
+
+    //Returns the coordinates of the white king 
+    private ChessCoordinate getWhiteKingCoords() throws NullPointerException {
+        char[] files = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'};
+
+        for(int i=0 ; i<files.length ; i++) {
+            for(int j=1 ; j<9 ; j++) {
+                ChessPiece piece = this.getPieceAt(files[i], j);
+                if(piece != null) {
+                    if(piece instanceof King && piece.getColor() == 0) {
+                        return new ChessCoordinate(files[i], j);
+                    }
+                }
+            }
+        }
+
+        throw new NullPointerException("There is no white king on the board");
+    }
+
+    //Returns the coordinates of the black king 
+    private ChessCoordinate getBlackKingCoords() throws NullPointerException {
+        char[] files = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'};
+
+        for(int i=0 ; i<files.length ; i++) {
+            for(int j=1 ; j<9 ; j++) {
+                ChessPiece piece = this.getPieceAt(files[i], j);
+                if(piece != null) {
+                    if(piece instanceof King && piece.getColor() == 1) {
+                        return new ChessCoordinate(files[i], j);
+                    }
+                }
+            }
+        }
+
+        throw new NullPointerException("There is no black king on the board");
     }
 
     //Returns the legal moves for a piece at a given coordinate 
