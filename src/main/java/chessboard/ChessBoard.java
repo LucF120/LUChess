@@ -166,12 +166,14 @@ public class ChessBoard {
         char whiteKingFile = whiteKingLocation.getFile();
         int whiteKingRank = whiteKingLocation.getRank(); 
         
-        char [] files = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h',};
+        char[] files = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'};
 
         ChessPiece[][] piecesCopy = new ChessPiece[8][8];
 
         for(int i=0 ; i<pieces.length ; i++) {
-            piecesCopy[i] = Arrays.copyOf(pieces[i], pieces[i].length);
+            for(int j=0 ; j<pieces[i].length ; j++) {
+                piecesCopy[i][j] = pieces[i][j];
+            }
         }
 
         //Check if the white king is in check 
@@ -180,7 +182,7 @@ public class ChessBoard {
         } else {
             //Check if the white king has any legal moves 
             if(this.getLegalMoves(whiteKingFile, whiteKingRank).size() > 0) {
-                return true;
+                return false;
             }
 
             //Check if there are any non-king moves that get the white king out of check 
@@ -193,12 +195,16 @@ public class ChessBoard {
                                 this.movePiece(files[i], j, destination.getFile(), destination.getRank());
                                 if(this.isWhiteInCheck() == false) {
                                     for(int l=0 ; l<pieces.length ; l++) {
-                                        pieces[l] = Arrays.copyOf(piecesCopy[l], piecesCopy[l].length);
+                                        for(int m=0 ; m<pieces[l].length ; m++) {
+                                            pieces[l][m] = piecesCopy[l][m];
+                                        }
                                     }
                                     return false;
                                 }
                                 for(int l=0 ; l<pieces.length ; l++) {
-                                    pieces[l] = Arrays.copyOf(piecesCopy[l], piecesCopy[l].length);
+                                    for(int m=0 ; m<pieces[l].length ; m++) {
+                                        pieces[l][m] = piecesCopy[l][m];
+                                    }
                                 }
                             }
                         }
@@ -213,11 +219,47 @@ public class ChessBoard {
 
     //Returns true if black's king is in checkmate 
     public boolean isBlackCheckmated() throws NullPointerException {
+        ChessCoordinate blackKingLocation = this.getBlackKingCoords();
+        char blackKingFile = blackKingLocation.getFile();
+        int blackKingRank = blackKingLocation.getRank(); 
+        
+        char[] files = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'};
+
+        ChessPiece[][] piecesCopy = new ChessPiece[8][8];
+
+        piecesCopy = copyToPieces(pieces); 
+
+        //Check if the black king is in check 
         if(this.isBlackInCheck() == false) {
             return false;
         } else {
-            return true;
+            //Check if the white king has any legal moves 
+            if(this.getLegalMoves(blackKingFile, blackKingRank).size() > 0) {
+                return false;
+            }
+
+            //Check if there are any non-king moves that get the black king out of check 
+            for(int i=0 ; i<files.length ; i++) {
+                for(int j=1 ; j<9 ; j++) {
+                    if(this.getPieceAt(files[i], j) != null) {
+                        if(this.getPieceAt(files[i], j).getColor() == 1) {
+                            for (int k=0 ; k < this.getLegalMoves(files[i], j).size() ; k++) {
+                                ChessCoordinate destination = this.getLegalMoves(files[i], j).get(k);
+                                this.movePiece(files[i], j, destination.getFile(), destination.getRank());
+                                if(this.isBlackInCheck() == false) {
+                                    pieces = copyToPieces(piecesCopy);
+                                    return false;
+                                }
+                                pieces = copyToPieces(piecesCopy);
+                            }
+                        }
+                    }
+                }
+            }
         }
+
+        //If there are no legal moves that get the king out of check, return true 
+        return true; 
     }
 
     //Returns true if the white king is in check
@@ -233,7 +275,7 @@ public class ChessBoard {
     }
 
     //Returns the coordinates of the white king 
-    private ChessCoordinate getWhiteKingCoords() throws NullPointerException {
+    public ChessCoordinate getWhiteKingCoords() throws NullPointerException {
         char[] files = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'};
 
         for(int i=0 ; i<files.length ; i++) {
@@ -541,435 +583,98 @@ public class ChessBoard {
     //Returns an array of the legal pawn moves given a pawn 
     private ArrayList<ChessCoordinate> getLegalPawnMoves(Pawn piece) {
         ArrayList<ChessCoordinate> legalMoves = new ArrayList<ChessCoordinate>();
-        //White pawn movements 
+        char[] leftFiles = this.getLeftFiles(piece.getFile());
+        char[] rightFiles = this.getRightFiles(piece.getFile());
+
         if(piece.getColor() == 0) {
-            //White pawn at starting position moving up 2 squares 
             if(piece.getRank() == 2) {
                 if(this.getPieceAt(piece.getFile(), 3) == null && this.getPieceAt(piece.getFile(), 4) == null) {
                     legalMoves.add(new ChessCoordinate(piece.getFile(), 4));
                 }
             }
-            //White pawn moving up 1 square 
-            if(this.getPieceAt(piece.getFile(), piece.getRank()+1) == null) {
-                legalMoves.add(new ChessCoordinate(piece.getFile(), piece.getRank()+1));
+
+            if(this.getPieceAt(piece.getFile(), piece.getRank() + 1) == null) {
+                legalMoves.add(new ChessCoordinate(piece.getFile(), piece.getRank() + 1));
             }
 
-            //White pawn diagonal captures and en passant captures 
-            switch(piece.getFile()) {
-                case 'a':
-                    if(this.getPieceAt('b', piece.getRank()+1) != null) {
-                        if(this.getPieceAt('b', piece.getRank()+1).getColor() == 1) {
-                            legalMoves.add(new ChessCoordinate('b', piece.getRank()+1));
+            if(leftFiles.length > 0 && piece.getRank() + 1 <= 8) {
+                if(this.getPieceAt(leftFiles[0], piece.getRank() + 1) != null) {
+                    if(this.getPieceAt(leftFiles[0], piece.getRank() + 1).getColor() == 1) {
+                        legalMoves.add(new ChessCoordinate(leftFiles[0], piece.getRank() + 1));
+                    }
+                }
+
+                if(this.getPieceAt(leftFiles[0], piece.getRank()) != null) {
+                    if(this.getPieceAt(leftFiles[0], piece.getRank()).getColor() == 1) {
+                        Pawn pawn = (Pawn) this.getPieceAt(leftFiles[0], piece.getRank());
+                        if(pawn.isFirstMove() == true) {
+                            legalMoves.add(new ChessCoordinate(leftFiles[0], piece.getRank() + 1));
                         }
                     }
-                    //Right en passant 
-                    ChessPiece rightNeighborA = this.getPieceAt('b', piece.getRank());
-                    if(rightNeighborA instanceof Pawn) {
-                        Pawn rightPawnA = (Pawn) rightNeighborA; 
-                        if(rightPawnA.getColor() == 1 && rightPawnA.isFirstMove() == true) {
-                            legalMoves.add(new ChessCoordinate('b', piece.getRank()+1));
+                }
+            }
+
+            if(rightFiles.length > 0 && piece.getRank() + 1 <= 8) {
+                if(this.getPieceAt(rightFiles[0], piece.getRank() + 1) != null) {
+                    if(this.getPieceAt(rightFiles[0], piece.getRank() + 1).getColor() == 1) {
+                        legalMoves.add(new ChessCoordinate(rightFiles[0], piece.getRank() + 1));
+                    }
+                }
+
+                if(this.getPieceAt(rightFiles[0], piece.getRank()) != null) {
+                    if(this.getPieceAt(rightFiles[0], piece.getRank()).getColor() == 1) {
+                        Pawn pawn = (Pawn) this.getPieceAt(rightFiles[0], piece.getRank());
+                        if(pawn.isFirstMove() == true) {
+                            legalMoves.add(new ChessCoordinate(rightFiles[0], piece.getRank() + 1));
                         }
                     }
-                    break;
-                case 'b':
-                    if(this.getPieceAt('a', piece.getRank()+1) != null) {
-                        if(this.getPieceAt('a', piece.getRank()+1).getColor() == 1) {
-                            legalMoves.add(new ChessCoordinate('a', piece.getRank()+1));
-                        }
-                    }
-                    if(this.getPieceAt('c', piece.getRank()+1) != null) {
-                        if(this.getPieceAt('c', piece.getRank()+1).getColor() == 1) {
-                            legalMoves.add(new ChessCoordinate('c', piece.getRank()+1));
-                        }
-                    }
-                    //Left en passant 
-                    ChessPiece leftNeighborB = this.getPieceAt('a', piece.getRank());
-                    if(leftNeighborB instanceof Pawn) {
-                        Pawn leftPawnB = (Pawn) leftNeighborB; 
-                        if(leftPawnB.getColor() == 1 && leftPawnB.isFirstMove() == true) {
-                            legalMoves.add(new ChessCoordinate('a', piece.getRank()+1));
-                        }
-                    }
-                    //Right en passant 
-                    ChessPiece rightNeighborB = this.getPieceAt('c', piece.getRank());
-                    if(rightNeighborB instanceof Pawn) {
-                        Pawn rightPawnB = (Pawn) rightNeighborB; 
-                        if(rightPawnB.getColor() == 1 && rightPawnB.isFirstMove() == true) {
-                            legalMoves.add(new ChessCoordinate('c', piece.getRank()+1));
-                        }
-                    }
-                    break;
-                case 'c':
-                    if(this.getPieceAt('b', piece.getRank()+1) != null) {
-                        if(this.getPieceAt('b', piece.getRank()+1).getColor() == 1) {
-                            legalMoves.add(new ChessCoordinate('b', piece.getRank()+1));
-                        }
-                    }
-                    if(this.getPieceAt('d', piece.getRank()+1) != null) {
-                        if(this.getPieceAt('d', piece.getRank()+1).getColor() == 1) {
-                            legalMoves.add(new ChessCoordinate('d', piece.getRank()+1));
-                        }
-                    }
-                    //Left en passant 
-                    ChessPiece leftNeighborC = this.getPieceAt('b', piece.getRank());
-                    if(leftNeighborC instanceof Pawn) {
-                        Pawn leftPawnC = (Pawn) leftNeighborC; 
-                        if(leftPawnC.getColor() == 1 && leftPawnC.isFirstMove() == true) {
-                            legalMoves.add(new ChessCoordinate('b', piece.getRank()+1));
-                        }
-                    }
-                    //Right en passant 
-                    ChessPiece rightNeighborC = this.getPieceAt('d', piece.getRank());
-                    if(rightNeighborC instanceof Pawn) {
-                        Pawn rightPawnC = (Pawn) rightNeighborC; 
-                        if(rightPawnC.getColor() == 1 && rightPawnC.isFirstMove() == true) {
-                            legalMoves.add(new ChessCoordinate('d', piece.getRank()+1));
-                        }
-                    }
-                    break;
-                case 'd':
-                    if(this.getPieceAt('c', piece.getRank()+1) != null) {
-                        if(this.getPieceAt('c', piece.getRank()+1).getColor() == 1) {
-                            legalMoves.add(new ChessCoordinate('c', piece.getRank()+1));
-                        }
-                    }
-                    if(this.getPieceAt('e', piece.getRank()+1) != null) {
-                        if(this.getPieceAt('e', piece.getRank()+1).getColor() == 1) {
-                            legalMoves.add(new ChessCoordinate('e', piece.getRank()+1));
-                        }
-                    }
-                    //Left en passant 
-                    ChessPiece leftNeighborD = this.getPieceAt('c', piece.getRank());
-                    if(leftNeighborD instanceof Pawn) {
-                        Pawn leftPawnD = (Pawn) leftNeighborD; 
-                        if(leftPawnD.getColor() == 1 && leftPawnD.isFirstMove() == true) {
-                            legalMoves.add(new ChessCoordinate('c', piece.getRank()+1));
-                        }
-                    }
-                    //Right en passant 
-                    ChessPiece rightNeighborD = this.getPieceAt('e', piece.getRank());
-                    if(rightNeighborD instanceof Pawn) {
-                        Pawn rightPawnD = (Pawn) rightNeighborD; 
-                        if(rightPawnD.getColor() == 1 && rightPawnD.isFirstMove() == true) {
-                            legalMoves.add(new ChessCoordinate('e', piece.getRank()+1));
-                        }
-                    }
-                    break;
-                case 'e': 
-                    if(this.getPieceAt('d', piece.getRank()+1) != null) {
-                        if(this.getPieceAt('d', piece.getRank()+1).getColor() == 1) {
-                            legalMoves.add(new ChessCoordinate('d', piece.getRank()+1));
-                        }
-                    }
-                    if(this.getPieceAt('f', piece.getRank()+1) != null) {
-                        if(this.getPieceAt('f', piece.getRank()+1).getColor() == 1) {
-                            legalMoves.add(new ChessCoordinate('f', piece.getRank()+1));
-                        }
-                    }
-                    //Left en passant 
-                    ChessPiece leftNeighborE = this.getPieceAt('d', piece.getRank());
-                    if(leftNeighborE instanceof Pawn) {
-                        Pawn leftPawnE = (Pawn) leftNeighborE; 
-                        if(leftPawnE.getColor() == 1 && leftPawnE.isFirstMove() == true) {
-                            legalMoves.add(new ChessCoordinate('d', piece.getRank()+1));
-                        }
-                    }
-                    //Right en passant 
-                    ChessPiece rightNeighborE = this.getPieceAt('f', piece.getRank());
-                    if(rightNeighborE instanceof Pawn) {
-                        Pawn rightPawnE = (Pawn) rightNeighborE; 
-                        if(rightPawnE.getColor() == 1 && rightPawnE.isFirstMove() == true) {
-                            legalMoves.add(new ChessCoordinate('f', piece.getRank()+1));
-                        }
-                    }
-                    break;
-                case 'f': 
-                    if(this.getPieceAt('e', piece.getRank()+1) != null) {
-                        if(this.getPieceAt('e', piece.getRank()+1).getColor() == 1) {
-                            legalMoves.add(new ChessCoordinate('e', piece.getRank()+1));
-                        }
-                    }
-                    if(this.getPieceAt('g', piece.getRank()+1) != null) {
-                        if(this.getPieceAt('g', piece.getRank()+1).getColor() == 1) {
-                            legalMoves.add(new ChessCoordinate('g', piece.getRank()+1));
-                        }
-                    }
-                    //Left en passant 
-                    ChessPiece leftNeighborF = this.getPieceAt('e', piece.getRank());
-                    if(leftNeighborF instanceof Pawn) {
-                        Pawn leftPawnF = (Pawn) leftNeighborF; 
-                        if(leftPawnF.getColor() == 1 && leftPawnF.isFirstMove() == true) {
-                            legalMoves.add(new ChessCoordinate('e', piece.getRank()+1));
-                        }
-                    }
-                    //Right en passant 
-                    ChessPiece rightNeighborF = this.getPieceAt('g', piece.getRank());
-                    if(rightNeighborF instanceof Pawn) {
-                        Pawn rightPawnF = (Pawn) rightNeighborF; 
-                        if(rightPawnF.getColor() == 1 && rightPawnF.isFirstMove() == true) {
-                            legalMoves.add(new ChessCoordinate('g', piece.getRank()+1));
-                        }
-                    }
-                    break;
-                case 'g':
-                    if(this.getPieceAt('f', piece.getRank()+1) != null) {
-                        if(this.getPieceAt('f', piece.getRank()+1).getColor() == 1) {
-                            legalMoves.add(new ChessCoordinate('f', piece.getRank()+1));
-                        }
-                    }
-                    if(this.getPieceAt('h', piece.getRank()+1) != null) {
-                        if(this.getPieceAt('h', piece.getRank()+1).getColor() == 1) {
-                            legalMoves.add(new ChessCoordinate('h', piece.getRank()+1));
-                        }
-                    }
-                    //Left en passant 
-                    ChessPiece leftNeighborG = this.getPieceAt('f', piece.getRank());
-                    if(leftNeighborG instanceof Pawn) {
-                        Pawn leftPawnG = (Pawn) leftNeighborG; 
-                        if(leftPawnG.getColor() == 1 && leftPawnG.isFirstMove() == true) {
-                            legalMoves.add(new ChessCoordinate('f', piece.getRank()+1));
-                        }
-                    }
-                    //Right en passant 
-                    ChessPiece rightNeighborG = this.getPieceAt('h', piece.getRank());
-                    if(rightNeighborG instanceof Pawn) {
-                        Pawn rightPawnG = (Pawn) rightNeighborG; 
-                        if(rightPawnG.getColor() == 1 && rightPawnG.isFirstMove() == true) {
-                            legalMoves.add(new ChessCoordinate('h', piece.getRank()+1));
-                        }
-                    }
-                    break;
-                case 'h':
-                    if(this.getPieceAt('g', piece.getRank()+1) != null) {
-                        if(this.getPieceAt('g', piece.getRank()+1).getColor() == 1) {
-                            legalMoves.add(new ChessCoordinate('g', piece.getRank()+1));
-                        }
-                    }
-                    //Left en passant 
-                    ChessPiece leftNeighborH = this.getPieceAt('g', piece.getRank());
-                    if(leftNeighborH instanceof Pawn) {
-                        Pawn leftPawnH = (Pawn) leftNeighborH; 
-                        if(leftPawnH.getColor() == 1 && leftPawnH.isFirstMove() == true) {
-                            legalMoves.add(new ChessCoordinate('g', piece.getRank()+1));
-                        }
-                    }
-                    break;
+                }
             }
         }
 
-        //Black pawn movements 
         if(piece.getColor() == 1) {
-            //White pawn at starting position moving up 2 squares 
             if(piece.getRank() == 7) {
                 if(this.getPieceAt(piece.getFile(), 6) == null && this.getPieceAt(piece.getFile(), 5) == null) {
                     legalMoves.add(new ChessCoordinate(piece.getFile(), 5));
                 }
             }
-            //Black pawn moving down 1 square 
-            if(this.getPieceAt(piece.getFile(), piece.getRank()-1) == null) {
-                legalMoves.add(new ChessCoordinate(piece.getFile(), piece.getRank()-1));
+
+            if(this.getPieceAt(piece.getFile(), piece.getRank() - 1) == null) {
+                legalMoves.add(new ChessCoordinate(piece.getFile(), piece.getRank() - 1));
+            }
+            
+            if(leftFiles.length > 0 && piece.getRank() - 1 >= 1) {
+                if(this.getPieceAt(leftFiles[0], piece.getRank() - 1) != null) {
+                    if(this.getPieceAt(leftFiles[0], piece.getRank() - 1).getColor() == 0) {
+                        legalMoves.add(new ChessCoordinate(leftFiles[0], piece.getRank() - 1));
+                    }
+                }
+
+                if(this.getPieceAt(leftFiles[0], piece.getRank()) != null) {
+                    if(this.getPieceAt(leftFiles[0], piece.getRank()).getColor() == 0) {
+                        Pawn pawn = (Pawn) this.getPieceAt(leftFiles[0], piece.getRank());
+                        if(pawn.isFirstMove() == true) {
+                            legalMoves.add(new ChessCoordinate(leftFiles[0], piece.getRank() - 1));
+                        }
+                    }
+                }
             }
 
-            //Black pawn diagonal captures and en passant captures 
-            switch(piece.getFile()) {
-                case 'a':
-                    if(this.getPieceAt('b', piece.getRank()-1) != null) {
-                        if(this.getPieceAt('b', piece.getRank()-1).getColor() == 0) {
-                            legalMoves.add(new ChessCoordinate('b', piece.getRank()-1));
+            if(rightFiles.length > 0 && piece.getRank() - 1 >= 1) {
+                if(this.getPieceAt(rightFiles[0], piece.getRank() - 1) != null) {
+                    if(this.getPieceAt(rightFiles[0], piece.getRank() - 1).getColor() == 0) {
+                        legalMoves.add(new ChessCoordinate(rightFiles[0], piece.getRank() - 1));
+                    }
+                }
+
+                if(this.getPieceAt(rightFiles[0], piece.getRank()) != null) {
+                    if(this.getPieceAt(rightFiles[0], piece.getRank()).getColor() == 0) {
+                        Pawn pawn = (Pawn) this.getPieceAt(rightFiles[0], piece.getRank());
+                        if(pawn.isFirstMove() == true) {
+                            legalMoves.add(new ChessCoordinate(rightFiles[0], piece.getRank() - 1));
                         }
                     }
-                    //Right en passant 
-                    ChessPiece rightNeighborA = this.getPieceAt('b', piece.getRank());
-                    if(rightNeighborA instanceof Pawn) {
-                        Pawn rightPawnA = (Pawn) rightNeighborA; 
-                        if(rightPawnA.getColor() == 0 && rightPawnA.isFirstMove() == true) {
-                            legalMoves.add(new ChessCoordinate('b', piece.getRank()-1));
-                        }
-                    }
-                    break;
-                case 'b':
-                    if(this.getPieceAt('a', piece.getRank()-1) != null) {
-                        if(this.getPieceAt('a', piece.getRank()-1).getColor() == 0) {
-                            legalMoves.add(new ChessCoordinate('a', piece.getRank()-1));
-                        }
-                    }
-                    if(this.getPieceAt('c', piece.getRank()-1) != null) {
-                        if(this.getPieceAt('c', piece.getRank()-1).getColor() == 0) {
-                            legalMoves.add(new ChessCoordinate('c', piece.getRank()-1));
-                        }
-                    }
-                    //Left en passant 
-                    ChessPiece leftNeighborB = this.getPieceAt('a', piece.getRank());
-                    if(leftNeighborB instanceof Pawn) {
-                        Pawn leftPawnB = (Pawn) leftNeighborB; 
-                        if(leftPawnB.getColor() == 0 && leftPawnB.isFirstMove() == true) {
-                            legalMoves.add(new ChessCoordinate('a', piece.getRank()-1));
-                        }
-                    }
-                    //Right en passant 
-                    ChessPiece rightNeighborB = this.getPieceAt('c', piece.getRank());
-                    if(rightNeighborB instanceof Pawn) {
-                        Pawn rightPawnB = (Pawn) rightNeighborB; 
-                        if(rightPawnB.getColor() == 0 && rightPawnB.isFirstMove() == true) {
-                            legalMoves.add(new ChessCoordinate('c', piece.getRank()-1));
-                        }
-                    }
-                    break;
-                case 'c':
-                    if(this.getPieceAt('b', piece.getRank()-1) != null) {
-                        if(this.getPieceAt('b', piece.getRank()-1).getColor() == 0) {
-                            legalMoves.add(new ChessCoordinate('b', piece.getRank()-1));
-                        }
-                    }
-                    if(this.getPieceAt('d', piece.getRank()-1) != null) {
-                        if(this.getPieceAt('d', piece.getRank()-1).getColor() == 0) {
-                            legalMoves.add(new ChessCoordinate('d', piece.getRank()-1));
-                        }
-                    }
-                    //Left en passant 
-                    ChessPiece leftNeighborC = this.getPieceAt('b', piece.getRank());
-                    if(leftNeighborC instanceof Pawn) {
-                        Pawn leftPawnC = (Pawn) leftNeighborC; 
-                        if(leftPawnC.getColor() == 0 && leftPawnC.isFirstMove() == true) {
-                            legalMoves.add(new ChessCoordinate('b', piece.getRank()-1));
-                        }
-                    }
-                    //Right en passant 
-                    ChessPiece rightNeighborC = this.getPieceAt('d', piece.getRank());
-                    if(rightNeighborC instanceof Pawn) {
-                        Pawn rightPawnC = (Pawn) rightNeighborC; 
-                        if(rightPawnC.getColor() == 0 && rightPawnC.isFirstMove() == true) {
-                            legalMoves.add(new ChessCoordinate('d', piece.getRank()-1));
-                        }
-                    }
-                    break;
-                case 'd':
-                    if(this.getPieceAt('c', piece.getRank()-1) != null) {
-                        if(this.getPieceAt('c', piece.getRank()-1).getColor() == 0) {
-                            legalMoves.add(new ChessCoordinate('c', piece.getRank()-1));
-                        }
-                    }
-                    if(this.getPieceAt('e', piece.getRank()-1) != null) {
-                        if(this.getPieceAt('e', piece.getRank()-1).getColor() == 0) {
-                            legalMoves.add(new ChessCoordinate('e', piece.getRank()-1));
-                        }
-                    }
-                    //Left en passant 
-                    ChessPiece leftNeighborD = this.getPieceAt('c', piece.getRank());
-                    if(leftNeighborD instanceof Pawn) {
-                        Pawn leftPawnD = (Pawn) leftNeighborD; 
-                        if(leftPawnD.getColor() == 0 && leftPawnD.isFirstMove() == true) {
-                            legalMoves.add(new ChessCoordinate('c', piece.getRank()-1));
-                        }
-                    }
-                    //Right en passant 
-                    ChessPiece rightNeighborD = this.getPieceAt('e', piece.getRank());
-                    if(rightNeighborD instanceof Pawn) {
-                        Pawn rightPawnD = (Pawn) rightNeighborD; 
-                        if(rightPawnD.getColor() == 0 && rightPawnD.isFirstMove() == true) {
-                            legalMoves.add(new ChessCoordinate('e', piece.getRank()-1));
-                        }
-                    }
-                    break;
-                case 'e': 
-                    if(this.getPieceAt('d', piece.getRank()-1) != null) {
-                        if(this.getPieceAt('d', piece.getRank()-1).getColor() == 0) {
-                            legalMoves.add(new ChessCoordinate('d', piece.getRank()-1));
-                        }
-                    }
-                    if(this.getPieceAt('f', piece.getRank()-1) != null) {
-                        if(this.getPieceAt('f', piece.getRank()-1).getColor() == 0) {
-                            legalMoves.add(new ChessCoordinate('f', piece.getRank()-1));
-                        }
-                    }
-                    //Left en passant 
-                    ChessPiece leftNeighborE = this.getPieceAt('d', piece.getRank());
-                    if(leftNeighborE instanceof Pawn) {
-                        Pawn leftPawnE = (Pawn) leftNeighborE; 
-                        if(leftPawnE.getColor() == 0 && leftPawnE.isFirstMove() == true) {
-                            legalMoves.add(new ChessCoordinate('d', piece.getRank()-1));
-                        }
-                    }
-                    //Right en passant 
-                    ChessPiece rightNeighborE = this.getPieceAt('f', piece.getRank());
-                    if(rightNeighborE instanceof Pawn) {
-                        Pawn rightPawnE = (Pawn) rightNeighborE; 
-                        if(rightPawnE.getColor() == 0 && rightPawnE.isFirstMove() == true) {
-                            legalMoves.add(new ChessCoordinate('f', piece.getRank()-1));
-                        }
-                    }
-                    break;
-                case 'f': 
-                    if(this.getPieceAt('e', piece.getRank()-1) != null) {
-                        if(this.getPieceAt('e', piece.getRank()-1).getColor() == 0) {
-                            legalMoves.add(new ChessCoordinate('e', piece.getRank()-1));
-                        }
-                    }
-                    if(this.getPieceAt('g', piece.getRank()-1) != null) {
-                        if(this.getPieceAt('g', piece.getRank()-1).getColor() == 0) {
-                            legalMoves.add(new ChessCoordinate('g', piece.getRank()-1));
-                        }
-                    }
-                    //Left en passant 
-                    ChessPiece leftNeighborF = this.getPieceAt('e', piece.getRank());
-                    if(leftNeighborF instanceof Pawn) {
-                        Pawn leftPawnF = (Pawn) leftNeighborF; 
-                        if(leftPawnF.getColor() == 0 && leftPawnF.isFirstMove() == true) {
-                            legalMoves.add(new ChessCoordinate('e', piece.getRank()-1));
-                        }
-                    }
-                    //Right en passant 
-                    ChessPiece rightNeighborF = this.getPieceAt('g', piece.getRank());
-                    if(rightNeighborF instanceof Pawn) {
-                        Pawn rightPawnF = (Pawn) rightNeighborF; 
-                        if(rightPawnF.getColor() == 0 && rightPawnF.isFirstMove() == true) {
-                            legalMoves.add(new ChessCoordinate('g', piece.getRank()-1));
-                        }
-                    }
-                    break;
-                case 'g':
-                    if(this.getPieceAt('f', piece.getRank()-1) != null) {
-                        if(this.getPieceAt('f', piece.getRank()-1).getColor() == 0) {
-                            legalMoves.add(new ChessCoordinate('f', piece.getRank()-1));
-                        }
-                    }
-                    if(this.getPieceAt('h', piece.getRank()-1) != null) {
-                        if(this.getPieceAt('h', piece.getRank()-1).getColor() == 0) {
-                            legalMoves.add(new ChessCoordinate('h', piece.getRank()-1));
-                        }
-                    }
-                    //Left en passant 
-                    ChessPiece leftNeighborG = this.getPieceAt('f', piece.getRank());
-                    if(leftNeighborG instanceof Pawn) {
-                        Pawn leftPawnG = (Pawn) leftNeighborG; 
-                        if(leftPawnG.getColor() == 0 && leftPawnG.isFirstMove() == true) {
-                            legalMoves.add(new ChessCoordinate('f', piece.getRank()-1));
-                        }
-                    }
-                    //Right en passant 
-                    ChessPiece rightNeighborG = this.getPieceAt('h', piece.getRank());
-                    if(rightNeighborG instanceof Pawn) {
-                        Pawn rightPawnG = (Pawn) rightNeighborG; 
-                        if(rightPawnG.getColor() == 0 && rightPawnG.isFirstMove() == true) {
-                            legalMoves.add(new ChessCoordinate('h', piece.getRank()-1));
-                        }
-                    }
-                    break;
-                case 'h':
-                    if(this.getPieceAt('g', piece.getRank()-1) != null) {
-                        if(this.getPieceAt('g', piece.getRank()-1).getColor() == 0) {
-                            legalMoves.add(new ChessCoordinate('g', piece.getRank()-1));
-                        }
-                    }
-                    //Left en passant 
-                    ChessPiece leftNeighborH = this.getPieceAt('g', piece.getRank());
-                    if(leftNeighborH instanceof Pawn) {
-                        Pawn leftPawnH = (Pawn) leftNeighborH; 
-                        if(leftPawnH.getColor() == 0 && leftPawnH.isFirstMove() == true) {
-                            legalMoves.add(new ChessCoordinate('g', piece.getRank()-1));
-                        }
-                    }
-                    break;
+                }
             }
         }
         return legalMoves; 
@@ -1494,5 +1199,43 @@ public class ChessBoard {
                 } 
             }
         }
+    }
+
+    private ChessPiece[][] copyToPieces(ChessPiece[][] pieces) {
+        ChessPiece[][] piecesCopy = new ChessPiece[8][8];
+
+        for(int i=0 ; i<pieces.length ; i++) {
+            for(int j=0 ; j<pieces[i].length ; j++) {
+                if(pieces[i][j] == null) {
+                    piecesCopy[i][j] = null; 
+                } 
+
+                if(pieces[i][j] instanceof King) {
+                    piecesCopy[i][j] = new King(pieces[i][j].getFile(), pieces[i][j].getRank(), true, pieces[i][j].getColor());
+                }
+
+                if(pieces[i][j] instanceof Rook) {
+                    piecesCopy[i][j] = new Rook(pieces[i][j].getFile(), pieces[i][j].getRank(), true, pieces[i][j].getColor());
+                }
+
+                if(pieces[i][j] instanceof Bishop) {
+                    piecesCopy[i][j] = new Bishop(pieces[i][j].getFile(), pieces[i][j].getRank(), true, pieces[i][j].getColor());
+                }
+
+                if(pieces[i][j] instanceof Knight) {
+                    piecesCopy[i][j] = new Knight(pieces[i][j].getFile(), pieces[i][j].getRank(), true, pieces[i][j].getColor());
+                }
+
+                if(pieces[i][j] instanceof Queen) {
+                    piecesCopy[i][j] = new Queen(pieces[i][j].getFile(), pieces[i][j].getRank(), true, pieces[i][j].getColor());
+                }
+
+                if(pieces[i][j] instanceof Pawn) {
+                    piecesCopy[i][j] = new Pawn(pieces[i][j].getFile(), pieces[i][j].getRank(), true, pieces[i][j].getColor());
+                }
+            }
+        }
+
+        return piecesCopy; 
     }
 }
