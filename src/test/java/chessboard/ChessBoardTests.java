@@ -1698,4 +1698,27 @@ public class ChessBoardTests {
         board.setPieceAt('g', 3, new Knight('g', 3, true, 1));
         assert(board.getLegalMoves('g', 2).size() == 0);
     }
+
+    @Test 
+    public void testWhiteStalemate() {
+        ChessBoard board = new ChessBoard(new ChessPiece[8][8]);
+        board.setPieceAt('e', 1, new King('e', 1, true, 0));
+        board.setPieceAt('c', 2, new Queen('c', 2, true, 1));
+        board.setPieceAt('f', 1, new Knight('f', 1, true, 0));
+        board.setPieceAt('h', 1, new Rook('h', 1, true, 1));
+
+        assert(board.isWhiteStalemated() == true);
+
+        board = new ChessBoard(new ChessPiece[8][8]);
+        board.setPieceAt('e', 8, new King('e', 8, true, 1));
+        board.setPieceAt('c', 7, new Queen('c', 7, true, 0));
+        board.setPieceAt('f', 8, new Knight('f', 8, true, 1));
+        board.setPieceAt('h', 8, new Rook('h', 8, true, 0));
+
+        assert(board.isBlackStalemated() == true);
+
+        board = new ChessBoard();
+        assert(board.isWhiteStalemated() == false);
+        assert(board.isBlackStalemated() == false);
+    }
 }
