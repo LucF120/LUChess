@@ -330,6 +330,7 @@ public class ChessBoard {
                     legalMoves.add(new ChessCoordinate(leftFile, piece.getRank()));
                 }
             }
+            this.setPieceAt(leftFile, piece.getRank(), capturePiece);
         }
 
         //Checks move to right
@@ -347,6 +348,7 @@ public class ChessBoard {
                     legalMoves.add(new ChessCoordinate(rightFile, piece.getRank()));
                 }
             }
+            this.setPieceAt(rightFile, piece.getRank(), capturePiece);
         }
 
         //Checks move up 
@@ -363,6 +365,7 @@ public class ChessBoard {
                     legalMoves.add(new ChessCoordinate(piece.getFile(), piece.getRank() + 1));
                 }
             }
+            this.setPieceAt(piece.getFile(), piece.getRank() + 1, capturePiece);
         }
 
         //Checks move down 
@@ -379,6 +382,7 @@ public class ChessBoard {
                     legalMoves.add(new ChessCoordinate(piece.getFile(), piece.getRank() - 1));
                 }
             }
+            this.setPieceAt(piece.getFile(), piece.getRank() - 1, capturePiece);
         }
 
         //Checks move diagonal up and left 
@@ -396,6 +400,7 @@ public class ChessBoard {
                     legalMoves.add(new ChessCoordinate(leftFile, piece.getRank() + 1));
                 }
             }
+            this.setPieceAt(leftFile, piece.getRank() + 1, capturePiece);
         }
 
         //Checks move diagonal down and left 
@@ -413,6 +418,7 @@ public class ChessBoard {
                     legalMoves.add(new ChessCoordinate(leftFile, piece.getRank() - 1));
                 }
             }
+            this.setPieceAt(leftFile, piece.getRank() - 1, capturePiece);
         }
 
         //Checks move diagonal up and right
@@ -430,6 +436,7 @@ public class ChessBoard {
                     legalMoves.add(new ChessCoordinate(rightFile, piece.getRank() + 1));
                 }
             }
+            this.setPieceAt(rightFile, piece.getRank() + 1, capturePiece);
         }
 
         //Checks move diagonal down and right
@@ -447,6 +454,7 @@ public class ChessBoard {
                     legalMoves.add(new ChessCoordinate(rightFile, piece.getRank() - 1));
                 }
             }
+            this.setPieceAt(rightFile, piece.getRank() - 1, capturePiece);
         }
 
         //Check for long and short castle 
@@ -1291,15 +1299,17 @@ public class ChessBoard {
     // boolean isCheckmate(); 
 
     //Takes in a file, rank, and a color, and checks if that square is currently attacked by the opposite color 
-    private boolean isSquareUnderAttack(char file, int rank, int color) {
+    public boolean isSquareUnderAttack(char file, int rank, int color) {
         char[] files = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'};
         for(char f : files) {
             for(int i=1 ; i<9 ; i++) {
-                if(!(this.getPieceAt(f, i) instanceof King)) {
-                    ArrayList<ChessCoordinate> legalMoves = this.getLegalMoves(f, i);
-                    if(legalMoves.size() > 0) {
-                        if(legalMoves.contains(new ChessCoordinate(file, rank)) && this.getPieceAt(f, i).getColor() != color) {
-                            return true;
+                if(this.getPieceAt(f, i) != null) {
+                    if(!(this.getPieceAt(f, i) instanceof King)) {
+                        ArrayList<ChessCoordinate> legalMoves = this.getLegalMoves(f, i);
+                        if(legalMoves.size() > 0) {
+                            if(legalMoves.contains(new ChessCoordinate(file, rank)) && this.getPieceAt(f, i).getColor() != color) {
+                                return true;
+                            }
                         }
                     }
                 }
@@ -1344,7 +1354,7 @@ public class ChessBoard {
     }
 
     //Returns the files to the left of a given file 
-    private char[] getLeftFiles(char file) {
+    public char[] getLeftFiles(char file) {
         char[] leftFiles; 
         if(file == 'a') {
             leftFiles = new char[0];
@@ -1395,7 +1405,7 @@ public class ChessBoard {
         return leftFiles;
     }
 
-    private char[] getRightFiles(char file) {
+    public char[] getRightFiles(char file) {
         char[] rightFiles; 
         if(file == 'a') {
             rightFiles = new char[7];
