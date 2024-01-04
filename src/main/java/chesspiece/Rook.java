@@ -61,4 +61,21 @@ public class Rook implements ChessPiece {
         this.location.setFile(file);
         this.location.setRank(rank);
     }
+
+    //Overriding the equals method 
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof Rook)) {
+            return false;
+        }
+
+        Rook other = (Rook) obj;
+        return this.getFile() == other.getFile() && this.getRank() == other.getRank() && this.getColor() == other.getColor(); 
+    }
+
+    //Overriding the hashCode method 
+    @Override
+    public int hashCode() {
+        return (int) this.location.getFile() + (64 * this.location.getRank()) + (100 * this.color); 
+  }
 }
