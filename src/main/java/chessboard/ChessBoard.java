@@ -318,7 +318,10 @@ public class ChessBoard {
         //Checks move to left 
         if(leftFiles.length > 0) {
             char leftFile = leftFiles[0];
+            ChessPiece capturePiece = this.getPieceAt(leftFile, piece.getRank());
+            this.setPieceAt(leftFile, piece.getRank(), null);
             if(this.isSquareUnderAttack(leftFile, piece.getRank(), piece.getColor()) == false) {
+                this.setPieceAt(leftFile, piece.getRank(), capturePiece);
                 if(this.getPieceAt(leftFile, piece.getRank()) != null) {
                     if(this.getPieceAt(leftFile, piece.getRank()).getColor() != piece.getColor()) {
                         legalMoves.add(new ChessCoordinate(leftFile, piece.getRank()));
@@ -332,8 +335,10 @@ public class ChessBoard {
         //Checks move to right
         if(rightFiles.length > 0) {
             char rightFile = rightFiles[0];
-
+            ChessPiece capturePiece = this.getPieceAt(rightFile, piece.getRank());
+            this.setPieceAt(rightFile, piece.getRank(), null);
             if(this.isSquareUnderAttack(rightFile, piece.getRank(), piece.getColor()) == false) {
+                this.setPieceAt(rightFile, piece.getRank(), capturePiece);
                 if(this.getPieceAt(rightFile, piece.getRank()) != null) {
                     if(this.getPieceAt(rightFile, piece.getRank()).getColor() != piece.getColor()) {
                         legalMoves.add(new ChessCoordinate(rightFile, piece.getRank()));
@@ -346,7 +351,10 @@ public class ChessBoard {
 
         //Checks move up 
         if(piece.getRank() + 1 <= 8) {
+            ChessPiece capturePiece = this.getPieceAt(piece.getFile(), piece.getRank() + 1);
+            this.setPieceAt(piece.getFile(), piece.getRank() + 1, null);
             if(this.isSquareUnderAttack(piece.getFile(), piece.getRank() + 1, piece.getColor()) == false) {
+                this.setPieceAt(piece.getFile(), piece.getRank() + 1, capturePiece);
                 if(this.getPieceAt(piece.getFile(), piece.getRank() + 1) != null) {
                     if(this.getPieceAt(piece.getFile(), piece.getRank() + 1).getColor() != piece.getColor()) {
                         legalMoves.add(new ChessCoordinate(piece.getFile(), piece.getRank() + 1));
@@ -359,7 +367,10 @@ public class ChessBoard {
 
         //Checks move down 
         if(piece.getRank() - 1 >= 1) {
+            ChessPiece capturePiece = this.getPieceAt(piece.getFile(), piece.getRank() - 1);
+            this.setPieceAt(piece.getFile(), piece.getRank() - 1, null);
             if(this.isSquareUnderAttack(piece.getFile(), piece.getRank() - 1, piece.getColor()) == false) {
+                this.setPieceAt(piece.getFile(), piece.getRank() - 1, capturePiece);
                 if(this.getPieceAt(piece.getFile(), piece.getRank() - 1) != null) {
                     if(this.getPieceAt(piece.getFile(), piece.getRank() - 1).getColor() != piece.getColor()) {
                         legalMoves.add(new ChessCoordinate(piece.getFile(), piece.getRank() - 1));
@@ -373,8 +384,10 @@ public class ChessBoard {
         //Checks move diagonal up and left 
         if(leftFiles.length > 0 && piece.getRank() + 1 <= 8) {
             char leftFile = leftFiles[0];
-
+            ChessPiece capturePiece = this.getPieceAt(leftFile, piece.getRank() + 1);
+            this.setPieceAt(leftFile, piece.getRank() + 1, null);
             if(this.isSquareUnderAttack(leftFile, piece.getRank() + 1, piece.getColor()) == false) {
+                this.setPieceAt(leftFile, piece.getRank() + 1, capturePiece);
                 if(this.getPieceAt(leftFile, piece.getRank() + 1) != null) {
                     if(this.getPieceAt(leftFile, piece.getRank() + 1).getColor() != piece.getColor()) {
                         legalMoves.add(new ChessCoordinate(leftFile, piece.getRank() + 1));
@@ -388,8 +401,10 @@ public class ChessBoard {
         //Checks move diagonal down and left 
         if(leftFiles.length > 0 && piece.getRank() - 1 >= 1) {
             char leftFile = leftFiles[0];
-
+            ChessPiece capturePiece = this.getPieceAt(leftFile, piece.getRank() - 1);
+            this.setPieceAt(leftFile, piece.getRank() - 1, null);
             if(this.isSquareUnderAttack(leftFile, piece.getRank() - 1, piece.getColor()) == false) {
+                this.setPieceAt(leftFile, piece.getRank() - 1, capturePiece);
                 if(this.getPieceAt(leftFile, piece.getRank() - 1) != null) {
                     if(this.getPieceAt(leftFile, piece.getRank() - 1).getColor() != piece.getColor()) {
                         legalMoves.add(new ChessCoordinate(leftFile, piece.getRank() - 1));
@@ -403,8 +418,10 @@ public class ChessBoard {
         //Checks move diagonal up and right
         if(rightFiles.length > 0 && piece.getRank() + 1 <= 8) {
             char rightFile = rightFiles[0];
-
+            ChessPiece capturePiece = this.getPieceAt(rightFile, piece.getRank() + 1);
+            this.setPieceAt(rightFile, piece.getRank() + 1, null);
             if(this.isSquareUnderAttack(rightFile, piece.getRank() + 1, piece.getColor()) == false) {
+                this.setPieceAt(rightFile, piece.getRank() + 1, capturePiece);
                 if(this.getPieceAt(rightFile, piece.getRank() + 1) != null) {
                     if(this.getPieceAt(rightFile, piece.getRank() + 1).getColor() != piece.getColor()) {
                         legalMoves.add(new ChessCoordinate(rightFile, piece.getRank() + 1));
@@ -418,8 +435,10 @@ public class ChessBoard {
         //Checks move diagonal down and right
         if(rightFiles.length > 0 && piece.getRank() - 1 >= 1) {
             char rightFile = rightFiles[0];
-
+            ChessPiece capturePiece = this.getPieceAt(rightFile, piece.getRank() - 1);
+            this.setPieceAt(rightFile, piece.getRank() - 1, null);
             if(this.isSquareUnderAttack(rightFile, piece.getRank() - 1, piece.getColor()) == false) {
+                this.setPieceAt(rightFile, piece.getRank() - 1, capturePiece);
                 if(this.getPieceAt(rightFile, piece.getRank() - 1) != null) {
                     if(this.getPieceAt(rightFile, piece.getRank() - 1).getColor() != piece.getColor()) {
                         legalMoves.add(new ChessCoordinate(rightFile, piece.getRank() - 1));
