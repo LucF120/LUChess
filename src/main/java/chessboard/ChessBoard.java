@@ -1057,8 +1057,6 @@ public class ChessBoard {
             }
     }
 
-    // boolean isCheckmate(); 
-
     //Takes in a file, rank, and a color, and checks if that square is currently attacked by the opposite color 
     public boolean isSquareUnderAttack(char file, int rank, int color) {
         char[] files = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'};
@@ -1077,6 +1075,77 @@ public class ChessBoard {
             }
         }
         return false; 
+    }
+
+    //Promote a pawn at the given file and rank to the given type 
+    public void promotePawn(char file, int rank, String type) throws IllegalArgumentException, NullPointerException {
+        if(file != 'a' && file != 'b' && file != 'c' && file != 'd' && file != 'e' && file != 'f' && file != 'g' && file != 'h') {
+            throw new IllegalArgumentException("The file must be between a-h");
+        }
+
+        if(rank != 1 && rank !=8) {
+            throw new IllegalArgumentException("The rank of the promoted pawn must be 1 for black pawns or 8 for white pawns");
+        }
+
+        if(this.getPieceAt(file, rank) == null) {
+            throw new NullPointerException("There is no piece on " + file + rank);
+        }
+
+        if(!(this.getPieceAt(file, rank) instanceof Pawn)) {
+            throw new IllegalArgumentException("The piece to be promoted must be a pawn");
+        }
+
+        if((this.getPieceAt(file, rank).getColor() == 0 && rank == 1) || (this.getPieceAt(file, rank).getColor() == 1 && rank == 8)) {
+            throw new IllegalArgumentException("Error, the pawn being promoted is on the incorrect rank");
+        }
+
+        ChessPiece piece = this.getPieceAt(file, rank);
+
+        switch(type) {
+            case "queen":
+                this.setPieceAt(file, rank, new Queen(file, rank, true, piece.getColor()));
+                break;
+            case "rook":
+                this.setPieceAt(file, rank, new Rook(file, rank, true, piece.getColor()));
+                break;
+            case "bishop":
+                this.setPieceAt(file, rank, new Bishop(file, rank, true, piece.getColor()));
+                break;
+            case "knight":
+                this.setPieceAt(file, rank, new Knight(file, rank, true, piece.getColor()));
+                break;
+            default:
+                throw new IllegalArgumentException("Invalid promotion type!");
+        }
+    }
+    //Returns true if a white pawn is promotable (just reached the 8th rank)
+    public boolean isWhitePawnPromotable() {
+        char[] files = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'};
+
+        for(int i=0 ; i<files.length ; i++) {
+            if(this.getPieceAt(files[i], 8) != null) {
+                if(this.getPieceAt(files[i], 8) instanceof Pawn && this.getPieceAt(files[i], 8).getColor() == 0) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    //Returns true if a black pawn is promotable (just reached the 1st rank)
+    public boolean isBlackPawnPromotable() {
+        char[] files = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'};
+
+        for(int i=0 ; i<files.length ; i++) {
+            if(this.getPieceAt(files[i], 1) != null) {
+                if(this.getPieceAt(files[i], 1) instanceof Pawn && this.getPieceAt(files[i], 1).getColor() == 1) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 
 
