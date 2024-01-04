@@ -170,11 +170,7 @@ public class ChessBoard {
 
         ChessPiece[][] piecesCopy = new ChessPiece[8][8];
 
-        for(int i=0 ; i<pieces.length ; i++) {
-            for(int j=0 ; j<pieces[i].length ; j++) {
-                piecesCopy[i][j] = pieces[i][j];
-            }
-        }
+        piecesCopy = copyToPieces(pieces); 
 
         //Check if the white king is in check 
         if(this.isWhiteInCheck() == false) {
@@ -194,18 +190,10 @@ public class ChessBoard {
                                 ChessCoordinate destination = this.getLegalMoves(files[i], j).get(k);
                                 this.movePiece(files[i], j, destination.getFile(), destination.getRank());
                                 if(this.isWhiteInCheck() == false) {
-                                    for(int l=0 ; l<pieces.length ; l++) {
-                                        for(int m=0 ; m<pieces[l].length ; m++) {
-                                            pieces[l][m] = piecesCopy[l][m];
-                                        }
-                                    }
+                                    pieces = copyToPieces(piecesCopy);
                                     return false;
                                 }
-                                for(int l=0 ; l<pieces.length ; l++) {
-                                    for(int m=0 ; m<pieces[l].length ; m++) {
-                                        pieces[l][m] = piecesCopy[l][m];
-                                    }
-                                }
+                                pieces = copyToPieces(piecesCopy);
                             }
                         }
                     }
