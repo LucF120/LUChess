@@ -7,6 +7,7 @@ import chesspiece.*;
 import util.*; 
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class ChessBoardTests {
     @Test
@@ -1008,22 +1009,9 @@ public class ChessBoardTests {
         board.setPieceAt('a', 1, new Rook('a', 1, true, 1));
         board.setPieceAt('a', 2, new Rook('a', 2, true, 1));
         assert(board.getLegalMoves('e', 1).equals(legalMoves));
-
-        //King surrounded by opposite color bishops 
-        legalMoves = new ArrayList<ChessCoordinate>();
         board.setPieceAt('a', 1, null);
         board.setPieceAt('a', 2, null);
-        board.setPieceAt('d', 1, new Bishop('d', 1, true, 1));
-        board.setPieceAt('f', 1, new Bishop('f', 1, true, 1));
-        board.setPieceAt('d', 2, new Bishop('d', 2, true, 1));
-        board.setPieceAt('f', 2, new Bishop('f', 2, true, 1));
-        board.setPieceAt('e', 2, new Bishop('e', 2, true, 1));
-        legalMoves.add(new ChessCoordinate('d', 1));
-        legalMoves.add(new ChessCoordinate('f', 1));
-        legalMoves.add(new ChessCoordinate('e', 2));
-        legalMoves.add(new ChessCoordinate('d', 2));
-        legalMoves.add(new ChessCoordinate('f', 2));
-        assert(board.getLegalMoves('e', 1).equals(legalMoves));
+
 
         //King surrounded by same color bishops 
         legalMoves = new ArrayList<ChessCoordinate>();
@@ -1596,11 +1584,19 @@ public class ChessBoardTests {
         assert(board.isWhiteInCheck() == true);
         assert(board.isBlackInCheck() == true);
     }
+
+    @Test
+    public void testWhiteKingCoords() {
+        ChessBoard board = new ChessBoard();
+        assert(board.getWhiteKingCoords().equals(new ChessCoordinate('e', 1)));
+    }
+    
     @Test
     public void checkMateTest() {
         ChessBoard board = new ChessBoard();
         assert(board.isWhiteCheckmated() == false);
         assert(board.isBlackCheckmated() == false);
+
 
         board = new ChessBoard(new ChessPiece[8][8]);
         board.setPieceAt('e', 1, new King('e', 1, true, 0));
@@ -1610,10 +1606,96 @@ public class ChessBoardTests {
         board.setPieceAt('f', 2, new Pawn('f', 2, true, 0));
         board.setPieceAt('h', 4, new Bishop('h', 4, true, 0));
         board.setPieceAt('f', 8, new Queen('f', 8, true, 0));
-        board.setPieceAt('h', 8, new Knight('h', 8, true, 0));
-
 
         assert(board.isWhiteCheckmated() == true);
-    
+
+        board.setPieceAt('b', 2, null);
+        assert(board.isWhiteCheckmated() == false);
+
+        board.setPieceAt('b', 2, new Rook('b', 2, true, 1));
+        assert(board.isWhiteCheckmated() == true);
+
+        board.setPieceAt('a', 1, null);
+        assert(board.isWhiteCheckmated() == false);
+
+
+        board = new ChessBoard(new ChessPiece[8][8]);
+        board.setPieceAt('h', 8, new King('h', 8, true, 1));
+        board.setPieceAt('h', 7, new Pawn('h', 7, true, 1));
+        board.setPieceAt('g', 7, new Pawn('g', 7, true, 1));
+        board.setPieceAt('g', 8, new Rook('g', 8, true, 1));
+        board.setPieceAt('g', 6, new Knight('g', 6, true, 0));
+        board.setPieceAt('h', 1, new Queen('h', 1, true, 0));
+
+        assert(board.isBlackCheckmated() == true);
+
+        board.setPieceAt('h', 1, null);
+        assert(board.isBlackCheckmated() == false);
+
+        board.setPieceAt('h', 1, new Queen('h', 1, true, 0));
+        assert(board.isBlackCheckmated() == true);
+    }
+
+    @Test
+    public void kingWithNoMoves() {
+        ChessBoard board = new ChessBoard(new ChessPiece[8][8]);
+        board.setPieceAt('e', 1, new King('e', 1, true, 0));
+        board.setPieceAt('e', 2, new Queen('e', 2, true, 1));
+        board.setPieceAt('a', 2, new Rook('a', 2, true, 1));
+        assert(board.getLegalMoves('e', 1).size() == 0);
+    }
+
+    @Test
+    public void kingSurroundedByOppBishops() {
+        ChessPiece[][] pieces = new ChessPiece[8][8];
+        ChessBoard board = new ChessBoard(pieces);
+        board.setPieceAt('e', 1, new King('e', 1, true, 0));
+        ArrayList<ChessCoordinate> legalMoves = new ArrayList<ChessCoordinate>();
+
+        //King surrounded by opposite color bishops 
+        legalMoves = new ArrayList<ChessCoordinate>();
+        board.setPieceAt('d', 1, new Bishop('d', 1, true, 1));
+        board.setPieceAt('f', 1, new Bishop('f', 1, true, 1));
+        board.setPieceAt('d', 2, new Bishop('d', 2, true, 1));
+        board.setPieceAt('f', 2, new Bishop('f', 2, true, 1));
+        board.setPieceAt('e', 2, new Bishop('e', 2, true, 1));
+        legalMoves.add(new ChessCoordinate('d', 2));
+        legalMoves.add(new ChessCoordinate('f', 2));
+        assert(board.getLegalMoves('e', 1).equals(legalMoves));
+    }
+
+    @Test
+    public void kingInCenterSurroundedByOppBishops() {
+        ChessBoard board = new ChessBoard(new ChessPiece[8][8]);
+        board.setPieceAt('e', 4, new King('e', 4, true, 0));
+        board.setPieceAt('e', 3, new Bishop('e', 3, true, 1));
+        board.setPieceAt('e', 5, new Bishop('e', 5, true, 1));
+        board.setPieceAt('d', 4, new Bishop('d', 4, true, 1));
+        board.setPieceAt('f', 4, new Bishop('f', 4, true, 1));
+        board.setPieceAt('d', 5, new Bishop('d', 5, true, 1));
+        board.setPieceAt('d', 3, new Bishop('d', 3, true, 1));
+        board.setPieceAt('f', 5, new Bishop('f', 5, true, 1));
+        board.setPieceAt('f', 3, new Bishop('f', 3, true, 1));
+        board.setPieceAt('f', 1, new Rook('f', 1, true, 1));
+        board.setPieceAt('f', 8, new Rook('f', 8, true, 1));
+        board.setPieceAt('d', 1, new Rook('d', 1, true, 1));
+        board.setPieceAt('d', 8, new Rook('d', 8, true, 1));
+        
+        ArrayList<ChessCoordinate> legalMoves = new ArrayList<ChessCoordinate>();
+        assert(board.getLegalMoves('e', 4).equals(legalMoves));
+    }
+
+    @Test
+    public void whiteAndBlackPawnsNoMoves() {
+        ChessBoard board = new ChessBoard(new ChessPiece[8][8]);
+        board.setPieceAt('g', 7, new Pawn('g', 7, true, 1));
+        board.setPieceAt('g', 6, new Knight('g', 6, true, 0));
+
+        ArrayList<ChessCoordinate> legalMoves = new ArrayList<ChessCoordinate>();
+        assert(board.getLegalMoves('g', 7).size() == 0);
+
+        board.setPieceAt('g', 2, new Pawn('g', 2, true, 0));
+        board.setPieceAt('g', 3, new Knight('g', 3, true, 1));
+        assert(board.getLegalMoves('g', 2).size() == 0);
     }
 }
