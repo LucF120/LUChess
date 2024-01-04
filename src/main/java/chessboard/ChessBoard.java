@@ -262,6 +262,74 @@ public class ChessBoard {
         return this.isSquareUnderAttack(blackKingLocation.getFile(), blackKingLocation.getRank(), 1);
     }
 
+    //Returns true if white is in stalemate (no legal moves on the board, and king is not in check)
+    public boolean isWhiteStalemated() throws NullPointerException {
+        if(isWhiteInCheck() == true) {
+            return false;
+        } 
+        
+        char[] files = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'};
+
+        ChessPiece[][] piecesCopy = new ChessPiece[8][8];
+
+        piecesCopy = copyToPieces(pieces); 
+
+        for(int i=0 ; i<files.length ; i++) {
+            for(int j=1 ; j<9 ; j++) {
+                if(this.getPieceAt(files[i], j) != null) {
+                    if(this.getPieceAt(files[i], j).getColor() == 0) {
+                        ArrayList<ChessCoordinate> legalMoves = this.getLegalMoves(files[i], j);
+                        for(int k=0 ; k<legalMoves.size() ; k++) {
+                            this.movePiece(files[i], j, legalMoves.get(k).getFile(), legalMoves.get(k).getRank());
+                            if(this.isWhiteInCheck() == false) {
+                                pieces = copyToPieces(piecesCopy);
+                                return false;
+                            }
+                            pieces = copyToPieces(piecesCopy);
+                        }
+                    }
+                }
+            }
+        }
+
+        //If all of the legal moves add up to 0, return true
+        return true; 
+    }
+
+    //Returns true if black is in stalemate (no legal moves on the board, and king is not in check)
+    public boolean isBlackStalemated() throws NullPointerException {
+        if(isBlackInCheck() == true) {
+            return false;
+        } 
+        
+        char[] files = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'};
+
+        ChessPiece[][] piecesCopy = new ChessPiece[8][8];
+
+        piecesCopy = copyToPieces(pieces); 
+
+        for(int i=0 ; i<files.length ; i++) {
+            for(int j=1 ; j<9 ; j++) {
+                if(this.getPieceAt(files[i], j) != null) {
+                    if(this.getPieceAt(files[i], j).getColor() == 1) {
+                        ArrayList<ChessCoordinate> legalMoves = this.getLegalMoves(files[i], j);
+                        for(int k=0 ; k<legalMoves.size() ; k++) {
+                            this.movePiece(files[i], j, legalMoves.get(k).getFile(), legalMoves.get(k).getRank());
+                            if(this.isBlackInCheck() == false) {
+                                pieces = copyToPieces(piecesCopy);
+                                return false;
+                            }
+                            pieces = copyToPieces(piecesCopy);
+                        }
+                    }
+                }
+            }
+        }
+
+        //If all of the legal moves add up to 0, return true
+        return true; 
+    }
+
     //Returns the coordinates of the white king 
     public ChessCoordinate getWhiteKingCoords() throws NullPointerException {
         char[] files = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'};
