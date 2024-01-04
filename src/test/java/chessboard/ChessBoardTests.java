@@ -1721,4 +1721,114 @@ public class ChessBoardTests {
         assert(board.isWhiteStalemated() == false);
         assert(board.isBlackStalemated() == false);
     }
+
+    @Test
+    public void testisPawnPromotable() {
+        ChessBoard board = new ChessBoard(new ChessPiece[8][8]);
+        board.setPieceAt('c', 8, new Pawn('c', 8, true, 0));
+        board.setPieceAt('d', 1, new Pawn('d', 1, true, 1));
+        
+        assert(board.isWhitePawnPromotable() == true);
+        assert(board.isBlackPawnPromotable() == true);
+
+        board = new ChessBoard();
+        assert(board.isWhitePawnPromotable() == false);
+        assert(board.isBlackPawnPromotable() == false);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void promotePawnIllegalFile() {
+        ChessBoard board = new ChessBoard(); 
+        board.promotePawn('i', 1, "queen");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void promotePawnIllegalRank() {
+        ChessBoard board = new ChessBoard(); 
+        board.promotePawn('i', 0, "queen");
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void promotePawnNoPawnPresent() {
+        ChessBoard board = new ChessBoard(new ChessPiece[8][8]); 
+        board.promotePawn('h', 8, "queen");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void promotePawnNotPawn() {
+        ChessBoard board = new ChessBoard(); 
+        board.setPieceAt('h', 8, new Rook('h', 8, true, 0));
+        board.promotePawn('h', 8, "queen");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void promotePawnWrongRank() {
+        ChessBoard board = new ChessBoard(); 
+        board.setPieceAt('h', 8, new Pawn('h', 8, true, 1));
+        board.promotePawn('h', 8, "queen");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void promotePawnWrongRank2() {
+        ChessBoard board = new ChessBoard(); 
+        board.setPieceAt('h', 1, new Pawn('h', 1, true, 0));
+        board.promotePawn('h', 1, "queen");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void promotePawnInvalidPromoType() {
+        ChessBoard board = new ChessBoard(); 
+        board.setPieceAt('h', 1, new Pawn('h', 1, true, 1));
+        board.promotePawn('h', 1, "king");
+    }
+
+    @Test
+    public void promoteWhitePawn() {
+        ChessBoard board = new ChessBoard(new ChessPiece[8][8]);
+        board.setPieceAt('h', 8, new Pawn('h', 8, true, 0));
+        board.setPieceAt('g', 8, new Pawn('g', 8, true, 0));
+        board.setPieceAt('e', 8, new Pawn('e', 8, true, 0));
+        board.setPieceAt('a', 8, new Pawn('a', 8, true, 0));
+        board.promotePawn('h', 8, "queen");
+        board.promotePawn('g', 8, "rook");
+        board.promotePawn('e', 8, "bishop");
+        board.promotePawn('a', 8, "knight");
+
+        assert(board.getPieceAt('h', 8) instanceof Queen);
+        assert(board.getPieceAt('h', 8).getColor() == 0);
+
+        assert(board.getPieceAt('g', 8) instanceof Rook);
+        assert(board.getPieceAt('g', 8).getColor() == 0);
+
+        assert(board.getPieceAt('e', 8) instanceof Bishop);
+        assert(board.getPieceAt('e', 8).getColor() == 0);
+
+        assert(board.getPieceAt('a', 8) instanceof Knight);
+        assert(board.getPieceAt('a', 8).getColor() == 0);
+    }
+
+    @Test
+    public void promoteBlackPawn() {
+        ChessBoard board = new ChessBoard(new ChessPiece[8][8]);
+        board.setPieceAt('h', 1, new Pawn('h', 1, true, 1));
+        board.setPieceAt('g', 1, new Pawn('g', 1, true, 1));
+        board.setPieceAt('e', 1, new Pawn('e', 1, true, 1));
+        board.setPieceAt('a', 1, new Pawn('a', 1, true, 1));
+        board.promotePawn('h', 1, "queen");
+        board.promotePawn('g', 1, "rook");
+        board.promotePawn('e', 1, "bishop");
+        board.promotePawn('a', 1, "knight");
+
+        assert(board.getPieceAt('h', 1) instanceof Queen);
+        assert(board.getPieceAt('h', 1).getColor() == 1);
+
+        assert(board.getPieceAt('g', 1) instanceof Rook);
+        assert(board.getPieceAt('g', 1).getColor() == 1);
+
+        assert(board.getPieceAt('e', 1) instanceof Bishop);
+        assert(board.getPieceAt('e', 1).getColor() == 1);
+
+        assert(board.getPieceAt('a', 1) instanceof Knight);
+        assert(board.getPieceAt('a', 1).getColor() == 1);
+    }
 }
