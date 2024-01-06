@@ -221,7 +221,7 @@ public class ChessBoard {
         if(this.isBlackInCheck() == false) {
             return false;
         } else {
-            //Check if the white king has any legal moves 
+            //Check if the black king has any legal moves 
             if(this.getLegalMoves(blackKingFile, blackKingRank).size() > 0) {
                 return false;
             }
@@ -349,7 +349,7 @@ public class ChessBoard {
     }
 
     //Returns the coordinates of the black king 
-    private ChessCoordinate getBlackKingCoords() throws NullPointerException {
+    public ChessCoordinate getBlackKingCoords() throws NullPointerException {
         char[] files = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'};
 
         for(int i=0 ; i<files.length ; i++) {
@@ -660,7 +660,7 @@ public class ChessBoard {
                     }
                 }
 
-                if(this.getPieceAt(leftFiles[0], piece.getRank()) != null) {
+                if(this.getPieceAt(leftFiles[0], piece.getRank()) instanceof Pawn) {
                     if(this.getPieceAt(leftFiles[0], piece.getRank()).getColor() == 1) {
                         Pawn pawn = (Pawn) this.getPieceAt(leftFiles[0], piece.getRank());
                         if(pawn.isFirstMove() == true) {
@@ -677,7 +677,7 @@ public class ChessBoard {
                     }
                 }
 
-                if(this.getPieceAt(rightFiles[0], piece.getRank()) != null) {
+                if(this.getPieceAt(rightFiles[0], piece.getRank()) instanceof Pawn) {
                     if(this.getPieceAt(rightFiles[0], piece.getRank()).getColor() == 1) {
                         Pawn pawn = (Pawn) this.getPieceAt(rightFiles[0], piece.getRank());
                         if(pawn.isFirstMove() == true) {
@@ -706,7 +706,7 @@ public class ChessBoard {
                     }
                 }
 
-                if(this.getPieceAt(leftFiles[0], piece.getRank()) != null) {
+                if(this.getPieceAt(leftFiles[0], piece.getRank()) instanceof Pawn) {
                     if(this.getPieceAt(leftFiles[0], piece.getRank()).getColor() == 0) {
                         Pawn pawn = (Pawn) this.getPieceAt(leftFiles[0], piece.getRank());
                         if(pawn.isFirstMove() == true) {
@@ -723,7 +723,7 @@ public class ChessBoard {
                     }
                 }
 
-                if(this.getPieceAt(rightFiles[0], piece.getRank()) != null) {
+                if(this.getPieceAt(rightFiles[0], piece.getRank()) instanceof Pawn) {
                     if(this.getPieceAt(rightFiles[0], piece.getRank()).getColor() == 0) {
                         Pawn pawn = (Pawn) this.getPieceAt(rightFiles[0], piece.getRank());
                         if(pawn.isFirstMove() == true) {
@@ -1058,7 +1058,7 @@ public class ChessBoard {
     }
 
     //Takes in a file, rank, and a color, and checks if that square is currently attacked by the opposite color 
-    public boolean isSquareUnderAttack(char file, int rank, int color) {
+    private boolean isSquareUnderAttack(char file, int rank, int color) {
         char[] files = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'};
         for(char f : files) {
             for(int i=1 ; i<9 ; i++) {
@@ -1184,7 +1184,7 @@ public class ChessBoard {
     }
 
     //Returns the files to the left of a given file 
-    public char[] getLeftFiles(char file) {
+    private char[] getLeftFiles(char file) {
         char[] leftFiles; 
         if(file == 'a') {
             leftFiles = new char[0];
@@ -1235,7 +1235,7 @@ public class ChessBoard {
         return leftFiles;
     }
 
-    public char[] getRightFiles(char file) {
+    private char[] getRightFiles(char file) {
         char[] rightFiles; 
         if(file == 'a') {
             rightFiles = new char[7];
