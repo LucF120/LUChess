@@ -1831,4 +1831,84 @@ public class ChessBoardTests {
         assert(board.getPieceAt('a', 1) instanceof Knight);
         assert(board.getPieceAt('a', 1).getColor() == 1);
     }
+
+    @Test
+    public void operaHouseGameTest() {
+        ChessBoard board = new ChessBoard();
+        assert(board.isWhiteCheckmated() == false);
+        assert(board.isBlackCheckmated() == false);
+        assert(board.isWhiteInCheck() == false);
+        assert(board.isBlackInCheck() == false);
+        assert(board.isWhiteStalemated() == false);
+        assert(board.isBlackStalemated() == false);
+
+        board.movePiece('e', 2, 'e', 4);
+        board.movePiece('e', 7, 'e', 5);
+        board.movePiece('g', 1, 'f', 3);
+        board.movePiece('d', 7, 'd', 6);
+        board.movePiece('d', 2, 'd', 4);
+        board.movePiece('c', 8, 'g', 4);
+        board.movePiece('d', 4, 'e', 5);
+        board.movePiece('g', 4, 'f', 3);
+        board.movePiece('d', 1, 'f', 3);
+        board.movePiece('d', 6, 'e', 5);
+        board.movePiece('f', 1, 'c', 4);
+        board.movePiece('g', 8, 'f', 6);
+        board.movePiece('f', 3, 'b', 3);
+        board.movePiece('d', 8, 'e', 7);
+        board.movePiece('b', 1, 'c', 3);
+        board.movePiece('c', 7, 'c', 6);
+        board.movePiece('c', 1, 'g', 5);
+        board.movePiece('b', 7, 'b', 5);
+        board.movePiece('c', 3, 'b', 5);
+        board.movePiece('c', 6, 'b', 5);
+        board.movePiece('c', 4, 'b', 5);
+
+        assert(board.isWhiteCheckmated() == false);
+        assert(board.isBlackCheckmated() == false);
+        assert(board.isWhiteInCheck() == false);
+        assert(board.isBlackInCheck() == true);
+        assert(board.isWhiteStalemated() == false);
+        assert(board.isBlackStalemated() == false);
+        
+        board.movePiece('b', 8, 'd', 7);
+        board.movePiece('e', 1, 'c', 1);
+
+        assert(board.getPieceAt('d', 1) instanceof Rook);
+
+        board.movePiece('a', 8, 'd', 8);
+        board.movePiece('d', 1, 'd', 7);
+        board.movePiece('d', 8, 'd', 7);
+        board.movePiece('h', 1, 'd', 1);
+        board.movePiece('e', 7, 'e', 6);
+        board.movePiece('b', 5, 'd', 7);
+
+        assert(board.isWhiteCheckmated() == false);
+        assert(board.isBlackCheckmated() == false);
+        assert(board.isWhiteInCheck() == false);
+        assert(board.isBlackInCheck() == true);
+        assert(board.isWhiteStalemated() == false);
+        assert(board.isBlackStalemated() == false);
+
+        board.movePiece('f', 6, 'd', 7);
+        board.movePiece('b', 3, 'b', 8);
+
+        assert(board.isWhiteCheckmated() == false);
+        assert(board.isBlackCheckmated() == false);
+        assert(board.isWhiteInCheck() == false);
+        assert(board.isBlackInCheck() == true);
+        assert(board.isWhiteStalemated() == false);
+        assert(board.isBlackStalemated() == false);
+
+        board.movePiece('d', 7, 'b', 8);
+        board.movePiece('d', 1, 'd', 8);
+
+        assert(board.isWhiteCheckmated() == false);
+        assert(board.isBlackCheckmated() == true);
+        assert(board.isWhiteInCheck() == false);
+        assert(board.isBlackInCheck() == true);
+        assert(board.isWhiteStalemated() == false);
+        assert(board.isBlackStalemated() == false);
+    }
+
 }
