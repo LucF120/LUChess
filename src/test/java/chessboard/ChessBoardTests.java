@@ -1911,4 +1911,55 @@ public class ChessBoardTests {
         assert(board.isBlackStalemated() == false);
     }
 
+    @Test
+    public void blackWinTest() {
+        ChessBoard board = new ChessBoard();
+        
+        assert(board.isWhiteCheckmated() == false);
+        assert(board.isBlackCheckmated() == false);
+        assert(board.isWhiteInCheck() == false);
+        assert(board.isBlackInCheck() == false);
+        assert(board.isWhiteStalemated() == false);
+        assert(board.isBlackStalemated() == false);
+
+        board.movePiece('e', 2, 'e', 4);
+        board.movePiece('e', 7, 'e', 5);
+        board.movePiece('f', 1, 'c', 4);
+        board.movePiece('d', 8, 'f', 6);
+        board.movePiece('b', 1, 'c', 3);
+        board.movePiece('f', 8, 'c', 5);
+        board.movePiece('c', 4, 'f', 7);
+
+        assert(board.isWhiteCheckmated() == false);
+        assert(board.isBlackCheckmated() == false);
+        assert(board.isWhiteInCheck() == false);
+        assert(board.isBlackInCheck() == true);
+        assert(board.isWhiteStalemated() == false);
+        assert(board.isBlackStalemated() == false);
+
+        board.movePiece('f', 6, 'f', 7);
+
+        assert(board.isWhiteCheckmated() == false);
+        assert(board.isBlackCheckmated() == false);
+        assert(board.isWhiteInCheck() == false);
+        assert(board.isBlackInCheck() == false);
+        assert(board.isWhiteStalemated() == false);
+        assert(board.isBlackStalemated() == false);
+
+        board.movePiece('g', 1, 'h', 3);
+        board.movePiece('d', 7, 'd', 5);
+        board.movePiece('e', 4, 'd', 5);
+        board.movePiece('c', 8, 'h', 3);
+        board.movePiece('g', 2, 'h', 3);
+        board.movePiece('f', 7, 'f', 2);
+
+        assert(board.isWhiteCheckmated() == true);
+        assert(board.isBlackCheckmated() == false);
+        assert(board.isWhiteInCheck() == true);
+        assert(board.isBlackInCheck() == false);
+        assert(board.isWhiteStalemated() == false);
+        assert(board.isBlackStalemated() == false);
+        
+    }
+
 }
