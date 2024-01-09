@@ -1,6 +1,7 @@
 package jar;
 
 import chessboard.*;
+import chesspiece.*;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -41,8 +42,64 @@ public class App
                     continue;
                 }
     
+                ChessPiece pieceToMove = board.getPieceAt(file, rank);
+                ChessPiece destinationPiece = board.getPieceAt(destFile, destRank);
+
+                String pieceToMoveString = "";
+                String destinationPieceString = "";
+
+                if(pieceToMove instanceof Pawn) {
+                    pieceToMoveString = "pawn";
+                }
+
+                if(pieceToMove instanceof Rook) {
+                    pieceToMoveString = "rook";
+                }
+
+                if(pieceToMove instanceof Knight) {
+                    pieceToMoveString = "knight";
+                }
+
+                if(pieceToMove instanceof Bishop) {
+                    pieceToMoveString = "bishop";
+                }
+
+                if(pieceToMove instanceof Queen) {
+                    pieceToMoveString = "queen";
+                }
+
+                if(pieceToMove instanceof King) {
+                    pieceToMoveString = "king";
+                }
+
+                if(destinationPiece instanceof Pawn) {
+                    destinationPieceString = "pawn";
+                }
+
+                if(destinationPiece instanceof Rook) {
+                    destinationPieceString = "rook";
+                }
+
+                if(destinationPiece instanceof Knight) {
+                    destinationPieceString = "knight";
+                }
+
+                if(destinationPiece instanceof Bishop) {
+                    destinationPieceString = "bishop";
+                }
+
+                if(destinationPiece instanceof Queen) {
+                    destinationPieceString = "queen";
+                }
+
                 try {
                     board.movePiece(file, rank, destFile, destRank);
+
+                    if(destinationPieceString.isEmpty()) {
+                        System.out.println("The white " + pieceToMoveString + " at " + file + rank + " has moved to " + destFile + destRank);
+                    } else {
+                        System.out.println("The white " + pieceToMoveString + " at " + file + rank + " has captured the " + destinationPieceString + " at " + destFile + destRank);
+                    }
                 } catch (IllegalArgumentException e) {
                     System.out.println(e.getMessage());
                     continue;
@@ -135,8 +192,64 @@ public class App
                     continue;
                 }
     
+                ChessPiece pieceToMove = board.getPieceAt(file, rank);
+                ChessPiece destinationPiece = board.getPieceAt(destFile, destRank);
+
+                String pieceToMoveString = "";
+                String destinationPieceString = "";
+
+                if(pieceToMove instanceof Pawn) {
+                    pieceToMoveString = "pawn";
+                }
+
+                if(pieceToMove instanceof Rook) {
+                    pieceToMoveString = "rook";
+                }
+
+                if(pieceToMove instanceof Knight) {
+                    pieceToMoveString = "knight";
+                }
+
+                if(pieceToMove instanceof Bishop) {
+                    pieceToMoveString = "bishop";
+                }
+
+                if(pieceToMove instanceof Queen) {
+                    pieceToMoveString = "queen";
+                }
+
+                if(pieceToMove instanceof King) {
+                    pieceToMoveString = "king";
+                }
+
+                if(destinationPiece instanceof Pawn) {
+                    destinationPieceString = "pawn";
+                }
+
+                if(destinationPiece instanceof Rook) {
+                    destinationPieceString = "rook";
+                }
+
+                if(destinationPiece instanceof Knight) {
+                    destinationPieceString = "knight";
+                }
+
+                if(destinationPiece instanceof Bishop) {
+                    destinationPieceString = "bishop";
+                }
+
+                if(destinationPiece instanceof Queen) {
+                    destinationPieceString = "queen";
+                }
+
                 try {
                     board.movePiece(file, rank, destFile, destRank);
+
+                    if(destinationPieceString.isEmpty()) {
+                        System.out.println("The black " + pieceToMoveString + " at " + file + rank + " has moved to " + destFile + destRank);
+                    } else {
+                        System.out.println("The black " + pieceToMoveString + " at " + file + rank + " has captured the " + destinationPieceString + " at " + destFile + destRank);
+                    }
                 } catch (IllegalArgumentException e) {
                     System.out.println(e.getMessage());
                     continue;
