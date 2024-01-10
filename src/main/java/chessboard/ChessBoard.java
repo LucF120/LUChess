@@ -1356,7 +1356,8 @@ public class ChessBoard {
                 }
 
                 if(pieces[i][j] instanceof Pawn) {
-                    piecesCopy[i][j] = new Pawn(pieces[i][j].getFile(), pieces[i][j].getRank(), true, pieces[i][j].getColor());
+                    Pawn p = (Pawn) pieces[i][j];
+                    piecesCopy[i][j] = new Pawn(p.getFile(), p.getRank(), true, p.getColor(), p.isFirstMove());
                 }
             }
         }
