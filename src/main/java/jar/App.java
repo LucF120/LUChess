@@ -24,6 +24,7 @@ public class App
         while(!isGameOver) {
             boolean whiteToMove = true;
             boolean blackToMove = false;
+
             while(whiteToMove) {
                 renderBoard(board);
 
@@ -103,6 +104,18 @@ public class App
                 }
 
                 try {
+                    if(board.isWhiteInCheck() == true) {
+                        ChessPiece[][] piecesCopy = new ChessPiece[8][8];
+                        piecesCopy = board.copyToPieces(board.getBoard());
+                        ChessBoard boardCopy = new ChessBoard(piecesCopy);
+
+                        boardCopy.movePiece(file, rank, destFile, destRank);
+                        if(boardCopy.isWhiteInCheck() == true) {
+                            System.out.println("\nThe move you provided did not get white out of check.\n");
+                            continue;
+                        }
+                    } 
+                    
                     board.movePiece(file, rank, destFile, destRank);
 
                     if(destinationPieceString.isEmpty()) {
@@ -263,6 +276,18 @@ public class App
                 }
 
                 try {
+                    if(board.isBlackInCheck() == true) {
+                        ChessPiece[][] piecesCopy = new ChessPiece[8][8];
+                        piecesCopy = board.copyToPieces(board.getBoard());
+                        ChessBoard boardCopy = new ChessBoard(piecesCopy);
+
+                        boardCopy.movePiece(file, rank, destFile, destRank);
+                        if(boardCopy.isBlackInCheck() == true) {
+                            System.out.println("\nThe move you provided did not get black out of check.\n");
+                            continue;
+                        }
+                    } 
+
                     board.movePiece(file, rank, destFile, destRank);
 
                     if(destinationPieceString.isEmpty()) {
@@ -381,7 +406,7 @@ public class App
                                 }
         
                                 if(piece instanceof Knight) {
-                                    line = line + " WK |";
+                                    line = line + " WN |";
                                 }
         
                                 if(piece instanceof Bishop) {
@@ -407,7 +432,7 @@ public class App
                                 }
         
                                 if(piece instanceof Knight) {
-                                    line = line + " BK |";
+                                    line = line + " BN |";
                                 }
         
                                 if(piece instanceof Bishop) {
