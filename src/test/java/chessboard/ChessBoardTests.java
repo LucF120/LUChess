@@ -1975,4 +1975,30 @@ public class ChessBoardTests {
 
         assert(board.isBlackCheckmated() == true);
     }
+
+    @Test
+    public void shortestStalemateTest() {
+        ChessBoard board = new ChessBoard();
+        board.movePiece('e', 2, 'e', 3);
+        board.movePiece('a', 7, 'a', 5);
+        board.movePiece('d', 1, 'h', 5);
+        board.movePiece('a', 8, 'a', 6);
+        board.movePiece('h', 5, 'a', 5);
+        board.movePiece('h', 7, 'h', 5);
+        board.movePiece('h', 2, 'h', 4);
+        board.movePiece('a', 6, 'h', 6);
+        board.movePiece('a', 5, 'c', 7);
+        board.movePiece('f', 7, 'f', 6);
+        board.movePiece('c', 7, 'd', 7);
+        board.movePiece('e', 8, 'f', 7);
+        board.movePiece('d', 7, 'b', 7);
+        board.movePiece('d', 8, 'd', 3);
+        board.movePiece('b', 7, 'b', 8);
+        board.movePiece('d', 3, 'h', 7);
+        board.movePiece('b', 8, 'c', 8);
+        board.movePiece('f', 7, 'g', 6);
+        board.movePiece('c', 8, 'e', 6);
+
+        assert(board.isBlackStalemated() == true);
+    }
 }
