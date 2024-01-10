@@ -1977,7 +1977,7 @@ public class ChessBoardTests {
     }
 
     @Test
-    public void shortestStalemateTest() {
+    public void shortestBlackStalemateTest() {
         ChessBoard board = new ChessBoard();
         board.movePiece('e', 2, 'e', 3);
         board.movePiece('a', 7, 'a', 5);
@@ -2000,5 +2000,32 @@ public class ChessBoardTests {
         board.movePiece('c', 8, 'e', 6);
 
         assert(board.isBlackStalemated() == true);
+    }
+
+    @Test
+    public void shortestWhiteStalemateTest() {
+        ChessBoard board = new ChessBoard();
+        board.movePiece('a', 2, 'a', 4);
+        board.movePiece('e', 7, 'e', 6);
+        board.movePiece('a', 1, 'a', 3);
+        board.movePiece('d', 8, 'h', 4);
+        board.movePiece('h', 2, 'h', 3);
+        board.movePiece('h', 4, 'a', 4);
+        board.movePiece('h', 3, 'h', 4);
+        board.movePiece('a', 4, 'c', 2);
+        board.movePiece('a', 3, 'h', 3);
+        board.movePiece('h', 7, 'h', 5);
+        board.movePiece('f', 2, 'f', 3);
+        board.movePiece('c', 2, 'd', 2);
+        board.movePiece('e', 1, 'f', 2);
+        board.movePiece('d', 2, 'b', 2);
+        board.movePiece('d', 1, 'd', 6);
+        board.movePiece('b', 2, 'b', 1);
+        board.movePiece('d', 6, 'h', 2);
+        board.movePiece('b', 1, 'c', 1);
+        board.movePiece('f', 2, 'g', 3);
+        board.movePiece('c', 1, 'e', 3);
+        
+        assert(board.isWhiteStalemated() == true);
     }
 }
