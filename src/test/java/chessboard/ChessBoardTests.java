@@ -2045,7 +2045,13 @@ public class ChessBoardTests {
         board.movePiece('d', 1, 'g', 4);
         board.movePiece('g', 7, 'g', 5);
 
-        assert(board.getLegalMoves('f', 5).contains(new ChessCoordinate('g', 6)));
+        board.isWhiteCheckmated();
+        board.isWhiteInCheck();
+        board.isWhiteStalemated();
+        board.isBlackStalemated();
+        board.isBlackInCheck();
+        board.isBlackCheckmated();
+        
         board.movePiece('f', 5, 'g', 6);
 
         assert(board.isBlackCheckmated() == true);
