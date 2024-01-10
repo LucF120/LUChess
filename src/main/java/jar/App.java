@@ -119,7 +119,17 @@ public class App
                     board.movePiece(file, rank, destFile, destRank);
 
                     if(destinationPieceString.isEmpty()) {
-                        System.out.println("\nThe white " + pieceToMoveString + " at " + file + rank + " has moved to " + destFile + destRank + "\n");
+                        if(pieceToMoveString.equals("king") && file == 'e' && (destFile == 'c' || destFile == 'g')) {
+                            if(destFile == 'c') {
+                                System.out.println("\nThe white king has castled long.");
+                            }
+
+                            if(destFile == 'g') {
+                                System.out.println("\nThe white king has castled short");
+                            }
+                        } else {
+                            System.out.println("\nThe white " + pieceToMoveString + " at " + file + rank + " has moved to " + destFile + destRank + "\n");
+                        }
                     } else {
                         System.out.println("\nThe white " + pieceToMoveString + " at " + file + rank + " has captured the " + destinationPieceString + " at " + destFile + destRank + "\n");
                     }
@@ -293,7 +303,17 @@ public class App
                     board.movePiece(file, rank, destFile, destRank);
 
                     if(destinationPieceString.isEmpty()) {
-                        System.out.println("\nThe black " + pieceToMoveString + " at " + file + rank + " has moved to " + destFile + destRank + "\n");
+                        if(pieceToMoveString.equals("king") && file == 'e' && (destFile == 'c' || destFile == 'g')) {
+                            if(destFile == 'c') {
+                                System.out.println("\nThe black king has castled long.");
+                            }
+
+                            if(destFile == 'g') {
+                                System.out.println("\nThe black king has castled short");
+                            }
+                        } else {
+                            System.out.println("\nThe black " + pieceToMoveString + " at " + file + rank + " has moved to " + destFile + destRank + "\n");
+                        }
                     } else {
                         System.out.println("\nThe black " + pieceToMoveString + " at " + file + rank + " has captured the " + destinationPieceString + " at " + destFile + destRank + "\n");
                     }
