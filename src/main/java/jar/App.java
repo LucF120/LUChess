@@ -41,7 +41,7 @@ public class App
                     destRank = scan.nextInt(); 
                 } catch (InputMismatchException e) {
                     System.out.println("Invalid input, try again");
-                    scan.next();
+                    scan = new Scanner(System.in);
                     continue;
                 }
     
@@ -178,6 +178,7 @@ public class App
                 }
 
                 if(board.isBlackCheckmated() == true) {
+                    renderBoard(board);
                     System.out.println("Black is in checkmate. White wins!");
                     isGameOver = true;
                     break;
@@ -188,6 +189,7 @@ public class App
                 }
 
                 if(board.isBlackStalemated()) {
+                    renderBoard(board);
                     System.out.println("Black is stalemated. The game is a draw");
                     isGameOver = true;
                     break;
@@ -213,7 +215,7 @@ public class App
                     destRank = scan.nextInt(); 
                 } catch (InputMismatchException e) {
                     System.out.println("Invalid input, try again");
-                    scan.next();
+                    scan = new Scanner(System.in);
                     continue;
                 }
     
@@ -350,6 +352,7 @@ public class App
                 }
 
                 if(board.isWhiteCheckmated() == true) {
+                    renderBoard(board);
                     System.out.println("White is in checkmate. Black wins!");
                     isGameOver = true;
                     break;
@@ -360,6 +363,7 @@ public class App
                 }
 
                 if(board.isWhiteStalemated()) {
+                    renderBoard(board);
                     System.out.println("White is stalemated. The game is a draw");
                     isGameOver = true;
                     break;
