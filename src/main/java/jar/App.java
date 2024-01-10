@@ -25,7 +25,9 @@ public class App
             boolean whiteToMove = true;
             boolean blackToMove = false;
             while(whiteToMove) {
-                System.out.println("White to move:\n");
+                renderBoard(board);
+
+                System.out.println("\nWhite to move:\n");
 
                 char file;
                 int rank;
@@ -96,9 +98,9 @@ public class App
                     board.movePiece(file, rank, destFile, destRank);
 
                     if(destinationPieceString.isEmpty()) {
-                        System.out.println("The white " + pieceToMoveString + " at " + file + rank + " has moved to " + destFile + destRank);
+                        System.out.println("\nThe white " + pieceToMoveString + " at " + file + rank + " has moved to " + destFile + destRank + "\n");
                     } else {
-                        System.out.println("The white " + pieceToMoveString + " at " + file + rank + " has captured the " + destinationPieceString + " at " + destFile + destRank);
+                        System.out.println("\nThe white " + pieceToMoveString + " at " + file + rank + " has captured the " + destinationPieceString + " at " + destFile + destRank + "\n");
                     }
                 } catch (IllegalArgumentException e) {
                     System.out.println(e.getMessage());
@@ -175,7 +177,9 @@ public class App
             }
 
             while(blackToMove) {
-                System.out.println("Black to move:\n");
+                renderBoard(board);
+
+                System.out.println("\nBlack to move:\n");
 
                 char file;
                 int rank;
@@ -246,9 +250,9 @@ public class App
                     board.movePiece(file, rank, destFile, destRank);
 
                     if(destinationPieceString.isEmpty()) {
-                        System.out.println("The black " + pieceToMoveString + " at " + file + rank + " has moved to " + destFile + destRank);
+                        System.out.println("\nThe black " + pieceToMoveString + " at " + file + rank + " has moved to " + destFile + destRank + "\n");
                     } else {
-                        System.out.println("The black " + pieceToMoveString + " at " + file + rank + " has captured the " + destinationPieceString + " at " + destFile + destRank);
+                        System.out.println("\nThe black " + pieceToMoveString + " at " + file + rank + " has captured the " + destinationPieceString + " at " + destFile + destRank + "\n");
                     }
                 } catch (IllegalArgumentException e) {
                     System.out.println(e.getMessage());
@@ -328,5 +332,86 @@ public class App
         }
         System.out.println("Thank you for playing!");
         scan.close();
+    }
+
+    public static void renderBoard(ChessBoard board) {
+        System.out.println();
+
+                char[] files = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'};
+
+                for(int i=8 ; i>0 ; i--) {
+                    if(i == 8) {
+                        System.out.println(" ________________________________________");
+                    } else {
+                        System.out.println(" |____|____|____|____|____|____|____|____|");
+                    }
+                    System.out.println(" |    |    |    |    |    |    |    |    |");
+
+                    String line = i + "|";
+
+                    for(int j=0 ; j<8 ; j++) {
+                        ChessPiece piece = board.getPieceAt(files[j], i);
+
+                        if(piece == null) {
+                            line = line + " -- |";
+                        } else {
+                            if(piece.getColor() == 0) {
+                                if(piece instanceof Pawn) {
+                                    line = line + " WP |";
+                                }
+        
+                                if(piece instanceof Rook) {
+                                    line = line + " WR |";
+                                }
+        
+                                if(piece instanceof Knight) {
+                                    line = line + " WK |";
+                                }
+        
+                                if(piece instanceof Bishop) {
+                                    line = line + " WB |";
+                                }
+        
+                                if(piece instanceof Queen) {
+                                    line = line + " WQ |";
+                                }
+        
+                                if(piece instanceof King) {
+                                    line = line + " WK |";
+                                }
+                            }
+
+                            if(piece.getColor() == 1) {
+                                if(piece instanceof Pawn) {
+                                    line = line + " BP |";
+                                }
+        
+                                if(piece instanceof Rook) {
+                                    line = line + " BR |";
+                                }
+        
+                                if(piece instanceof Knight) {
+                                    line = line + " BK |";
+                                }
+        
+                                if(piece instanceof Bishop) {
+                                    line = line + " BB |";
+                                }
+        
+                                if(piece instanceof Queen) {
+                                    line = line + " BQ |";
+                                }
+        
+                                if(piece instanceof King) {
+                                    line = line + " BK |";
+                                }
+                            }
+                        }
+                    }
+                    System.out.println(line);
+                    // System.out.println(" |_________________________|");
+                }
+                System.out.println(" |_______________________________________|");
+                System.out.println("   a    b    c    d    e    f    g    h\n");
     }
 }
