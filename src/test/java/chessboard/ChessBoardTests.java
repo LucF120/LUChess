@@ -1962,4 +1962,17 @@ public class ChessBoardTests {
         
     }
 
+    @Test
+    public void kingMatedByQueenTest() {
+        ChessBoard board = new ChessBoard();
+        board.movePiece('e', 2, 'e', 4);
+        board.movePiece('e', 7, 'e', 5);
+        board.movePiece('d', 1, 'h', 5);
+        board.movePiece('d', 8, 'h', 4);
+        board.movePiece('h', 5, 'f', 7);
+        board.movePiece('e', 8, 'd', 8);
+        board.movePiece('f', 7, 'f', 8);
+
+        assert(board.isBlackCheckmated() == true);
+    }
 }
