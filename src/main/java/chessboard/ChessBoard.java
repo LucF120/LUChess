@@ -1326,7 +1326,7 @@ public class ChessBoard {
         }
     }
 
-    private ChessPiece[][] copyToPieces(ChessPiece[][] pieces) {
+    public ChessPiece[][] copyToPieces(ChessPiece[][] pieces) {
         ChessPiece[][] piecesCopy = new ChessPiece[8][8];
 
         for(int i=0 ; i<pieces.length ; i++) {
