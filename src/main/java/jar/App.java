@@ -45,6 +45,14 @@ public class App
                 }
     
                 ChessPiece pieceToMove = board.getPieceAt(file, rank);
+
+                if(pieceToMove != null) {
+                    if(pieceToMove.getColor() != 0) {
+                        System.out.println("The piece you are trying to move is not a white piece.");
+                        continue;
+                    }
+                }
+
                 ChessPiece destinationPiece = board.getPieceAt(destFile, destRank);
 
                 String pieceToMoveString = "";
@@ -197,6 +205,14 @@ public class App
                 }
     
                 ChessPiece pieceToMove = board.getPieceAt(file, rank);
+
+                if(pieceToMove != null) {
+                    if(pieceToMove.getColor() != 1) {
+                        System.out.println("The piece you are trying to move is not a black piece.");
+                        continue;
+                    }
+                }
+
                 ChessPiece destinationPiece = board.getPieceAt(destFile, destRank);
 
                 String pieceToMoveString = "";
@@ -353,7 +369,7 @@ public class App
                         ChessPiece piece = board.getPieceAt(files[j], i);
 
                         if(piece == null) {
-                            line = line + " -- |";
+                            line = line + "    |";
                         } else {
                             if(piece.getColor() == 0) {
                                 if(piece instanceof Pawn) {
