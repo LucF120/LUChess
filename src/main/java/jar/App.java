@@ -127,7 +127,13 @@ public class App
                             if(destFile == 'g') {
                                 System.out.println("\nThe white king has castled short");
                             }
-                        } else {
+                        } 
+                        
+                        else if(pieceToMoveString.equals("pawn") && file != destFile) {
+                            System.out.println("\nThe white pawn at " + file + rank + " has captured the black pawn at " + destFile + rank + " via en passant.");
+                        }
+
+                        else {
                             System.out.println("\nThe white " + pieceToMoveString + " at " + file + rank + " has moved to " + destFile + destRank + "\n");
                         }
                     } else {
@@ -311,7 +317,13 @@ public class App
                             if(destFile == 'g') {
                                 System.out.println("\nThe black king has castled short");
                             }
-                        } else {
+                        }
+                        
+                        else if(pieceToMoveString.equals("pawn") && file != destFile) {
+                            System.out.println("\nThe black pawn at " + file + rank + " has captured the white pawn at " + destFile + rank + " via en passant.");
+                        }
+                        
+                        else {
                             System.out.println("\nThe black " + pieceToMoveString + " at " + file + rank + " has moved to " + destFile + destRank + "\n");
                         }
                     } else {
