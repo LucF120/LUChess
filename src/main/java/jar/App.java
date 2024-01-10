@@ -114,7 +114,17 @@ public class App
                             System.out.println("\nThe move you provided did not get white out of check.\n");
                             continue;
                         }
-                    } 
+                    } else {
+                        ChessPiece[][] piecesCopy = new ChessPiece[8][8];
+                        piecesCopy = board.copyToPieces(board.getBoard());
+                        ChessBoard boardCopy = new ChessBoard(piecesCopy);
+
+                        boardCopy.movePiece(file, rank, destFile, destRank);
+                        if(boardCopy.isWhiteInCheck() == true) {
+                            System.out.println("\nThis is an illegal move that exposes the king.\n");
+                            continue;
+                        }
+                    }
                     
                     board.movePiece(file, rank, destFile, destRank);
 
@@ -304,7 +314,17 @@ public class App
                             System.out.println("\nThe move you provided did not get black out of check.\n");
                             continue;
                         }
-                    } 
+                    } else {
+                        ChessPiece[][] piecesCopy = new ChessPiece[8][8];
+                        piecesCopy = board.copyToPieces(board.getBoard());
+                        ChessBoard boardCopy = new ChessBoard(piecesCopy);
+
+                        boardCopy.movePiece(file, rank, destFile, destRank);
+                        if(boardCopy.isBlackInCheck() == true) {
+                            System.out.println("\nThis is an illegal move that exposes the king.\n");
+                            continue;
+                        }
+                    }
 
                     board.movePiece(file, rank, destFile, destRank);
 
