@@ -2028,4 +2028,26 @@ public class ChessBoardTests {
         
         assert(board.isWhiteStalemated() == true);
     }
+
+    @Test
+    public void enPassantMateTest() {
+        ChessBoard board = new ChessBoard();
+        board.movePiece('e', 2, 'e', 4);
+        board.movePiece('f', 7, 'f', 5);
+        board.movePiece('e', 4, 'f', 5);
+        board.movePiece('e', 8, 'f', 7);
+        board.movePiece('b', 2, 'b', 3);
+        board.movePiece('d', 7, 'd', 6);
+        board.movePiece('c', 1, 'b', 2);
+        board.movePiece('h', 7, 'h', 6);
+        board.movePiece('f', 1, 'b', 5);
+        board.movePiece('a', 7, 'a', 6);
+        board.movePiece('d', 1, 'g', 4);
+        board.movePiece('g', 7, 'g', 5);
+
+        assert(board.getLegalMoves('f', 5).contains(new ChessCoordinate('g', 6)));
+        board.movePiece('f', 5, 'g', 6);
+
+        assert(board.isBlackCheckmated() == true);
+    }
 }
