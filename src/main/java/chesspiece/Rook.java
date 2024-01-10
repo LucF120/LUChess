@@ -19,6 +19,15 @@ public class Rook implements ChessPiece {
         this.hasMoved = false;
     }
 
+    //Constructor where you can set hasMoved to true or false 
+    public Rook(char file, int rank, boolean isAlive, int color, boolean hasMoved) {
+        this.location = new ChessCoordinate(file, rank);
+        this.isAlive = isAlive; 
+        this.value = 5; 
+        this.color = color; 
+        this.hasMoved = hasMoved;
+    }
+
     //Returns the file that the piece is currently in (a-h)
     //Returns '0' if the piece is not on the board 
     public char getFile() {
