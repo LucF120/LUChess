@@ -2,19 +2,23 @@ package jar;
 
 import chessboard.*;
 import chesspiece.*;
+import chessview.*;
+import util.*;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
+import java.io.IOException;
 
-/**
- * Hello world!
- *
- */
 public class App 
-{
-    public static void main(String[] args)
+{ 
+    public static void main(String[] args) 
     {
         ChessBoard board = new ChessBoard(); 
+
+        
+        Board boardView = new Board(board);
+        boardView.makeBoard();
+
         Scanner scan = new Scanner(System.in);
 
         System.out.println("Welcome to LUChess!\n");
@@ -26,21 +30,21 @@ public class App
             boolean blackToMove = false;
 
             while(whiteToMove) {
-                renderBoard(board);
-
-                System.out.println("\nWhite to move:\n");
-
                 char file;
                 int rank;
                 char destFile;
                 int destRank;
+                ChessCoordinate firstClick = null;
+                ChessCoordinate secondClick = null;
                 try {
-                    file = scan.next().charAt(0);
-                    rank = scan.nextInt();
-                    destFile = scan.next().charAt(0);
-                    destRank = scan.nextInt(); 
-                } catch (InputMismatchException e) {
-                    System.out.println("Invalid input, try again");
+                    firstClick = boardView.getPanel().getFirstClick();
+                    secondClick = boardView.getPanel().getSecondClick();
+    
+                    file = firstClick.getFile();
+                    rank = firstClick.getRank();
+                    destFile = secondClick.getFile();
+                    destRank = secondClick.getRank();
+                } catch (NullPointerException e) {
                     scan = new Scanner(System.in);
                     continue;
                 }
@@ -50,6 +54,7 @@ public class App
                 if(pieceToMove != null) {
                     if(pieceToMove.getColor() != 0) {
                         System.out.println("The piece you are trying to move is not a white piece.");
+                        boardView.getPanel().resetClicks();
                         continue;
                     }
                 }
@@ -112,6 +117,7 @@ public class App
                         boardCopy.movePiece(file, rank, destFile, destRank);
                         if(boardCopy.isWhiteInCheck() == true) {
                             System.out.println("\nThe move you provided did not get white out of check.\n");
+                            boardView.getPanel().resetClicks();
                             continue;
                         }
                     } else {
@@ -122,6 +128,7 @@ public class App
                         boardCopy.movePiece(file, rank, destFile, destRank);
                         if(boardCopy.isWhiteInCheck() == true) {
                             System.out.println("\nThis is an illegal move that exposes the king.\n");
+                            boardView.getPanel().resetClicks();
                             continue;
                         }
                     }
@@ -151,9 +158,11 @@ public class App
                     }
                 } catch (IllegalArgumentException e) {
                     System.out.println(e.getMessage());
+                    boardView.getPanel().resetClicks();
                     continue;
                 } catch(NullPointerException e) {
                     System.out.println(e.getMessage());
+                    boardView.getPanel().resetClicks();
                     continue;
                 }
 
@@ -173,7 +182,7 @@ public class App
                             promotionInput = scan.next().charAt(0);
                         } catch (InputMismatchException e) {
                             System.out.println("Invalid promotion input, please try again");
-                            scan.next();
+                            scan = new Scanner(System.in);
                             continue;
                         }
 
@@ -221,26 +230,29 @@ public class App
                     break;
                 }
 
-                whiteToMove = false;
                 blackToMove = true;
+                boardView.getPanel().resetClicks();
+                renderBoard(board);
+                whiteToMove = false;
+                
             }
 
             while(blackToMove) {
-                renderBoard(board);
-
-                System.out.println("\nBlack to move:\n");
-
                 char file;
                 int rank;
                 char destFile;
                 int destRank;
+                ChessCoordinate firstClick = null;
+                ChessCoordinate secondClick = null;
                 try {
-                    file = scan.next().charAt(0);
-                    rank = scan.nextInt();
-                    destFile = scan.next().charAt(0);
-                    destRank = scan.nextInt(); 
-                } catch (InputMismatchException e) {
-                    System.out.println("Invalid input, try again");
+                    firstClick = boardView.getPanel().getFirstClick();
+                    secondClick = boardView.getPanel().getSecondClick();
+    
+                    file = firstClick.getFile();
+                    rank = firstClick.getRank();
+                    destFile = secondClick.getFile();
+                    destRank = secondClick.getRank();
+                } catch (NullPointerException e) {
                     scan = new Scanner(System.in);
                     continue;
                 }
@@ -250,6 +262,7 @@ public class App
                 if(pieceToMove != null) {
                     if(pieceToMove.getColor() != 1) {
                         System.out.println("The piece you are trying to move is not a black piece.");
+                        boardView.getPanel().resetClicks();
                         continue;
                     }
                 }
@@ -312,6 +325,7 @@ public class App
                         boardCopy.movePiece(file, rank, destFile, destRank);
                         if(boardCopy.isBlackInCheck() == true) {
                             System.out.println("\nThe move you provided did not get black out of check.\n");
+                            boardView.getPanel().resetClicks();
                             continue;
                         }
                     } else {
@@ -322,6 +336,7 @@ public class App
                         boardCopy.movePiece(file, rank, destFile, destRank);
                         if(boardCopy.isBlackInCheck() == true) {
                             System.out.println("\nThis is an illegal move that exposes the king.\n");
+                            boardView.getPanel().resetClicks();
                             continue;
                         }
                     }
@@ -351,9 +366,11 @@ public class App
                     }
                 } catch (IllegalArgumentException e) {
                     System.out.println(e.getMessage());
+                    boardView.getPanel().resetClicks();
                     continue;
                 } catch(NullPointerException e) {
                     System.out.println(e.getMessage());
+                    boardView.getPanel().resetClicks();
                     continue;
                 }
 
@@ -373,7 +390,7 @@ public class App
                             promotionInput = scan.next().charAt(0);
                         } catch (InputMismatchException e) {
                             System.out.println("Invalid promotion input, please try again");
-                            scan.next();
+                            scan = new Scanner(System.in);
                             continue;
                         }
 
@@ -422,6 +439,8 @@ public class App
                 }
 
                 whiteToMove = true;
+                boardView.getPanel().resetClicks();
+                renderBoard(board);
                 blackToMove = false;
             }
 
