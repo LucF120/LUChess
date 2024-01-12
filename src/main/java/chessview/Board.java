@@ -12,7 +12,7 @@ import java.io.IOException;
 
 //Represents a chess board consisting of 64 squares 
 public class Board {
-    static Color BEIGE = new Color(245, 245, 220);
+    static Color BEIGE = new Color(181, 181, 141);
     static Color GREEN = new Color(107, 142, 35);
     static char[] FILES = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'};
 
