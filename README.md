@@ -5,6 +5,7 @@ My goals are to accomplish the following steps (the order may be subject to chan
 <ol>
 	<li>Create and define a class hierarchy for all the components of the game of chess (the board, the pieces, teams, etc), and create functions for the different actions in the game (winning, losing, moving pieces, capturing pieces, check, checkmate, stalemate, etc)</li> 
 	<li>Allow the user to play a game of chess in the console (playing as both teams)</li> 
+	<li>Allow the user to play a game of chess against themselves with an interactive GUI</li>
 	<li>Allow the user to play a game of chess in the console against the computer (computer making random moves)</li>
 	<li>Allow the user to play a game of chess in the console against a smart computer (need to integrate an open-source chess engine)</li>
 	<li>Create a GUI to allow the user to play a game of chess against the smart computer, while seeing the board and being able to interact with it</li> 
@@ -19,4 +20,5 @@ I will continue to update this README to keep track of what goals I have accompl
 	<li>Date Started: 12/20/2023</li>
 	<li>Goal 1 Accomplished: 1/6/2024</li>
 	<li>Goal 2 Accomplished: 1/10/2024</li>
+	<li>Goal 3 Accomplished: 1/12/2024</li>
 </ul>
