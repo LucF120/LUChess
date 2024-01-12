@@ -29,10 +29,15 @@ public class ChessPanel extends JPanel implements MouseListener {
         super.paintComponent(g);
 
         for(int i=0 ; i<8 ; i++) {
-            for(int j=0 ; j<8 ; j++) {
-                Square square = board[i][j];
-    
-                BufferedImage image = square.draw();
+            for(int j=1 ; j<9 ; j++) {
+                Square square = board[i][j-1];
+                BufferedImage image;
+
+                if(game.getPieceAt(FILES[i], Math.abs(9 -j)) == null) {
+                    image = square.draw();
+                } else {
+                    image = square.drawPiece(game.getPieceAt(FILES[i], Math.abs(9 -j)));
+                }
                 g.drawImage(image, (square.fileToInt(square.getFile())-1)*100, (square.getRank()-1)*100, null);
             }
         }

@@ -1,9 +1,20 @@
 package chessview;
 
+import chesspiece.*;
+
 import java.awt.Color;
 import java.awt.Graphics.*;
 import java.awt.Graphics2D;
 import java.awt.image.*;
+import javax.imageio.ImageIO;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.lang.ClassLoader;
+import java.net.URL;
+
+
+
 
 //Represents one square on the chessboard 
 public class Square {
@@ -25,8 +36,62 @@ public class Square {
 
         Graphics2D g = squareImage.createGraphics();
         g.setColor(color);
-        g.fillRect (0, 0, squareImage.getWidth(), squareImage.getHeight() );
+        g.fillRect (0, 0, squareImage.getWidth(), squareImage.getHeight());
         return squareImage;
+    }
+
+    public BufferedImage drawPiece(ChessPiece piece) {
+        if(piece == null) {
+            return this.draw();
+        }
+
+        String pathToImg = "src/main/resources/images/";
+
+        if(this.fileToInt(piece.getFile()) % 2 == piece.getRank() % 2) {
+            pathToImg = pathToImg + "DarkSquare_";
+        } else {
+            pathToImg = pathToImg + "LightSquare_";
+        }
+
+        if(piece.getColor() == 0) {
+            pathToImg = pathToImg + "White";
+        } else {
+            pathToImg = pathToImg + "Black";
+        }
+
+        if(piece instanceof Pawn) {
+            pathToImg = pathToImg + "Pawn.png";
+        }
+
+        if(piece instanceof Rook) {
+            pathToImg = pathToImg + "Rook.png";
+        }
+
+        if(piece instanceof Bishop) {
+            pathToImg = pathToImg + "Bishop.png";
+        }
+
+        if(piece instanceof Knight) {
+            pathToImg = pathToImg + "Knight.png";
+        }
+
+        if(piece instanceof Queen) {
+            pathToImg = pathToImg + "Queen.png";
+        }
+
+        if(piece instanceof King) {
+            pathToImg = pathToImg + "King.png";
+        }
+
+        BufferedImage image = this.draw();
+        try {
+            image = ImageIO.read(new File(pathToImg));
+        } catch(IOException e) {
+            System.out.println("Error: IOException");
+        }
+
+        return image;
+
     }
 
     public char getFile() {
@@ -41,7 +106,7 @@ public class Square {
         return this.isClicked;
     }
 
-    public int fileToInt(int f) {
+    public int fileToInt(char f) {
         int val = 8;
 
         switch(f) {

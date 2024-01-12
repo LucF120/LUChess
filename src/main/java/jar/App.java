@@ -8,16 +8,21 @@ import util.*;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.io.IOException;
+import javax.swing.*;
 
 public class App 
 { 
     public static void main(String[] args) 
     {
         ChessBoard board = new ChessBoard(); 
-
         
-        Board boardView = new Board(board);
-        boardView.makeBoard();
+        final Board boardView = new Board(board);
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                boardView.makeBoard();
+            }
+        });
 
         Scanner scan = new Scanner(System.in);
 
@@ -211,6 +216,13 @@ public class App
                     }
 
                 }
+
+                SwingUtilities.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        boardView.makeBoard();
+                    }
+                });
 
                 if(board.isBlackCheckmated() == true) {
                     renderBoard(board);
@@ -420,6 +432,13 @@ public class App
 
                 }
 
+                SwingUtilities.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        boardView.makeBoard();
+                    }
+                });
+
                 if(board.isWhiteCheckmated() == true) {
                     renderBoard(board);
                     System.out.println("White is in checkmate. Black wins!");
@@ -448,6 +467,7 @@ public class App
         }
         System.out.println("Thank you for playing!");
         scan.close();
+        System.exit(0);
     }
 
     public static void renderBoard(ChessBoard board) {

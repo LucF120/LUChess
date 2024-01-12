@@ -9,6 +9,7 @@ import java.awt.*;
 import java.awt.image.*;
 import javax.swing.*;
 import java.io.IOException;
+import javax.imageio.ImageIO;
 
 //Represents a chess board consisting of 64 squares 
 public class Board {
@@ -19,11 +20,14 @@ public class Board {
     private Square[][] board = new Square[8][8];
     private ChessBoard game;
     private ChessPanel chessPanel;
+    private JFrame frame; 
 
     public Board(ChessBoard game) {
         this.game = game;
 
         this.renderBoard(board);
+        this.chessPanel = new ChessPanel(board, game);
+        frame = new JFrame("Chess Application");
     }
 
     private void renderBoard(Square[][] board) {
@@ -39,19 +43,16 @@ public class Board {
     }
 
     public void makeBoard() {
-        JFrame frame = new JFrame("Chess Application");
-
-        chessPanel = new ChessPanel(board, game);
-
-
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setPreferredSize(new Dimension(900, 900));
+        chessPanel.revalidate();
+        chessPanel.repaint();
+        frame.add(chessPanel);
         frame.pack();
-        frame.getContentPane().add(chessPanel);
         frame.setVisible(true);
     }
 
-    public chessview.Square[][] getChessBoard() {
+    public Square[][] getChessBoard() {
         return this.board;
     }
     
