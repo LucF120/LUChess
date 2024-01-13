@@ -34,6 +34,8 @@ public class App
             boolean whiteToMove = true;
             boolean blackToMove = false;
 
+            boolean renderedFirstRedClick = false;
+
             while(whiteToMove) {
                 char file;
                 int rank;
@@ -43,8 +45,17 @@ public class App
                 ChessCoordinate secondClick = null;
                 try {
                     firstClick = boardView.getPanel().getFirstClick();
+                    if(firstClick != null && renderedFirstRedClick == false) {
+                        SwingUtilities.invokeLater(new Runnable() {
+                            @Override
+                            public void run() {
+                                boardView.makeBoard();
+                            }
+                        });
+                        renderedFirstRedClick = true;
+                    }
                     secondClick = boardView.getPanel().getSecondClick();
-    
+
                     file = firstClick.getFile();
                     rank = firstClick.getRank();
                     destFile = secondClick.getFile();
@@ -60,6 +71,13 @@ public class App
                     if(pieceToMove.getColor() != 0) {
                         System.out.println("The piece you are trying to move is not a white piece.");
                         boardView.getPanel().resetClicks();
+                        renderedFirstRedClick = false;
+                        SwingUtilities.invokeLater(new Runnable() {
+                            @Override
+                            public void run() {
+                                boardView.makeBoard();
+                            }
+                        });
                         continue;
                     }
                 }
@@ -123,6 +141,13 @@ public class App
                         if(boardCopy.isWhiteInCheck() == true) {
                             System.out.println("\nThe move you provided did not get white out of check.\n");
                             boardView.getPanel().resetClicks();
+                            renderedFirstRedClick = false;
+                            SwingUtilities.invokeLater(new Runnable() {
+                                @Override
+                                public void run() {
+                                    boardView.makeBoard();
+                                }
+                            });
                             continue;
                         }
                     } else {
@@ -134,6 +159,13 @@ public class App
                         if(boardCopy.isWhiteInCheck() == true) {
                             System.out.println("\nThis is an illegal move that exposes the king.\n");
                             boardView.getPanel().resetClicks();
+                            renderedFirstRedClick = false;
+                            SwingUtilities.invokeLater(new Runnable() {
+                                @Override
+                                public void run() {
+                                    boardView.makeBoard();
+                                }
+                            });
                             continue;
                         }
                     }
@@ -164,10 +196,24 @@ public class App
                 } catch (IllegalArgumentException e) {
                     System.out.println(e.getMessage());
                     boardView.getPanel().resetClicks();
+                    renderedFirstRedClick = false;
+                    SwingUtilities.invokeLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            boardView.makeBoard();
+                        }
+                    });
                     continue;
                 } catch(NullPointerException e) {
                     System.out.println(e.getMessage());
                     boardView.getPanel().resetClicks();
+                    renderedFirstRedClick = false;
+                    SwingUtilities.invokeLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            boardView.makeBoard();
+                        }
+                    });
                     continue;
                 }
 
@@ -246,6 +292,7 @@ public class App
                 boardView.getPanel().resetClicks();
                 renderBoard(board);
                 whiteToMove = false;
+                renderedFirstRedClick = false;
                 
             }
 
@@ -258,6 +305,15 @@ public class App
                 ChessCoordinate secondClick = null;
                 try {
                     firstClick = boardView.getPanel().getFirstClick();
+                    if(firstClick != null && renderedFirstRedClick == false) {
+                        SwingUtilities.invokeLater(new Runnable() {
+                            @Override
+                            public void run() {
+                                boardView.makeBoard();
+                            }
+                        });
+                        renderedFirstRedClick = true;
+                    }
                     secondClick = boardView.getPanel().getSecondClick();
     
                     file = firstClick.getFile();
@@ -275,6 +331,13 @@ public class App
                     if(pieceToMove.getColor() != 1) {
                         System.out.println("The piece you are trying to move is not a black piece.");
                         boardView.getPanel().resetClicks();
+                        renderedFirstRedClick = false;
+                        SwingUtilities.invokeLater(new Runnable() {
+                            @Override
+                            public void run() {
+                                boardView.makeBoard();
+                            }
+                        });
                         continue;
                     }
                 }
@@ -338,6 +401,13 @@ public class App
                         if(boardCopy.isBlackInCheck() == true) {
                             System.out.println("\nThe move you provided did not get black out of check.\n");
                             boardView.getPanel().resetClicks();
+                            renderedFirstRedClick = false;
+                            SwingUtilities.invokeLater(new Runnable() {
+                                @Override
+                                public void run() {
+                                    boardView.makeBoard();
+                                }
+                            });
                             continue;
                         }
                     } else {
@@ -379,10 +449,24 @@ public class App
                 } catch (IllegalArgumentException e) {
                     System.out.println(e.getMessage());
                     boardView.getPanel().resetClicks();
+                    renderedFirstRedClick = false;
+                    SwingUtilities.invokeLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            boardView.makeBoard();
+                        }
+                    });
                     continue;
                 } catch(NullPointerException e) {
                     System.out.println(e.getMessage());
                     boardView.getPanel().resetClicks();
+                    renderedFirstRedClick = false;
+                    SwingUtilities.invokeLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            boardView.makeBoard();
+                        }
+                    });
                     continue;
                 }
 
@@ -461,6 +545,7 @@ public class App
                 boardView.getPanel().resetClicks();
                 renderBoard(board);
                 blackToMove = false;
+                renderedFirstRedClick = false;
             }
 
 

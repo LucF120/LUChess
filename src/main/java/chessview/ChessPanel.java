@@ -33,12 +33,12 @@ public class ChessPanel extends JPanel implements MouseListener {
                 Square square = board[i][j-1];
                 BufferedImage image;
 
-                if(game.getPieceAt(FILES[i], Math.abs(9 -j)) == null) {
+                if(game.getPieceAt(FILES[i], Math.abs(j)) == null) {
                     image = square.draw();
                 } else {
-                    image = square.drawPiece(game.getPieceAt(FILES[i], Math.abs(9 -j)));
+                    image = square.drawPiece(game.getPieceAt(FILES[i], Math.abs(j)));
                 }
-                g.drawImage(image, (square.fileToInt(square.getFile())-1)*100, (square.getRank()-1)*100, null);
+                g.drawImage(image, (Square.fileToInt(square.getFile())-1)*100, 900 - (square.getRank()+1)*100, null);
             }
         }
     }
@@ -60,6 +60,7 @@ public class ChessPanel extends JPanel implements MouseListener {
 
             if(this.firstClick == null) {
                 this.firstClick = new ChessCoordinate(FILES[x], y);
+                board[x][y-1].setIsClicked();
             } else {
                 if(this.secondClick == null) {
                     this.secondClick = new ChessCoordinate(FILES[x], y);
@@ -96,7 +97,14 @@ public class ChessPanel extends JPanel implements MouseListener {
     }
 
     public void resetClicks() {
-        this.firstClick = null;
+        if(this.firstClick != null) {
+            int x = Square.fileToInt(firstClick.getFile()) - 1;
+            int y = this.firstClick.getRank() - 1;
+            board[x][y].setIsClicked();
+            this.firstClick = null;
+        } 
+
         this.secondClick = null;
     }
+    
 }

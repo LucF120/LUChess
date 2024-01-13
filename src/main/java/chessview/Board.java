@@ -33,7 +33,7 @@ public class Board {
     private void renderBoard(Square[][] board) {
         for(int i=0 ; i<8 ; i++) {
             for(int j=1 ; j<9 ; j++) {
-                if(i%2 == (j-1)%2) {
+                if(i%2 != (j-1)%2) {
                     board[i][j-1] = new Square(BEIGE, FILES[i], j);
                 } else {
                     board[i][j-1] = new Square(GREEN, FILES[i], j);

@@ -29,6 +29,7 @@ public class Square {
         this.color = color;
         this.file = file;
         this.rank = rank; 
+        this.isClicked = false;
     }
 
     public BufferedImage draw() {
@@ -37,6 +38,11 @@ public class Square {
         Graphics2D g = squareImage.createGraphics();
         g.setColor(color);
         g.fillRect (0, 0, squareImage.getWidth(), squareImage.getHeight());
+
+        if(this.isClicked()) {
+            squareImage = this.redTintImage(squareImage);
+        }
+
         return squareImage;
     }
 
@@ -89,6 +95,10 @@ public class Square {
         } catch(IOException e) {
             System.out.println("Error: IOException");
         }
+        
+        if(this.isClicked()) {
+            image = this.redTintImage(image);
+        }
 
         return image;
 
@@ -106,7 +116,32 @@ public class Square {
         return this.isClicked;
     }
 
-    public int fileToInt(char f) {
+    public void setIsClicked() {
+        this.isClicked = !this.isClicked;
+    }
+
+    public BufferedImage redTintImage(BufferedImage image) {
+        BufferedImage redTintedImage = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_ARGB);
+
+        for(int y=0 ; y<image.getHeight() ; y++) {
+            for(int x=0 ; x<image.getWidth() ; x++) {
+                Color color = new Color(image.getRGB(x, y));
+
+                int newRed = Math.min(255, color.getRed() + (color.getRed() / 2));
+
+                Color newColor = new Color(newRed, color.getGreen(), color.getBlue());
+
+                redTintedImage.setRGB(x, y, newColor.getRGB());
+
+
+                
+            }
+        }
+
+        return redTintedImage;
+    }
+
+    public static int fileToInt(char f) {
         int val = 8;
 
         switch(f) {
