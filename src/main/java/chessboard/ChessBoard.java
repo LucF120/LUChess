@@ -649,6 +649,10 @@ public class ChessBoard {
         char[] leftFiles = this.getLeftFiles(piece.getFile());
         char[] rightFiles = this.getRightFiles(piece.getFile());
 
+        if(piece.getRank() == 1 || piece.getRank() == 8) {
+            return legalMoves;
+        }
+
         if(piece.getColor() == 0) {
             if(piece.getRank() == 2) {
                 if(this.getPieceAt(piece.getFile(), 3) == null && this.getPieceAt(piece.getFile(), 4) == null) {
@@ -1068,12 +1072,16 @@ public class ChessBoard {
     private boolean isSquareUnderAttack(char file, int rank, int color) {
         char[] files = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'};
         for(char f : files) {
-            for(int i=1 ; i<9 ; i++) {
+            for(int i=1 ; i<=8 ; i++) {
                 if(this.getPieceAt(f, i) != null) {
                     if(!(this.getPieceAt(f, i) instanceof King)) {
                         ArrayList<ChessCoordinate> legalMoves = this.getLegalMoves(f, i);
                         if(legalMoves.size() > 0) {
                             if(legalMoves.contains(new ChessCoordinate(file, rank)) && this.getPieceAt(f, i).getColor() != color) {
+                                if(this.getPieceAt(f, i) instanceof Pawn && f == file) {
+                                    //Pawns can't capture up or down
+                                    continue;
+                                }
                                 return true;
                             }
                         }
@@ -1155,6 +1163,24 @@ public class ChessBoard {
         return false;
     }
 
+    //Returns the pawn that is able to be promoted. 
+    //There should only ever be 1 pawn able to be promoted at a time, so this function returns the first pawn found on the 1st or 8th rank
+    //Returns null if there is no promotable pawn 
+    public Pawn getPromotablePawn() {
+        char[] files = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'};
+
+        for(char f : files) {
+            if(this.getPieceAt(f, 1) instanceof Pawn) {
+                return (Pawn) this.getPieceAt(f, 1);
+            }
+
+            if(this.getPieceAt(f, 8) instanceof Pawn) {
+                return (Pawn) this.getPieceAt(f, 8);
+            }
+        }
+
+        return null;
+    }
 
     //Returns the total value of the white pieces currently
     //On the board 
