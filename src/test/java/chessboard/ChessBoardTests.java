@@ -2056,4 +2056,28 @@ public class ChessBoardTests {
 
         assert(board.isBlackCheckmated() == true);
     }
+
+    @Test
+    public void canKingStepInfrontOfOpposingPawn() {
+        ChessPiece[][] pieces = new ChessPiece[8][8];
+        ChessBoard board = new ChessBoard(pieces);
+        board.setPieceAt('e', 8, new King('e', 8, true, 1));
+        board.setPieceAt('e', 6, new Pawn('e', 6, true, 0));
+        assert(board.getLegalMoves('e', 8).contains(new ChessCoordinate('e', 7)));
+    }
+
+    @Test
+    public void getPromotablePawnTest() {
+        ChessBoard board = new ChessBoard();
+        board.movePiece('e', 2, 'e', 4);
+        board.movePiece('f', 7, 'f', 5);
+        board.movePiece('e', 4, 'f', 5);
+        board.movePiece('g', 7, 'g', 5);
+        board.movePiece('f', 5, 'g', 6);
+        board.movePiece('a', 7, 'a', 5);
+        board.movePiece('g', 6, 'g', 7);
+        board.movePiece('a', 5, 'a', 4);
+        board.movePiece('g', 7, 'h', 8);
+        assert(board.getPromotablePawn().equals(new Pawn('h', 8, true, 0)));
+    }
 }
