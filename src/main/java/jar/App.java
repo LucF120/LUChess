@@ -46,14 +46,23 @@ public class App
                 try {
                     firstClick = boardView.getPanel().getFirstClick();
                     if(firstClick != null && renderedFirstRedClick == false) {
-                        SwingUtilities.invokeLater(new Runnable() {
-                            @Override
-                            public void run() {
-                                boardView.makeBoard();
-                            }
-                        });
-                        renderedFirstRedClick = true;
-                    }
+                        if(board.getPieceAt(firstClick.getFile(), firstClick.getRank()) == null) {
+                            boardView.getPanel().resetClicks(); 
+                        }
+                        else if(board.getPieceAt(firstClick.getFile(), firstClick.getRank()).getColor() == 0) {
+                            SwingUtilities.invokeLater(new Runnable() {
+                                @Override
+                                public void run() {
+                                    boardView.makeBoard();
+                                }
+                            });
+                            renderedFirstRedClick = true;
+                        } 
+                        
+                        else {
+                            boardView.getPanel().resetClicks();
+                        }
+                    } 
                     secondClick = boardView.getPanel().getSecondClick();
 
                     file = firstClick.getFile();
@@ -66,6 +75,7 @@ public class App
                 }
     
                 ChessPiece pieceToMove = board.getPieceAt(file, rank);
+
 
                 if(pieceToMove != null) {
                     if(pieceToMove.getColor() != 0) {
@@ -169,7 +179,7 @@ public class App
                             continue;
                         }
                     }
-                    
+
                     board.movePiece(file, rank, destFile, destRank);
 
                     if(destinationPieceString.isEmpty()) {
@@ -193,6 +203,7 @@ public class App
                     } else {
                         System.out.println("\nThe white " + pieceToMoveString + " at " + file + rank + " has captured the " + destinationPieceString + " at " + destFile + destRank + "\n");
                     }
+
                 } catch (IllegalArgumentException e) {
                     System.out.println(e.getMessage());
                     boardView.getPanel().resetClicks();
@@ -218,49 +229,18 @@ public class App
                 }
 
                 if(board.isWhitePawnPromotable() == true) {
-                    boolean promotionChosen = false;
-                    while(!promotionChosen) {
-                        System.out.println("The pawn at " + destFile + destRank + " can be promoted.");
-                        System.out.println("Please type one of the following options:");
-                        System.out.println("Q: Queen");
-                        System.out.println("R: Rook");
-                        System.out.println("B: Bishop");
-                        System.out.println("K: Knight");
-
-                        char promotionInput;
-
-                        try {
-                            promotionInput = scan.next().charAt(0);
-                        } catch (InputMismatchException e) {
-                            System.out.println("Invalid promotion input, please try again");
-                            scan = new Scanner(System.in);
-                            continue;
-                        }
-
-                        switch(promotionInput) {
-                            case 'Q': 
-                                board.promotePawn(destFile, destRank, "queen");
-                                System.out.println("The pawn at " + destFile + destRank + " has been promoted to a queen!");
-                                break;
-                            case 'R':
-                                board.promotePawn(destFile, destRank, "rook");
-                                System.out.println("The pawn at " + destFile + destRank + " has been promoted to a rook!");
-                                break;
-                            case 'B':
-                                board.promotePawn(destFile, destRank, "bishop");
-                                System.out.println("The pawn at " + destFile + destRank + " has been promoted to a bishop!");
-                                break;
-                            case 'K':
-                                board.promotePawn(destFile, destRank, "knight");
-                                System.out.println("The pawn at " + destFile + destRank + " has been promoted to a knight!");
-                                break;
-                            default:
-                                System.out.println("Invalid promotion input, please try again");
-                                continue;
-                        }
-                        promotionChosen = true;
+                    System.out.println("The pawn at " + destFile + destRank + " can be promoted.");
+                        boardView.getPanel().addPromotionButtons();
+                        SwingUtilities.invokeLater(new Runnable() {
+                            @Override
+                            public void run() {
+                                boardView.makeBoard();
+                            }
+                        });
+                    while(board.getPieceAt(destFile, destRank) instanceof Pawn) {
+                        //Wait for promotion 
                     }
-
+                    boardView.getPanel().removePromotionButtons();
                 }
 
                 SwingUtilities.invokeLater(new Runnable() {
@@ -306,14 +286,23 @@ public class App
                 try {
                     firstClick = boardView.getPanel().getFirstClick();
                     if(firstClick != null && renderedFirstRedClick == false) {
-                        SwingUtilities.invokeLater(new Runnable() {
-                            @Override
-                            public void run() {
-                                boardView.makeBoard();
-                            }
-                        });
-                        renderedFirstRedClick = true;
-                    }
+                        if(board.getPieceAt(firstClick.getFile(), firstClick.getRank()) == null) {
+                            boardView.getPanel().resetClicks(); 
+                        }
+                        else if(board.getPieceAt(firstClick.getFile(), firstClick.getRank()).getColor() == 1) {
+                            SwingUtilities.invokeLater(new Runnable() {
+                                @Override
+                                public void run() {
+                                    boardView.makeBoard();
+                                }
+                            });
+                            renderedFirstRedClick = true;
+                        } 
+                        
+                        else {
+                            boardView.getPanel().resetClicks();
+                        }
+                    } 
                     secondClick = boardView.getPanel().getSecondClick();
     
                     file = firstClick.getFile();
@@ -419,6 +408,13 @@ public class App
                         if(boardCopy.isBlackInCheck() == true) {
                             System.out.println("\nThis is an illegal move that exposes the king.\n");
                             boardView.getPanel().resetClicks();
+                            renderedFirstRedClick = false;
+                            SwingUtilities.invokeLater(new Runnable() {
+                                @Override
+                                public void run() {
+                                    boardView.makeBoard();
+                                }
+                            });
                             continue;
                         }
                     }
@@ -471,49 +467,18 @@ public class App
                 }
 
                 if(board.isBlackPawnPromotable() == true) {
-                    boolean promotionChosen = false;
-                    while(!promotionChosen) {
-                        System.out.println("The pawn at " + destFile + destRank + " can be promoted.");
-                        System.out.println("Please type one of the following options:");
-                        System.out.println("Q: Queen");
-                        System.out.println("R: Rook");
-                        System.out.println("B: Bishop");
-                        System.out.println("K: Knight");
-
-                        char promotionInput;
-
-                        try {
-                            promotionInput = scan.next().charAt(0);
-                        } catch (InputMismatchException e) {
-                            System.out.println("Invalid promotion input, please try again");
-                            scan = new Scanner(System.in);
-                            continue;
-                        }
-
-                        switch(promotionInput) {
-                            case 'Q': 
-                                board.promotePawn(destFile, destRank, "queen");
-                                System.out.println("The pawn at " + destFile + destRank + " has been promoted to a queen!");
-                                break;
-                            case 'R':
-                                board.promotePawn(destFile, destRank, "rook");
-                                System.out.println("The pawn at " + destFile + destRank + " has been promoted to a rook!");
-                                break;
-                            case 'B':
-                                board.promotePawn(destFile, destRank, "bishop");
-                                System.out.println("The pawn at " + destFile + destRank + " has been promoted to a bishop!");
-                                break;
-                            case 'K':
-                                board.promotePawn(destFile, destRank, "knight");
-                                System.out.println("The pawn at " + destFile + destRank + " has been promoted to a knight!");
-                                break;
-                            default:
-                                System.out.println("Invalid promotion input, please try again");
-                                continue;
-                        }
-                        promotionChosen = true;
+                    System.out.println("The pawn at " + destFile + destRank + " can be promoted.");
+                        boardView.getPanel().addPromotionButtons();
+                        SwingUtilities.invokeLater(new Runnable() {
+                            @Override
+                            public void run() {
+                                boardView.makeBoard();
+                            }
+                        });
+                    while(board.getPieceAt(destFile, destRank) instanceof Pawn) {
+                        //Wait for promotion 
                     }
-
+                    boardView.getPanel().removePromotionButtons();
                 }
 
                 SwingUtilities.invokeLater(new Runnable() {
