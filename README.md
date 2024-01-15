@@ -20,5 +20,5 @@ I will continue to update this README to keep track of what goals I have accompl
 	<li>Date Started: 12/20/2023</li>
 	<li>Goal 1 Accomplished: 1/6/2024</li>
 	<li>Goal 2 Accomplished: 1/10/2024</li>
-	<li>Goal 3 Accomplished: 1/12/2024</li>
+	<li>Goal 3 Accomplished: 1/15/2024</li>
 </ul>
