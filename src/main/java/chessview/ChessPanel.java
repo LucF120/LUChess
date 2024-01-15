@@ -16,12 +16,19 @@ public class ChessPanel extends JPanel implements MouseListener {
     private ChessCoordinate firstClick;
     private ChessCoordinate secondClick;
 
+    private JButton queenPromoButton;
+    private JButton rookPromoButton;
+    private JButton knightPromoButton;
+    private JButton bishopPromoButton;
+
     static char[] FILES = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'};
 
     public ChessPanel(Square[][] board, ChessBoard game) {
         this.board = board;
         this.game = game;
         addMouseListener(this);
+        this.initializePromotionButtons();
+        this.setLayout(new FlowLayout(FlowLayout.CENTER));
     }
 
     @Override
@@ -105,6 +112,44 @@ public class ChessPanel extends JPanel implements MouseListener {
         } 
 
         this.secondClick = null;
+    }
+
+    public void addPromotionButtons() {
+        this.add(queenPromoButton);
+        this.add(rookPromoButton);
+        this.add(bishopPromoButton);
+        this.add(knightPromoButton);
+    }
+
+    public void removePromotionButtons() {
+
+        this.remove(queenPromoButton);
+        this.remove(rookPromoButton);
+        this.remove(bishopPromoButton);
+        this.remove(knightPromoButton);
+    }
+
+    private void initializePromotionButtons() {
+        queenPromoButton = new JButton("Queen");
+        rookPromoButton = new JButton("Rook");
+        bishopPromoButton = new JButton("Bishop");
+        knightPromoButton = new JButton("Knight");
+
+        queenPromoButton.setActionCommand("Promote to Queen");
+        queenPromoButton.addActionListener(new PawnPromotionListener(game));
+        queenPromoButton.setPreferredSize(new Dimension(100, 100));
+
+        rookPromoButton.setActionCommand("Promote to Rook");
+        rookPromoButton.addActionListener(new PawnPromotionListener(game));
+        rookPromoButton.setPreferredSize(new Dimension(100, 100));
+
+        bishopPromoButton.setActionCommand("Promote to Bishop");
+        bishopPromoButton.addActionListener(new PawnPromotionListener(game));
+        bishopPromoButton.setPreferredSize(new Dimension(100, 100));
+
+        knightPromoButton.setActionCommand("Promote to Knight");
+        knightPromoButton.addActionListener(new PawnPromotionListener(game));
+        knightPromoButton.setPreferredSize(new Dimension(100, 100));
     }
     
 }
