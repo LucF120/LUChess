@@ -28,7 +28,7 @@ public class ChessPanel extends JPanel implements MouseListener {
         this.game = game;
         addMouseListener(this);
         this.initializePromotionButtons();
-        this.setLayout(new FlowLayout(FlowLayout.CENTER));
+        this.setLayout(null);
     }
 
     @Override
@@ -138,18 +138,24 @@ public class ChessPanel extends JPanel implements MouseListener {
         queenPromoButton.setActionCommand("Promote to Queen");
         queenPromoButton.addActionListener(new PawnPromotionListener(game));
         queenPromoButton.setPreferredSize(new Dimension(100, 100));
+        queenPromoButton.setBounds(200, 350, queenPromoButton.getPreferredSize().width, queenPromoButton.getPreferredSize().height);
+
 
         rookPromoButton.setActionCommand("Promote to Rook");
         rookPromoButton.addActionListener(new PawnPromotionListener(game));
         rookPromoButton.setPreferredSize(new Dimension(100, 100));
+        rookPromoButton.setBounds(300, 350, rookPromoButton.getPreferredSize().width, rookPromoButton.getPreferredSize().height);
 
         bishopPromoButton.setActionCommand("Promote to Bishop");
         bishopPromoButton.addActionListener(new PawnPromotionListener(game));
         bishopPromoButton.setPreferredSize(new Dimension(100, 100));
+        bishopPromoButton.setBounds(400, 350, bishopPromoButton.getPreferredSize().width, bishopPromoButton.getPreferredSize().height);
 
         knightPromoButton.setActionCommand("Promote to Knight");
         knightPromoButton.addActionListener(new PawnPromotionListener(game));
         knightPromoButton.setPreferredSize(new Dimension(100, 100));
+        knightPromoButton.setBounds(500, 350, knightPromoButton.getPreferredSize().width, knightPromoButton.getPreferredSize().height);
+
     }
     
 }
