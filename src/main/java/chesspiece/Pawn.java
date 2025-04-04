@@ -9,6 +9,7 @@ public class Pawn implements ChessPiece {
     private int value; 
     private int color; 
     private boolean isFirstMove; 
+    private String piece; 
 
     //Constructor for a Pawn 
     public Pawn(char file, int rank, boolean isAlive, int color) {
@@ -17,6 +18,7 @@ public class Pawn implements ChessPiece {
         this.value = 1; 
         this.color = color; 
         this.isFirstMove = false;
+        this.piece = "Pawn";
     }
 
     //Constructor for a Pawn where you can set isFirstMove 

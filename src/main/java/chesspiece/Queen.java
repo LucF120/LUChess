@@ -8,6 +8,7 @@ public class Queen implements ChessPiece {
     private boolean isAlive; 
     private int value; 
     private int color; 
+    private String piece;
 
     //Constructor for a Queen 
     public Queen(char file, int rank, boolean isAlive, int color) {
@@ -15,6 +16,7 @@ public class Queen implements ChessPiece {
         this.isAlive = isAlive; 
         this.value = 9; 
         this.color = color; 
+        this.piece = "Queen";
     }
 
     //Returns the file that the piece is currently in (a-h)

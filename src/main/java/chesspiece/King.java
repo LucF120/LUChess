@@ -9,6 +9,7 @@ public class King implements ChessPiece {
     private int value; 
     private int color;
     private boolean hasMoved; 
+    private String piece;
 
     //Constructor for a King 
     public King(char file, int rank, boolean isAlive, int color) {
@@ -17,6 +18,7 @@ public class King implements ChessPiece {
         this.value = 200; 
         this.color = color; 
         this.hasMoved = false;
+        this.piece = "King";
     }
 
     //Constructor where you can set hasMoved to true or false 

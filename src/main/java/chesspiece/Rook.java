@@ -9,6 +9,7 @@ public class Rook implements ChessPiece {
     private int value; 
     private int color; 
     private boolean hasMoved; 
+    private String piece;
 
     //Constructor for a Rook 
     public Rook(char file, int rank, boolean isAlive, int color) {
@@ -17,6 +18,7 @@ public class Rook implements ChessPiece {
         this.value = 5; 
         this.color = color; 
         this.hasMoved = false;
+        this.piece = "Rook";
     }
 
     //Constructor where you can set hasMoved to true or false 

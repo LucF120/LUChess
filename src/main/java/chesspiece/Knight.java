@@ -8,6 +8,7 @@ public class Knight implements ChessPiece {
     private boolean isAlive; 
     private int value; 
     private int color;
+    private String piece;
 
     //Constructor for a Knight 
     public Knight(char file, int rank, boolean isAlive, int color) {
@@ -15,6 +16,7 @@ public class Knight implements ChessPiece {
         this.isAlive = isAlive; 
         this.value = 3; 
         this.color = color; 
+        this.piece= "Knight";
     }
 
     //Returns the file that the piece is currently in (a-h)
