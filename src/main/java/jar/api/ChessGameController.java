@@ -45,7 +45,8 @@ public class ChessGameController {
     
     // POST to create a new game
     @PostMapping
-    public ChessBoard createGame(@RequestBody ChessBoard game) {
+    public ChessBoard createGame() {
+        ChessBoard game = new ChessBoard();
         String id = UUID.randomUUID().toString();
         games.put(id, game);
         return game;
