@@ -57,6 +57,11 @@ public class King implements ChessPiece {
         return this.color; 
     }
 
+    //Returns a string corresponding to the piece type.
+    public String getPiece() {
+        return this.piece;
+    }
+
     //Returns whether or not the king has moved 
     public boolean hasMoved() {
         return this.hasMoved; 

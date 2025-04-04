@@ -46,6 +46,11 @@ public class Knight implements ChessPiece {
         return this.color; 
     }
 
+    //Returns a string corresponding to the piece type.
+    public String getPiece() {
+        return this.piece;
+    }
+
     //Changes the location of a knight
     public void changeLocation(char file, int rank) {
         this.location.setFile(file);

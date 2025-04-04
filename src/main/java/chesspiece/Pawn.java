@@ -57,6 +57,11 @@ public class Pawn implements ChessPiece {
         return this.color; 
     }
 
+    //Returns a string corresponding to the piece type.
+    public String getPiece() {
+        return this.piece;
+    }
+
     //Returns a boolean of whether or not the pawn just moved for the first time 
     public boolean isFirstMove() {
         return this.isFirstMove; 

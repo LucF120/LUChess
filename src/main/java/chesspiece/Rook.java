@@ -57,6 +57,11 @@ public class Rook implements ChessPiece {
         return this.color; 
     }
 
+    //Returns a string corresponding to the piece type.
+    public String getPiece() {
+        return this.piece;
+    }
+
     //Returns whether or not this rook has moved 
     public boolean hasMoved() {
         return this.hasMoved; 

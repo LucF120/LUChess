@@ -19,6 +19,9 @@ public interface ChessPiece {
     //Returns 0 if a piece is white, 1 if a piece is black 
     int getColor(); 
 
+    //Returns a string corresponding to the piece type.
+    String getPiece();
+
     //Changes the location of a chess piece 
     void changeLocation(char file, int rank); 
 }
