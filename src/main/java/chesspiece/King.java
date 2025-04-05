@@ -28,6 +28,7 @@ public class King implements ChessPiece {
         this.value = 200; 
         this.color = color; 
         this.hasMoved = hasMoved;
+        this.piece = "King";
     }
 
     //Returns the file that the piece is currently in (a-h)

@@ -28,6 +28,7 @@ public class Pawn implements ChessPiece {
         this.value = 1; 
         this.color = color; 
         this.isFirstMove = isFirstMove;
+        this.piece = "Pawn";
     }
 
     //Returns the file that the piece is currently in (a-h)

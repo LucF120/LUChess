@@ -28,6 +28,7 @@ public class Rook implements ChessPiece {
         this.value = 5; 
         this.color = color; 
         this.hasMoved = hasMoved;
+        this.piece = "Rook";
     }
 
     //Returns the file that the piece is currently in (a-h)
